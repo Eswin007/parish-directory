@@ -1,0 +1,65 @@
+.family {
+  position: relative;
+  & + & {
+    margin-top: 3rem;
+  }
+
+  &:hover {
+    .family__edit {
+      opacity: 1;
+    }
+  }
+
+  &__name {
+    font-size: 1.75rem;
+    margin-bottom: 0.5rem;
+    color: #b13814;
+  }
+
+  &__detail {
+    table {
+      border-collapse: collapse;
+    }
+    tr td {
+      padding-block: 3px;
+    }
+    tr td:first-child {
+      width: 7rem;
+    }
+    tr td:last-child {
+      font-weight: bold;
+    }
+  }
+
+  &__edit {
+    all: unset;
+    font-size: 1rem;
+    color: rgb(47, 47, 238);
+    text-decoration: underline;
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    opacity: 0;
+  }
+
+  .members {
+    margin-top: 1rem;
+    width: 100%;
+    border-collapse: collapse;
+    tr {
+      td,
+      th {
+        padding: 0.5rem;
+      }
+      td {
+        border-bottom: 1px solid rgba(black, 0.1);
+      }
+
+      th {
+        color: white;
+        background-color: #b13814;
+        font-weight: 400;
+      }
+    }
+  }
+}

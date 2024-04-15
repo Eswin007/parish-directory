@@ -1,28 +1,36 @@
 import React from "react";
+import Members from "./Members";
 
-const Family = ({ children }) => {
+const Family = ({ children, hof, address, email, parish, phone, members }) => {
   return (
     <div className="family">
-      <h2 className="family__name">John Doe</h2>
+      <h2 className="family__name">{hof}</h2>
+      <button className="family__edit">Edit</button>
       <table className="family__detail">
-        <tr>
-          <td>Address</td>
-          <td>Address</td>
-        </tr>
-        <tr>
-          <td>Mother Parish</td>
-          <td>Mother Parish</td>
-        </tr>
-        <tr>
-          <td>Phone</td>
-          <td>Phone</td>
-        </tr>
-        <tr>
-          <td>Email</td>
-          <td>Email</td>
-        </tr>
+        <tbody>
+          <tr>
+            <td>Address</td>
+            <td>{address}</td>
+          </tr>
+          <tr>
+            <td>Mother Parish</td>
+            <td>{parish}</td>
+          </tr>
+          <tr>
+            <td>Phone</td>
+            <td>
+              <span>
+                {phone[0]} / {phone[1]}
+              </span>
+            </td>
+          </tr>
+          <tr>
+            <td>Email</td>
+            <td>{email}</td>
+          </tr>
+        </tbody>
       </table>
-      {children}
+      <Members members={members} />
     </div>
   );
 };
