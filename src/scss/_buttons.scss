@@ -1,0 +1,19 @@
+.btn {
+  all: unset;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.25rem;
+  line-height: 1;
+  font-size: 0.875rem;
+  cursor: pointer;
+  text-transform: uppercase;
+}
+
+.btn-primary {
+  background-color: #b13814;
+  color: white;
+}
+
+.btn-secondary {
+  color: #b13814;
+  border: 1px solid currentColor;
+}
