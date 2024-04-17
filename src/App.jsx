@@ -17,14 +17,17 @@ const App = () => {
 
   useEffect(() => {
     fetchMembers();
-  }, []);
+  }, [members]);
 
   return (
     <>
       <Header setShowAddMembers={setShowAddMembers} />
       <div className="wrapper">
         {showAddMembers ? (
-          <AddMembers />
+          <AddMembers
+            setShowAddMembers={setShowAddMembers}
+            fetchMembers={fetchMembers}
+          />
         ) : (
           members?.map((member) => (
             <Family
