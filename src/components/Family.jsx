@@ -19,9 +19,7 @@ const Family = ({ children, hof, address, email, parish, phone, members }) => {
           <tr>
             <td>Phone</td>
             <td>
-              <span>
-                {phone[0]} / {phone[1]}
-              </span>
+              <span>{/* {phone} / {phone} */}</span>
             </td>
           </tr>
           <tr>

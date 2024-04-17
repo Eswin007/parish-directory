@@ -1,0 +1,20 @@
+.input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+
+  label {
+    font-size: 0.875rem;
+  }
+
+  input {
+    padding: 0.5rem;
+    border: 1px solid #838383;
+    border-radius: 0.25rem;
+    &:focus {
+      outline: 0;
+      box-shadow: 0 0 2px 0 #68bbff;
+      border-color: #68bbff;
+    }
+  }
+}

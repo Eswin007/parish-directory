@@ -1,0 +1,15 @@
+.add-members {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+
+  button {
+    justify-self: flex-start;
+  }
+  h3 {
+    grid-column: 1/-1;
+    color: #4a4a4a;
+    text-transform: uppercase;
+    font-size: 0.875rem;
+  }
+}
