@@ -3,21 +3,20 @@ import InputField from "./InputField";
 import Button from "./Button";
 import axios from "axios";
 
-const AddMembers = ({ setShowAddMembers, fetchMembers }) => {
-  const [formData, setFormData] = useState({
-    hof: "",
-    phone1: "",
-    phone2: "",
-    email: "",
-    mother_parish: "",
-    address: "",
-  });
+const AddMembers = ({
+  setShowAddMembers,
+  //   fetchMembers,
+  addFamilyHandler,
+  formData,
+  setFormData,
+}) => {
   const onSubmitHanlder = (e) => {
     e.preventDefault();
-    console.log({ id: Math.random(), ...formData }, "submit");
-    axios.post("http://localhost:8000/family", formData);
-    setShowAddMembers(false);
-    fetchMembers();
+    addFamilyHandler(formData);
+    // console.log({ id: Math.random(), ...formData }, "submit");
+    // axios.post("http://localhost:8000/family", formData);
+    // setShowAddMembers(false);
+    // fetchMembers();
   };
   const onChangeHandler = (e, name) => {
     setFormData((prev) => ({

@@ -5,7 +5,7 @@
   }
 
   &:hover {
-    .family__edit {
+    .family__controls {
       opacity: 1;
     }
   }
@@ -31,8 +31,7 @@
     }
   }
 
-  &__edit {
-    all: unset;
+  &__controls {
     font-size: 1rem;
     color: rgb(47, 47, 238);
     text-decoration: underline;
@@ -40,6 +39,12 @@
     top: 1rem;
     right: 1rem;
     opacity: 0;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    button {
+      all: unset;
+    }
   }
 
   .members {

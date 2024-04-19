@@ -1,11 +1,26 @@
 import React from "react";
 import Members from "./Members";
 
-const Family = ({ children, hof, address, email, parish, phone, members }) => {
+const Family = ({
+  children,
+  hof,
+  address,
+  email,
+  parish,
+  phone,
+  members,
+  id,
+  onDeleteFamily,
+}) => {
   return (
     <div className="family">
       <h2 className="family__name">{hof}</h2>
-      <button className="family__edit">Edit</button>
+      <div className="family__controls">
+        <button className="family__btn" onClick={() => onDeleteFamily(id)}>
+          Delete
+        </button>
+        <button className="family__btn">Edit</button>
+      </div>
       <table className="family__detail">
         <tbody>
           <tr>

@@ -9,6 +9,14 @@ import AddMembers from "./components/AddMembers";
 const App = () => {
   const [members, setMembers] = useState([]);
   const [showAddMembers, setShowAddMembers] = useState(false);
+  const [formData, setFormData] = useState({
+    hof: "",
+    phone1: "",
+    phone2: "",
+    email: "",
+    mother_parish: "",
+    address: "",
+  });
 
   const fetchMembers = async () => {
     const membersList = await axios.get("http://localhost:8000/family");
@@ -17,7 +25,20 @@ const App = () => {
 
   useEffect(() => {
     fetchMembers();
-  }, [members]);
+  }, []);
+
+  const addFamilyHandler = async (formvalues) => {
+    console.log(formvalues, "form-values");
+    await axios.post("http://localhost:8000/family", formvalues);
+    await fetchMembers();
+    setShowAddMembers(false);
+  };
+
+  const onDeleteFamily = async (id) => {
+    console.log(id, "id");
+    const response = await axios.delete(`http://localhost:8000/family/${id}`);
+    console.log(response, "response");
+  };
 
   return (
     <>
@@ -26,18 +47,22 @@ const App = () => {
         {showAddMembers ? (
           <AddMembers
             setShowAddMembers={setShowAddMembers}
-            fetchMembers={fetchMembers}
+            formData={formData}
+            setFormData={setFormData}
+            addFamilyHandler={addFamilyHandler}
           />
         ) : (
           members?.map((member) => (
             <Family
               key={member.id}
+              id={member.id}
               hof={member?.hof}
               email={member?.email}
               parish={member?.mother_parish}
               address={member?.address}
               phone={member?.phone}
               members={member?.members}
+              onDeleteFamily={onDeleteFamily}
             />
           ))
         )}
