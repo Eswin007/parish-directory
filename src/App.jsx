@@ -34,10 +34,15 @@ const App = () => {
     setShowAddMembers(false);
   };
 
-  const onDeleteFamily = async (id) => {
-    console.log(id, "id");
-    const response = await axios.delete(`http://localhost:8000/family/${id}`);
-    console.log(response, "response");
+  const onDeleteFamily = (id) => {
+    // console.log(axios.get(`http://localhost:8000/family/${id}`), "fetch");
+    // const value = await axios.get(`http://localhost:8000/family/${id}`);
+    // console.log(value.data, "fetch");
+    // console.log(id, "id");
+    axios
+      .delete(`http://localhost:8000/family/${id}`)
+      .then((res) => fetchMembers())
+      .catch((err) => console.log(err, "err"));
   };
 
   return (
