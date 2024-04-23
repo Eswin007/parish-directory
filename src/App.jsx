@@ -45,6 +45,10 @@ const App = () => {
       .catch((err) => console.log(err, "err"));
   };
 
+  const onEditFamily = (id) => {
+    setShowAddMembers(true);
+  };
+
   return (
     <>
       <Header setShowAddMembers={setShowAddMembers} />
@@ -68,6 +72,7 @@ const App = () => {
               phone={member?.phone}
               members={member?.members}
               onDeleteFamily={onDeleteFamily}
+              onEditFamily={onEditFamily}
             />
           ))
         )}

@@ -11,6 +11,7 @@ const Family = ({
   members,
   id,
   onDeleteFamily,
+  onEditFamily,
 }) => {
   return (
     <div className="family">
@@ -19,7 +20,9 @@ const Family = ({
         <button className="family__btn" onClick={() => onDeleteFamily(id)}>
           Delete
         </button>
-        <button className="family__btn">Edit</button>
+        <button className="family__btn" onClick={() => onEditFamily(id)}>
+          Edit
+        </button>
       </div>
       <table className="family__detail">
         <tbody>
