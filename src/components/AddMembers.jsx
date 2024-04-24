@@ -13,10 +13,6 @@ const AddMembers = ({
   const onSubmitHanlder = (e) => {
     e.preventDefault();
     addFamilyHandler(formData);
-    // console.log({ id: Math.random(), ...formData }, "submit");
-    // axios.post("http://localhost:8000/family", formData);
-    // setShowAddMembers(false);
-    // fetchMembers();
   };
   const onChangeHandler = (e, name) => {
     setFormData((prev) => ({

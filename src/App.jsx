@@ -35,10 +35,6 @@ const App = () => {
   };
 
   const onDeleteFamily = (id) => {
-    // console.log(axios.get(`http://localhost:8000/family/${id}`), "fetch");
-    // const value = await axios.get(`http://localhost:8000/family/${id}`);
-    // console.log(value.data, "fetch");
-    // console.log(id, "id");
     axios
       .delete(`http://localhost:8000/family/${id}`)
       .then((res) => fetchMembers())
@@ -47,6 +43,9 @@ const App = () => {
 
   const onEditFamily = (id) => {
     setShowAddMembers(true);
+    const editMember = members.filter((member) => member.id === id);
+    setFormData(...editMember);
+    console.log(formData);
   };
 
   return (
