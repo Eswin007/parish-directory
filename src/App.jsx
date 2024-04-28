@@ -11,13 +11,11 @@ const App = () => {
   const [showAddMembers, setShowAddMembers] = useState(false);
   const [formData, setFormData] = useState({
     hof: "",
-    phone1: "",
-    phone2: "",
+    phone: [],
     email: "",
     mother_parish: "",
     address: "",
   });
-
   const fetchMembers = async () => {
     const membersList = await axios.get("http://localhost:8000/family");
     setMembers(membersList.data);

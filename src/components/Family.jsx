@@ -37,7 +37,7 @@ const Family = ({
           <tr>
             <td>Phone</td>
             <td>
-              <span>{/* {phone} / {phone} */}</span>
+              <span>{`${phone[0]} / ${phone[1]}`}</span>
             </td>
           </tr>
           <tr>

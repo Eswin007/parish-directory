@@ -33,13 +33,13 @@ const AddMembers = ({
       <InputField
         placeholder="Phone 1"
         label="Phone 1"
-        value={formData.phone1}
+        value={formData.phone[0]}
         onChange={(e) => onChangeHandler(e, "phone1")}
       />
       <InputField
         placeholder="Phone 2"
         label="Phone 2"
-        value={formData.phone2}
+        value={formData.phone[1]}
         onChange={(e) => onChangeHandler(e, "phone2")}
       />
       <InputField
