@@ -4,11 +4,12 @@ import Family from "./components/Family";
 import Card from "./components/Card";
 import { useEffect, useState } from "react";
 import "./scss/main.scss";
-import AddMembers from "./components/AddMembers";
+import MemberForm from "./components/MemberForm";
 
 const App = () => {
   const [members, setMembers] = useState([]);
-  const [showAddMembers, setShowAddMembers] = useState(false);
+  const [addMembers, setAddMembers] = useState(false);
+  const [editMembers, setEditMembers] = useState(false);
   const [formData, setFormData] = useState({
     hof: "",
     phone: [],
@@ -29,7 +30,7 @@ const App = () => {
     console.log(formvalues, "form-values");
     await axios.post("http://localhost:8000/family", formvalues);
     await fetchMembers();
-    setShowAddMembers(false);
+    setAddMembers(false);
   };
 
   const onDeleteFamily = (id) => {
@@ -40,7 +41,7 @@ const App = () => {
   };
 
   const onEditFamily = (id) => {
-    setShowAddMembers(true);
+    setEditMembers(true);
     const editMember = members.filter((member) => member.id === id);
     setFormData(...editMember);
     console.log(formData);
@@ -48,16 +49,21 @@ const App = () => {
 
   return (
     <>
-      <Header setShowAddMembers={setShowAddMembers} />
+      <Header setAddMembers={setAddMembers} />
       <div className="wrapper">
-        {showAddMembers ? (
-          <AddMembers
-            setShowAddMembers={setShowAddMembers}
+        {editMembers && (
+          <MemberForm formData={formData} setFormData={setFormData} />
+        )}
+        {addMembers && (
+          <MemberForm
+            setAddMembers={setAddMembers}
             formData={formData}
             setFormData={setFormData}
             addFamilyHandler={addFamilyHandler}
           />
-        ) : (
+        )}
+        {!addMembers &&
+          !editMembers &&
           members?.map((member) => (
             <Family
               key={member.id}
@@ -71,8 +77,7 @@ const App = () => {
               onDeleteFamily={onDeleteFamily}
               onEditFamily={onEditFamily}
             />
-          ))
-        )}
+          ))}
       </div>
     </>
   );

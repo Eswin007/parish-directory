@@ -2,12 +2,12 @@ import React from "react";
 import Searchbar from "./Searchbar";
 import Button from "./Button";
 
-const Header = ({ setShowAddMembers }) => {
+const Header = ({ setAddMembers }) => {
   return (
     <div className="header">
       <div className="logo">DIRECTORY</div>
       <Searchbar placeholder="search" />
-      <Button onClick={() => setShowAddMembers(true)}>Add Family</Button>
+      <Button onClick={() => setAddMembers(true)}>Add Family</Button>
     </div>
   );
 };

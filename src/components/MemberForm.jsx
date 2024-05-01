@@ -3,13 +3,7 @@ import InputField from "./InputField";
 import Button from "./Button";
 import axios from "axios";
 
-const AddMembers = ({
-  setShowAddMembers,
-  //   fetchMembers,
-  addFamilyHandler,
-  formData,
-  setFormData,
-}) => {
+const MemberForm = ({ addFamilyHandler, formData, setFormData }) => {
   const onSubmitHanlder = (e) => {
     e.preventDefault();
     addFamilyHandler(formData);
@@ -65,4 +59,4 @@ const AddMembers = ({
   );
 };
 
-export default AddMembers;
+export default MemberForm;
