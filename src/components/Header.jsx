@@ -2,12 +2,14 @@ import React from "react";
 import Searchbar from "./Searchbar";
 import Button from "./Button";
 
-const Header = ({ setAddMembers }) => {
+const Header = ({ setShowForm, showForm }) => {
   return (
     <div className="header">
       <div className="logo">DIRECTORY</div>
       <Searchbar placeholder="search" />
-      <Button onClick={() => setAddMembers(true)}>Add Family</Button>
+      {!showForm && (
+        <Button onClick={() => setShowForm(true)}>Add Family</Button>
+      )}
     </div>
   );
 };

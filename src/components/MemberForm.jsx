@@ -2,16 +2,17 @@ import React, { useState } from "react";
 import InputField from "./InputField";
 import Button from "./Button";
 import axios from "axios";
+import Card from "./Card";
 
-const MemberForm = ({ addFamilyHandler, formData, setFormData }) => {
+const MemberForm = ({ saveFamilyHandler, formData, setFormData }) => {
   const onSubmitHanlder = (e) => {
     e.preventDefault();
-    addFamilyHandler(formData);
+    saveFamilyHandler(formData, formData.id);
   };
-  const onChangeHandler = (e, name) => {
+  const onChangeHandler = (e, inputName) => {
     setFormData((prev) => ({
       ...prev,
-      [name]: e.target.value,
+      [inputName]: e.target.value,
     }));
   };
 
@@ -54,7 +55,8 @@ const MemberForm = ({ addFamilyHandler, formData, setFormData }) => {
         value={formData.address}
         onChange={(e) => onChangeHandler(e, "address")}
       />
-      <Button>Add</Button>
+
+      <Button>Save</Button>
     </form>
   );
 };

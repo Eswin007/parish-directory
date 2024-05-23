@@ -8,7 +8,7 @@
         "0987654321"
       ],
       "email": "john@example.com",
-      "mother_parish": "American",
+      "mother_parish": "Americans",
       "address": "123 Main St, Anytown, USA",
       "members": [
         {
@@ -73,16 +73,6 @@
           "blood": "AB-"
         }
       ]
-    },
-    {
-      "id": "9359",
-      "hof": "asdf",
-      "phone": [],
-      "email": "adfs",
-      "mother_parish": "dfsa",
-      "address": "adfs",
-      "phone1": "afsd",
-      "phone2": "adfs"
     }
   ]
 }

@@ -5,18 +5,38 @@ import Card from "./components/Card";
 import { useEffect, useState } from "react";
 import "./scss/main.scss";
 import MemberForm from "./components/MemberForm";
+import { Helmet } from "react-helmet";
 
+const FAMILY_INITIAL = {
+  hof: "",
+  phone: [],
+  email: "",
+  mother_parish: "",
+  address: "",
+  // members: [{
+  //     name: "",
+  //     relation: "",
+  //     occupation: "",
+  //     dob: "",
+  //     dom: "",
+  //     blood: "",
+  //   },
+  // ],
+};
+// const MEMBERS = {
+//   name: "",
+//   relation: "",
+//   occupation: "",
+//   dob: "",
+//   dom: "",
+//   blood: "",
+// };
 const App = () => {
   const [members, setMembers] = useState([]);
-  const [addMembers, setAddMembers] = useState(false);
-  const [editMembers, setEditMembers] = useState(false);
-  const [formData, setFormData] = useState({
-    hof: "",
-    phone: [],
-    email: "",
-    mother_parish: "",
-    address: "",
-  });
+  const [showForm, setShowForm] = useState(false);
+  const [formData, setFormData] = useState(FAMILY_INITIAL);
+  const [flag, setFlag] = useState(false);
+
   const fetchMembers = async () => {
     const membersList = await axios.get("http://localhost:8000/family");
     setMembers(membersList.data);
@@ -26,11 +46,19 @@ const App = () => {
     fetchMembers();
   }, []);
 
-  const addFamilyHandler = async (formvalues) => {
-    console.log(formvalues, "form-values");
-    await axios.post("http://localhost:8000/family", formvalues);
-    await fetchMembers();
-    setAddMembers(false);
+  const saveFamilyHandler = async (formvalues, memberID) => {
+    console.log(memberID, "memberid");
+    if (memberID) {
+      await axios.put(`http://localhost:8000/family/${memberID}`, formvalues);
+      await fetchMembers();
+      setShowForm(false);
+    } else {
+      setFormData(FAMILY_INITIAL);
+      console.log(formvalues, "form-values");
+      await axios.post("http://localhost:8000/family", formvalues);
+      await fetchMembers();
+      setShowForm(false);
+    }
   };
 
   const onDeleteFamily = (id) => {
@@ -41,7 +69,7 @@ const App = () => {
   };
 
   const onEditFamily = (id) => {
-    setEditMembers(true);
+    setShowForm(true);
     const editMember = members.filter((member) => member.id === id);
     setFormData(...editMember);
     console.log(formData);
@@ -49,21 +77,18 @@ const App = () => {
 
   return (
     <>
-      <Header setAddMembers={setAddMembers} />
+      <Header setShowForm={setShowForm} />
       <div className="wrapper">
-        {editMembers && (
-          <MemberForm formData={formData} setFormData={setFormData} />
-        )}
-        {addMembers && (
+        {showForm && (
           <MemberForm
-            setAddMembers={setAddMembers}
+            setShowForm={setShowForm}
             formData={formData}
             setFormData={setFormData}
-            addFamilyHandler={addFamilyHandler}
+            saveFamilyHandler={saveFamilyHandler}
+            showForm={showForm}
           />
         )}
-        {!addMembers &&
-          !editMembers &&
+        {!showForm &&
           members?.map((member) => (
             <Family
               key={member.id}
@@ -76,6 +101,7 @@ const App = () => {
               members={member?.members}
               onDeleteFamily={onDeleteFamily}
               onEditFamily={onEditFamily}
+              membersList={formData?.members}
             />
           ))}
       </div>
