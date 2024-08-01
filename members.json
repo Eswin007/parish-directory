@@ -3,18 +3,16 @@
     {
       "id": "1",
       "hof": "John Smith",
-      "phone": [
-        "1234567890",
-        "0987654321"
-      ],
+      "phone1": "8111838906",
+      "phone2": "9947768082",
       "email": "john@example.com",
       "mother_parish": "Americans",
       "address": "123 Main St, Anytown, USA",
       "members": [
         {
           "name": "John Smith",
-          "relation": "Self",
-          "occupation": "Head of Family",
+          "relation": "HoF",
+          "occupation": "Farmer",
           "dob": "1970-01-01",
           "dom": null,
           "blood": "A+"
@@ -40,18 +38,16 @@
     {
       "id": "2",
       "hof": "Maria Garcia",
-      "phone": [
-        "9876543210",
-        "0123456789"
-      ],
+      "phone1": "8111838906",
+      "phone2": "9947768082",
       "email": "maria@example.com",
       "mother_parish": "Spanish",
       "address": "456 Oak St, Othertown, Spain",
       "members": [
         {
           "name": "Maria Garcia",
-          "relation": "Self",
-          "occupation": "Head of Family",
+          "relation": "HoF",
+          "occupation": "Business",
           "dob": "1975-03-15",
           "dom": null,
           "blood": "B+"
@@ -73,6 +69,17 @@
           "blood": "AB-"
         }
       ]
+    },
+    {
+      "id": "96b8",
+      "hof": "",
+      "phone1": "",
+      "phone2": "",
+      "email": "",
+      "mother_parish": "",
+      "address": "",
+      "dob": "",
+      "dom": "2024-08-07"
     }
   ]
 }

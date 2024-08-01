@@ -7,7 +7,7 @@ const Button = ({ type, variant, className, children, onClick }) => {
       type={type}
       className={`btn ${
         variant === "secondary" ? "btn-secondary" : "btn-primary"
-      } ${className && className}`}
+      } ${className ?? className}`}
     >
       {children}
     </button>

@@ -7,12 +7,14 @@ import "./scss/main.scss";
 import MemberForm from "./components/MemberForm";
 import { Helmet } from "react-helmet";
 
-const FAMILY_INITIAL = {
+export const FAMILY_INITIAL = {
   hof: "",
-  phone: [],
+  phone1: "",
+  phone2: "",
   email: "",
   mother_parish: "",
   address: "",
+  dob: "",
   // members: [{
   //     name: "",
   //     relation: "",
@@ -23,14 +25,7 @@ const FAMILY_INITIAL = {
   //   },
   // ],
 };
-// const MEMBERS = {
-//   name: "",
-//   relation: "",
-//   occupation: "",
-//   dob: "",
-//   dom: "",
-//   blood: "",
-// };
+
 const App = () => {
   const [members, setMembers] = useState([]);
   const [showForm, setShowForm] = useState(false);
@@ -77,7 +72,11 @@ const App = () => {
 
   return (
     <>
-      <Header setShowForm={setShowForm} />
+      <Header
+        setShowForm={setShowForm}
+        showForm={showForm}
+        setFormData={setFormData}
+      />
       <div className="wrapper">
         {showForm && (
           <MemberForm
@@ -97,7 +96,8 @@ const App = () => {
               email={member?.email}
               parish={member?.mother_parish}
               address={member?.address}
-              phone={member?.phone}
+              phone1={member?.phone1}
+              phone2={member?.phone2}
               members={member?.members}
               onDeleteFamily={onDeleteFamily}
               onEditFamily={onEditFamily}

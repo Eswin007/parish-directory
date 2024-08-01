@@ -4,7 +4,12 @@ import Button from "./Button";
 import axios from "axios";
 import Card from "./Card";
 
-const MemberForm = ({ saveFamilyHandler, formData, setFormData }) => {
+const MemberForm = ({
+  saveFamilyHandler,
+  formData,
+  setFormData,
+  setShowForm,
+}) => {
   const onSubmitHanlder = (e) => {
     e.preventDefault();
     saveFamilyHandler(formData, formData.id);
@@ -28,13 +33,13 @@ const MemberForm = ({ saveFamilyHandler, formData, setFormData }) => {
       <InputField
         placeholder="Phone 1"
         label="Phone 1"
-        value={formData.phone[0]}
+        value={formData.phone1}
         onChange={(e) => onChangeHandler(e, "phone1")}
       />
       <InputField
         placeholder="Phone 2"
         label="Phone 2"
-        value={formData.phone[1]}
+        value={formData.phone2}
         onChange={(e) => onChangeHandler(e, "phone2")}
       />
       <InputField
@@ -55,8 +60,19 @@ const MemberForm = ({ saveFamilyHandler, formData, setFormData }) => {
         value={formData.address}
         onChange={(e) => onChangeHandler(e, "address")}
       />
-
-      <Button>Save</Button>
+      <InputField
+        type="date"
+        placeholder="DD/MM/YY"
+        label="DOM"
+        value={formData.dom}
+        onChange={(e) => onChangeHandler(e, "dom")}
+      />
+      <div className="button-wrap">
+        <Button variant="secondary" onClick={() => setShowForm(false)}>
+          Cancel
+        </Button>
+        <Button>Save</Button>
+      </div>
     </form>
   );
 };

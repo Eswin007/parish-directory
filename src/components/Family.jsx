@@ -2,17 +2,18 @@ import React from "react";
 import Members from "./Members";
 
 const Family = ({
-  children,
   hof,
   address,
   email,
   parish,
-  phone,
+  phone1,
+  phone2,
   members,
   id,
   onDeleteFamily,
   onEditFamily,
 }) => {
+  console.log(phone1, "phone");
   return (
     <div className="family">
       <h2 className="family__name">{hof}</h2>
@@ -37,7 +38,7 @@ const Family = ({
           <tr>
             <td>Phone</td>
             <td>
-              <span>{`${phone[0]} / ${phone[1]}`}</span>
+              <span>{`${phone1} / ${phone2}`}</span>
             </td>
           </tr>
           <tr>

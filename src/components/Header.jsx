@@ -1,15 +1,17 @@
 import React from "react";
 import Searchbar from "./Searchbar";
 import Button from "./Button";
-
-const Header = ({ setShowForm, showForm }) => {
+import { FAMILY_INITIAL } from "../App";
+const Header = ({ setShowForm, showForm, setFormData }) => {
+  const addNewMember = () => {
+    setShowForm(true);
+    setFormData(FAMILY_INITIAL);
+  };
   return (
     <div className="header">
       <div className="logo">DIRECTORY</div>
-      <Searchbar placeholder="search" />
-      {!showForm && (
-        <Button onClick={() => setShowForm(true)}>Add Family</Button>
-      )}
+      {!showForm && <Searchbar placeholder="search" />}
+      {!showForm && <Button onClick={addNewMember}>Add Family</Button>}
     </div>
   );
 };

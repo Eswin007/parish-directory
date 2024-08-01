@@ -1,6 +1,32 @@
 .header {
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
   align-items: center;
   justify-content: space-between;
   padding: 1.5rem 6rem;
+
+  button {
+    justify-self: flex-end;
+  }
+  .searchbar {
+    display: flex;
+    align-items: stretch;
+    border: 1px solid #333;
+    border-radius: 0.25rem;
+    overflow: hidden;
+    input {
+      padding: 0.5rem;
+      outline: 0;
+      border: 0;
+      width: 100%;
+      font-size: 0.875rem;
+    }
+    button {
+      all: unset;
+      padding: 0.5rem;
+      height: 100%;
+      background-color: #ccc;
+      cursor: pointer;
+    }
+  }
 }
