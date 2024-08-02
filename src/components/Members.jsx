@@ -1,6 +1,6 @@
 import React from "react";
 
-const Members = ({ members }) => {
+const Members = ({ members, dob, dom, occupation, name, blood }) => {
   return (
     <table className="members">
       <thead>
@@ -14,6 +14,14 @@ const Members = ({ members }) => {
         </tr>
       </thead>
       <tbody>
+        <tr>
+          <td>{name}</td>
+          <td>HoF</td>
+          <td>{occupation}</td>
+          <td>{dob}</td>
+          <td>{dom}</td>
+          <td>{blood}</td>
+        </tr>
         {members?.map((member) => {
           return (
             <tr>

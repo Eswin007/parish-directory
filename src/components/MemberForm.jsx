@@ -14,11 +14,26 @@ const MemberForm = ({
     e.preventDefault();
     saveFamilyHandler(formData, formData.id);
   };
-  const onChangeHandler = (e, inputName) => {
-    setFormData((prev) => ({
-      ...prev,
-      [inputName]: e.target.value,
-    }));
+  const onChangeHandler = (e, inputName, membersId) => {
+    setFormData((prev) => {
+      const updatedMembers = prev.members?.map((member) => {
+        if (member.id === membersId) {
+          return { ...member, [inputName]: e.target.value };
+        }
+        return member;
+      });
+      return { ...prev, [inputName]: e.target.value, members: updatedMembers };
+    });
+  };
+  // const onChangeHandler = (e, inputName, membersId) => {
+  //   setFormData((prev) => ({
+  //     ...prev,
+  //     [inputName]: e.target.value,
+  //   }));
+  // };
+
+  const addMoreHandler = (e) => {
+    e.preventDefault();
   };
 
   return (
@@ -61,13 +76,75 @@ const MemberForm = ({
         onChange={(e) => onChangeHandler(e, "address")}
       />
       <InputField
+        placeholder="Occupation"
+        label="Occupation"
+        value={formData.dom}
+        onChange={(e) => onChangeHandler(e, "occupation")}
+      />
+      <InputField
         type="date"
         placeholder="DD/MM/YY"
-        label="DOM"
+        label="Date of Birth"
+        value={formData.dob}
+        onChange={(e) => onChangeHandler(e, "dob")}
+      />
+      <InputField
+        type="date"
+        placeholder="DD/MM/YY"
+        label="Date of Marriage"
         value={formData.dom}
         onChange={(e) => onChangeHandler(e, "dom")}
       />
+      <InputField
+        placeholder="Blood"
+        label="Blood Group"
+        value={formData.blood}
+        onChange={(e) => onChangeHandler(e, "blood")}
+      />
+
+      {formData?.members?.map((item) => {
+        return (
+          <Card key={item.id} className="full-width-col member-card">
+            <InputField
+              placeholder="Name"
+              label="Name"
+              value={item.name}
+              onChange={(e) => onChangeHandler(e, "name", item.id)}
+            />
+            <InputField
+              placeholder="Relation"
+              label="Relation"
+              value={item.relation}
+              onChange={(e) => onChangeHandler(e, "relation", item.id)}
+            />
+            <InputField
+              type="date"
+              placeholder="DD/MM/YY"
+              label="Date of Birth"
+              value={item.dob}
+              onChange={(e) => onChangeHandler(e, "dob", item.id)}
+            />
+            <InputField
+              type="date"
+              placeholder="DD/MM/YY"
+              label="Date of Marriage"
+              value={item.dom}
+              onChange={(e) => onChangeHandler(e, "dom", item.id)}
+            />
+            <InputField
+              placeholder="Blood"
+              label="Blood"
+              value={item.blood}
+              onChange={(e) => onChangeHandler(e, "blood", item.id)}
+            />
+          </Card>
+        );
+      })}
+
       <div className="button-wrap">
+        <Button variant="secondary" onClick={addMoreHandler}>
+          Add More
+        </Button>
         <Button variant="secondary" onClick={() => setShowForm(false)}>
           Cancel
         </Button>

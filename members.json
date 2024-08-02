@@ -8,16 +8,11 @@
       "email": "john@example.com",
       "mother_parish": "Americans",
       "address": "123 Main St, Anytown, USA",
+      "dob": "1990-05-15",
+      "dom": "2024-08-29",
       "members": [
         {
-          "name": "John Smith",
-          "relation": "HoF",
-          "occupation": "Farmer",
-          "dob": "1970-01-01",
-          "dom": null,
-          "blood": "A+"
-        },
-        {
+          "id": "1a2b3c",
           "name": "Alice Smith",
           "relation": "Daughter",
           "occupation": "Teacher",
@@ -26,14 +21,18 @@
           "blood": "A+"
         },
         {
+          "id": "4d5e6f",
           "name": "Bob Smith",
           "relation": "Son",
           "occupation": "Engineer",
           "dob": "1995-10-20",
-          "dom": null,
+          "dom": "2024-08-29",
           "blood": "O+"
         }
-      ]
+      ],
+      "name": "Bob Smith",
+      "occupation": "Business",
+      "blood": "B+"
     },
     {
       "id": "2",
@@ -42,17 +41,13 @@
       "phone2": "9947768082",
       "email": "maria@example.com",
       "mother_parish": "Spanish",
+      "dob": "1990-05-15",
+      "occupation": "Farmer",
+      "dom": "1990-05-15",
       "address": "456 Oak St, Othertown, Spain",
       "members": [
         {
-          "name": "Maria Garcia",
-          "relation": "HoF",
-          "occupation": "Business",
-          "dob": "1975-03-15",
-          "dom": null,
-          "blood": "B+"
-        },
-        {
+          "id": "7g8h9i",
           "name": "Carlos Garcia",
           "relation": "Son",
           "occupation": "Doctor",
@@ -61,6 +56,7 @@
           "blood": "B+"
         },
         {
+          "id": "0j1k2l",
           "name": "Elena Garcia",
           "relation": "Daughter",
           "occupation": "Artist",
@@ -68,18 +64,21 @@
           "dom": null,
           "blood": "AB-"
         }
-      ]
+      ],
+      "blood": "AB+"
     },
     {
-      "id": "96b8",
-      "hof": "",
-      "phone1": "",
-      "phone2": "",
-      "email": "",
-      "mother_parish": "",
-      "address": "",
-      "dob": "",
-      "dom": "2024-08-07"
+      "id": "392d",
+      "hof": "Eswin",
+      "phone1": "9947768082",
+      "phone2": "9947768082",
+      "email": "eswin007@gmail.com",
+      "mother_parish": "Thengode",
+      "address": "Kizhakkedath House",
+      "dob": "1993-11-30",
+      "blood": "O+",
+      "occupation": "IT Professional",
+      "dom": "2025-04-28"
     }
   ]
 }

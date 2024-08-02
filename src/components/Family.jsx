@@ -8,12 +8,16 @@ const Family = ({
   parish,
   phone1,
   phone2,
+  dom,
+  dob,
+  occupation,
+  name,
+  blood,
   members,
   id,
   onDeleteFamily,
   onEditFamily,
 }) => {
-  console.log(phone1, "phone");
   return (
     <div className="family">
       <h2 className="family__name">{hof}</h2>
@@ -47,7 +51,14 @@ const Family = ({
           </tr>
         </tbody>
       </table>
-      <Members members={members} />
+      <Members
+        members={members}
+        dob={dob}
+        dom={dom}
+        occupation={occupation}
+        name={name}
+        blood={blood}
+      />
     </div>
   );
 };

@@ -15,6 +15,7 @@ export const FAMILY_INITIAL = {
   mother_parish: "",
   address: "",
   dob: "",
+  blood: "",
   // members: [{
   //     name: "",
   //     relation: "",
@@ -67,7 +68,6 @@ const App = () => {
     setShowForm(true);
     const editMember = members.filter((member) => member.id === id);
     setFormData(...editMember);
-    console.log(formData);
   };
 
   return (
@@ -99,6 +99,11 @@ const App = () => {
               phone1={member?.phone1}
               phone2={member?.phone2}
               members={member?.members}
+              dob={member?.dob}
+              dom={member?.dom}
+              name={member?.hof}
+              blood={member?.blood}
+              occupation={member?.occupation}
               onDeleteFamily={onDeleteFamily}
               onEditFamily={onEditFamily}
               membersList={formData?.members}
