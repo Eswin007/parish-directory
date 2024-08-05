@@ -25,15 +25,44 @@ const MemberForm = ({
       return { ...prev, [inputName]: e.target.value, members: updatedMembers };
     });
   };
-  // const onChangeHandler = (e, inputName, membersId) => {
-  //   setFormData((prev) => ({
-  //     ...prev,
-  //     [inputName]: e.target.value,
-  //   }));
-  // };
 
-  const addMoreHandler = (e) => {
+  const addMoreHandler = (e, familyID) => {
     e.preventDefault();
+    if (formData?.id === familyID) {
+      setFormData((prev) => ({
+        ...prev,
+        members: [
+          ...(prev?.members || []),
+          {
+            id: Date.now().toString(),
+            occupation: "",
+            dob: "",
+            dom: "",
+            blood: "",
+            relation: "",
+          },
+        ],
+      }));
+    }
+  };
+
+  const removeMemberHandler = (e, memberID, formId) => {
+    e.preventDefault();
+    // console.log(formData.members);
+    if (formData?.id === formId) {
+      // const indexValue = formData?.members?.findIndex(
+      //   (member) => member?.id === memberID
+      // );
+      // formData?.members?.splice(indexValue, 1);
+
+      const updatedData = formData?.members?.filter(
+        (member) => member.id !== memberID
+      );
+      setFormData((prev) => ({
+        ...prev,
+        members: [...updatedData],
+      }));
+    }
   };
 
   return (
@@ -42,7 +71,7 @@ const MemberForm = ({
       <InputField
         placeholder="Name"
         label="Name"
-        value={formData.hof}
+        value={formData.hof || ""}
         onChange={(e) => onChangeHandler(e, "hof")}
       />
       <InputField
@@ -78,7 +107,7 @@ const MemberForm = ({
       <InputField
         placeholder="Occupation"
         label="Occupation"
-        value={formData.dom}
+        value={formData.occupation}
         onChange={(e) => onChangeHandler(e, "occupation")}
       />
       <InputField
@@ -102,9 +131,9 @@ const MemberForm = ({
         onChange={(e) => onChangeHandler(e, "blood")}
       />
 
-      {formData?.members?.map((item) => {
+      {formData?.members?.map((item, index) => {
         return (
-          <Card key={item.id} className="full-width-col member-card">
+          <Card key={index} className="full-width-col member-card">
             <InputField
               placeholder="Name"
               label="Name"
@@ -137,12 +166,22 @@ const MemberForm = ({
               value={item.blood}
               onChange={(e) => onChangeHandler(e, "blood", item.id)}
             />
+            <Button
+              variant="secondary"
+              className="remove-member-btn"
+              onClick={(e) => removeMemberHandler(e, item.id, formData.id)}
+            >
+              Remove
+            </Button>
           </Card>
         );
       })}
 
       <div className="button-wrap">
-        <Button variant="secondary" onClick={addMoreHandler}>
+        <Button
+          variant="secondary"
+          onClick={(e) => addMoreHandler(e, formData.id)}
+        >
           Add More
         </Button>
         <Button variant="secondary" onClick={() => setShowForm(false)}>

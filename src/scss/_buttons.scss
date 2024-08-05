@@ -6,14 +6,19 @@
   font-size: 0.875rem;
   cursor: pointer;
   text-transform: uppercase;
+  --clr-base: #b13814;
 }
 
 .btn-primary {
-  background-color: #b13814;
+  background-color: var(--clr-base);
   color: white;
 }
 
 .btn-secondary {
-  color: #b13814;
-  border: 1px solid currentColor;
+  color: var(--clr-base);
+  border: 1px solid var(--clr-base);
+}
+
+.remove-member-btn {
+  align-self: flex-end;
 }

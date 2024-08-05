@@ -24,7 +24,7 @@ const Members = ({ members, dob, dom, occupation, name, blood }) => {
         </tr>
         {members?.map((member) => {
           return (
-            <tr>
+            <tr key={member.id}>
               <td>{member.name}</td>
               <td>{member.relation}</td>
               <td>{member.occupation}</td>
