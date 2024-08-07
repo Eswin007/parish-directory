@@ -15,6 +15,8 @@ const MemberForm = ({
     saveFamilyHandler(formData, formData.id);
   };
   const onChangeHandler = (e, inputName, membersId) => {
+    console.log(membersId, "membersID", inputName, "inputName");
+
     setFormData((prev) => {
       const updatedMembers = prev.members?.map((member) => {
         if (member.id === membersId) {
@@ -35,11 +37,12 @@ const MemberForm = ({
           ...(prev?.members || []),
           {
             id: Date.now().toString(),
+            name: "",
             occupation: "",
+            relation: "",
             dob: "",
             dom: "",
             blood: "",
-            relation: "",
           },
         ],
       }));
@@ -50,11 +53,6 @@ const MemberForm = ({
     e.preventDefault();
     // console.log(formData.members);
     if (formData?.id === formId) {
-      // const indexValue = formData?.members?.findIndex(
-      //   (member) => member?.id === memberID
-      // );
-      // formData?.members?.splice(indexValue, 1);
-
       const updatedData = formData?.members?.filter(
         (member) => member.id !== memberID
       );
@@ -137,7 +135,7 @@ const MemberForm = ({
             <InputField
               placeholder="Name"
               label="Name"
-              value={item.name}
+              value={item.name || ""}
               onChange={(e) => onChangeHandler(e, "name", item.id)}
             />
             <InputField
@@ -145,6 +143,12 @@ const MemberForm = ({
               label="Relation"
               value={item.relation}
               onChange={(e) => onChangeHandler(e, "relation", item.id)}
+            />
+            <InputField
+              placeholder="Occupation"
+              label="Occupation"
+              value={item.occupation}
+              onChange={(e) => onChangeHandler(e, "occupation", item.id)}
             />
             <InputField
               type="date"
