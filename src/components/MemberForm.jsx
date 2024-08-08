@@ -16,15 +16,18 @@ const MemberForm = ({
   };
   const onChangeHandler = (e, inputName, membersId) => {
     console.log(membersId, "membersID", inputName, "inputName");
-
     setFormData((prev) => {
-      const updatedMembers = prev.members?.map((member) => {
-        if (member.id === membersId) {
-          return { ...member, [inputName]: e.target.value };
-        }
-        return member;
-      });
-      return { ...prev, [inputName]: e.target.value, members: updatedMembers };
+      if (membersId) {
+        const updatedMembers = prev.members.map((member) => {
+          if (member.id === membersId) {
+            return { ...member, [inputName]: e.target.value };
+          }
+          return member;
+        });
+        return { ...prev, members: updatedMembers };
+      } else {
+        return { ...prev, [inputName]: e.target.value };
+      }
     });
   };
 

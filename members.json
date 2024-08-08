@@ -13,17 +13,17 @@
       "members": [
         {
           "id": "1723035159259",
-          "name": "sdf",
-          "occupation": "sdf",
-          "relation": "fsdf",
+          "name": "Jane",
+          "occupation": "Self Employed",
+          "relation": "W",
           "dob": "2024-01-01",
           "dom": "2024-01-01",
-          "blood": "sd"
+          "blood": "O+"
         }
       ],
       "name": "sdf",
-      "occupation": "sdf",
-      "blood": "sd",
+      "occupation": "Business",
+      "blood": "AB+",
       "relation": "fsdf"
     },
     {
@@ -41,7 +41,7 @@
         {
           "id": "7g8h9i",
           "name": "Carlos Garcia",
-          "relation": "Son",
+          "relation": "S",
           "occupation": "Doctor",
           "dob": "1988-03-10",
           "dom": "2015-07-25",
@@ -50,7 +50,7 @@
         {
           "id": "0j1k2l",
           "name": "Elena Garcia",
-          "relation": "Daughter",
+          "relation": "D",
           "occupation": "Artist",
           "dob": "1992-11-30",
           "dom": "",
@@ -61,25 +61,43 @@
     },
     {
       "id": "81fc",
-      "hof": "Dixon4",
+      "hof": "Dixon AJ",
       "phone1": "8129255249",
-      "phone2": "1233",
+      "phone2": "9947768082",
       "email": "dixonjacob123@gmail.com",
-      "mother_parish": "Thengode3",
-      "address": "Thengode",
+      "mother_parish": "Thengode",
+      "address": "Kizhakkedath House",
       "dob": "1962-05-31",
-      "blood": "C+",
-      "occupation": "33",
+      "blood": "O+",
+      "occupation": "Business",
       "dom": "1983-10-18",
       "members": [
         {
           "id": "1723034422360",
-          "name": "",
-          "occupation": "33",
-          "relation": "",
-          "dob": "",
-          "dom": "",
-          "blood": "C+"
+          "name": "Lissy Dixon",
+          "occupation": "Homemaker",
+          "relation": "W",
+          "dob": "2024-01-01",
+          "dom": "2024-01-01",
+          "blood": "O+"
+        },
+        {
+          "id": "1723093295288",
+          "name": "Edwin Dixon",
+          "occupation": "IT Professinal",
+          "relation": "S",
+          "dob": "2024-01-01",
+          "dom": "2024-01-01",
+          "blood": "O+"
+        },
+        {
+          "id": "1723093312879",
+          "name": "Eswin Dixon",
+          "occupation": "IT Professinal",
+          "relation": "S",
+          "dob": "2024-02-01",
+          "dom": "2024-01-01",
+          "blood": "O+"
         }
       ]
     }
