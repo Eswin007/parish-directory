@@ -28,5 +28,12 @@
       background-color: #ccc;
       cursor: pointer;
     }
+
+    &__clear {
+      align-self: center;
+      padding-inline: 0.5rem;
+      padding-block: 3px;
+      cursor: pointer;
+    }
   }
 }

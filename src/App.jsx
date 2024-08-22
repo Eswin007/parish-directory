@@ -5,6 +5,7 @@ import Card from "./components/Card";
 import { useEffect, useState } from "react";
 import "./scss/main.scss";
 import MemberForm from "./components/MemberForm";
+import Dropdown from "./components/Dropdown";
 
 export const FAMILY_INITIAL = {
   hof: "",
@@ -27,11 +28,13 @@ export const FAMILY_INITIAL = {
   // ],
 };
 
+export const BLOOD_GROUP = ["A+", "A-", "B-", "O+", "O-", "AB+", "AB-", "B+"];
+
 const App = () => {
   const [members, setMembers] = useState([]);
   const [showForm, setShowForm] = useState(false);
   const [formData, setFormData] = useState(FAMILY_INITIAL);
-
+  const bloodGroup = BLOOD_GROUP;
   const fetchMembers = async () => {
     const membersList = await axios.get("http://localhost:8000/family");
     setMembers(membersList.data);
@@ -76,6 +79,9 @@ const App = () => {
         setShowForm={setShowForm}
         showForm={showForm}
         setFormData={setFormData}
+        members={members}
+        setMembers={setMembers}
+        fetchMembers={fetchMembers}
       />
       <div className="wrapper">
         {showForm && (

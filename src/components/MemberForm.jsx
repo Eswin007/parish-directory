@@ -3,6 +3,8 @@ import InputField from "./InputField";
 import Button from "./Button";
 import axios from "axios";
 import Card from "./Card";
+import Dropdown from "./Dropdown";
+import { BLOOD_GROUP } from "../App";
 
 const MemberForm = ({
   saveFamilyHandler,
@@ -15,11 +17,12 @@ const MemberForm = ({
     saveFamilyHandler(formData, formData.id);
   };
   const onChangeHandler = (e, inputName, membersId) => {
-    console.log(membersId, "membersID", inputName, "inputName");
+    console.log(membersId, "membersID", inputName, "inputName", e);
     setFormData((prev) => {
       if (membersId) {
         const updatedMembers = prev.members.map((member) => {
           if (member.id === membersId) {
+            console.log(e, "new error");
             return { ...member, [inputName]: e.target.value };
           }
           return member;
@@ -125,11 +128,13 @@ const MemberForm = ({
         value={formData.dom}
         onChange={(e) => onChangeHandler(e, "dom")}
       />
-      <InputField
-        placeholder="Blood"
+
+      <Dropdown
         label="Blood Group"
+        placeholder="Select"
+        options={BLOOD_GROUP}
         value={formData.blood}
-        onChange={(e) => onChangeHandler(e, "blood")}
+        onChange={(value) => onChangeHandler({ target: { value } }, "blood")}
       />
 
       {formData?.members?.map((item, index) => {
@@ -167,11 +172,15 @@ const MemberForm = ({
               value={item.dom}
               onChange={(e) => onChangeHandler(e, "dom", item.id)}
             />
-            <InputField
-              placeholder="Blood"
-              label="Blood"
+
+            <Dropdown
+              label="Blood Group"
+              placeholder="Select"
+              options={BLOOD_GROUP}
               value={item.blood}
-              onChange={(e) => onChangeHandler(e, "blood", item.id)}
+              onChange={(value) =>
+                onChangeHandler({ target: { value } }, "blood", item.id)
+              }
             />
             <Button
               variant="secondary"

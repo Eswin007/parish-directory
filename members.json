@@ -60,46 +60,46 @@
       "blood": "AB+"
     },
     {
-      "id": "81fc",
+      "id": "d77d",
       "hof": "Dixon AJ",
-      "phone1": "8129255249",
-      "phone2": "9947768082",
-      "email": "dixonjacob123@gmail.com",
+      "phone1": "9947768082",
+      "phone2": "8129255249",
+      "email": "eswin007@gmail.com",
       "mother_parish": "Thengode",
-      "address": "Kizhakkedath House",
-      "dob": "1962-05-31",
-      "blood": "O+",
-      "occupation": "Business",
-      "dom": "1983-10-18",
+      "address": "Kakkanad",
+      "dob": "2024-01-01",
+      "blood": "A+",
       "members": [
         {
-          "id": "1723034422360",
+          "id": "1724237487404",
           "name": "Lissy Dixon",
           "occupation": "Homemaker",
-          "relation": "W",
+          "relation": "Wife",
           "dob": "2024-01-01",
           "dom": "2024-01-01",
           "blood": "O+"
         },
         {
-          "id": "1723093295288",
+          "id": "1724237513141",
           "name": "Edwin Dixon",
-          "occupation": "IT Professinal",
-          "relation": "S",
+          "occupation": "IT Professional",
+          "relation": "Son",
           "dob": "2024-01-01",
           "dom": "2024-01-01",
           "blood": "O+"
         },
         {
-          "id": "1723093312879",
+          "id": "1724237532228",
           "name": "Eswin Dixon",
-          "occupation": "IT Professinal",
-          "relation": "S",
-          "dob": "2024-02-01",
+          "occupation": "IT Professional",
+          "relation": "Son",
+          "dob": "2024-01-01",
           "dom": "2024-01-01",
           "blood": "O+"
         }
-      ]
+      ],
+      "occupation": "Private",
+      "dom": "2024-01-01"
     }
   ]
 }
