@@ -93,7 +93,7 @@ const App = () => {
             showForm={showForm}
           />
         )}
-        {!showForm &&
+        {!showForm && members?.length !== 0 ? (
           members?.map((member) => (
             <Family
               key={member.id}
@@ -114,7 +114,10 @@ const App = () => {
               onEditFamily={onEditFamily}
               membersList={formData?.members}
             />
-          ))}
+          ))
+        ) : (
+          <div>No data to show</div>
+        )}
       </div>
     </>
   );

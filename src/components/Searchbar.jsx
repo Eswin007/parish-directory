@@ -23,6 +23,8 @@ const Searchbar = ({
     );
     setMembers(filteredMembers);
     setSearchCount(filteredMembers.length);
+    console.log(searchCount);
+    fetchMembers();
   };
   const searchValueHandler = (e) => {
     setSearchValue(e.target.value);
@@ -35,9 +37,6 @@ const Searchbar = ({
         placeholder={placeholder}
         onChange={searchValueHandler}
       />
-      {searchCount && (
-        <div className="searchbar__clear">Showing {searchCount} item(s)</div>
-      )}
       {searchValue && (
         <div className="searchbar__clear" onClick={searchClearHandler}>
           Clear
