@@ -6,26 +6,28 @@ const Searchbar = ({
   members,
   setMembers,
   fetchMembers,
+  setFilteredMembers,
 }) => {
   const [searchValue, setSearchValue] = useState();
   const [searchCount, setSearchCount] = useState(0);
 
   const searchClearHandler = () => {
     setSearchValue("");
-    fetchMembers();
+    setFilteredMembers(members);
   };
 
   const memberFilterHandler = (filterRequest) => {
-    const membersToFilter = [...members];
-    console.log(membersToFilter);
-    const filteredMembers = membersToFilter.filter((person) =>
-      person.hof.toLowerCase().includes(filterRequest.toLowerCase())
+    const searchedMembers = members?.filter(
+      (member) =>
+        member?.hof.toLowerCase().includes(filterRequest.toLowerCase()) ||
+        member?.members.some((person) =>
+          person.name.toLowerCase().includes(filterRequest.toLowerCase())
+        )
     );
-    setMembers(filteredMembers);
-    setSearchCount(filteredMembers.length);
-    console.log(searchCount);
-    fetchMembers();
+    setSearchCount(searchedMembers.length);
+    setFilteredMembers(searchedMembers);
   };
+
   const searchValueHandler = (e) => {
     setSearchValue(e.target.value);
   };
@@ -37,6 +39,7 @@ const Searchbar = ({
         placeholder={placeholder}
         onChange={searchValueHandler}
       />
+      {searchCount !== 0 && <span>{searchCount}</span>}
       {searchValue && (
         <div className="searchbar__clear" onClick={searchClearHandler}>
           Clear

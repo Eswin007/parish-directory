@@ -34,10 +34,12 @@ const App = () => {
   const [members, setMembers] = useState([]);
   const [showForm, setShowForm] = useState(false);
   const [formData, setFormData] = useState(FAMILY_INITIAL);
+  const [filteredMembers, setFilteredMembers] = useState([]);
   const bloodGroup = BLOOD_GROUP;
   const fetchMembers = async () => {
     const membersList = await axios.get("http://localhost:8000/family");
     setMembers(membersList.data);
+    setFilteredMembers(membersList.data);
   };
 
   useEffect(() => {
@@ -82,6 +84,7 @@ const App = () => {
         members={members}
         setMembers={setMembers}
         fetchMembers={fetchMembers}
+        setFilteredMembers={setFilteredMembers}
       />
       <div className="wrapper">
         {showForm && (
@@ -93,8 +96,8 @@ const App = () => {
             showForm={showForm}
           />
         )}
-        {!showForm && members?.length !== 0 ? (
-          members?.map((member) => (
+        {!showForm && filteredMembers?.length !== 0 ? (
+          filteredMembers?.map((member) => (
             <Family
               key={member.id}
               id={member.id}

@@ -9,6 +9,7 @@ const Header = ({
   members,
   setMembers,
   fetchMembers,
+  setFilteredMembers,
 }) => {
   const addNewMember = () => {
     setShowForm(true);
@@ -25,6 +26,7 @@ const Header = ({
           members={members}
           setMembers={setMembers}
           fetchMembers={fetchMembers}
+          setFilteredMembers={setFilteredMembers}
         />
       )}
       {!showForm && <Button onClick={addNewMember}>Add Family</Button>}
