@@ -2,6 +2,15 @@
   display: flex;
   flex-direction: column;
   gap: 3px;
+  position: relative;
+
+  &.invalid {
+    color: rgb(226, 0, 0);
+
+    input {
+      border-color: rgb(226, 0, 0);
+    }
+  }
 
   label {
     font-size: 0.875rem;
@@ -24,6 +33,16 @@
   flex-direction: column;
   gap: 3px;
   font-size: 0.875rem;
+  position: relative;
+
+  &.invalid {
+    label {
+      color: rgb(226, 0, 0);
+    }
+    .dd {
+      border-color: rgb(226, 0, 0);
+    }
+  }
 }
 .dd {
   all: unset;
@@ -54,6 +73,7 @@
     border-top: 0;
     border-radius: 0 0 0.25rem 0.25rem;
     background-color: white;
+    z-index: 100;
   }
 
   &__menu {
@@ -78,4 +98,13 @@
     padding: 0.5rem;
     color: #838383;
   }
+}
+
+.input-error {
+  color: rgb(226, 0, 0);
+  font-size: 13px;
+  position: absolute;
+  left: 0.5rem;
+  bottom: 0;
+  transform: translateY(105%);
 }

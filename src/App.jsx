@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import "./scss/main.scss";
 import MemberForm from "./components/MemberForm";
 import Dropdown from "./components/Dropdown";
+import { object, string, date, array } from "yup";
 
 export const FAMILY_INITIAL = {
   hof: "",
@@ -35,6 +36,7 @@ const App = () => {
   const [showForm, setShowForm] = useState(false);
   const [formData, setFormData] = useState(FAMILY_INITIAL);
   const [filteredMembers, setFilteredMembers] = useState([]);
+  const [errors, setErrors] = useState();
   const bloodGroup = BLOOD_GROUP;
   const fetchMembers = async () => {
     const membersList = await axios.get("http://localhost:8000/family");
@@ -46,18 +48,63 @@ const App = () => {
     fetchMembers();
   }, []);
 
+  const validationSchema = object().shape({
+    hof: string().required("Name is required"),
+    phone1: string()
+      .required("Phone 1 is required")
+      .matches(/^[0-9]+$/, "Must be only digits")
+      .min(10, "Must be exactly 10 digits")
+      .max(10, "Must be exactly 10 digits"),
+    phone2: string()
+      .nullable()
+      .matches(/^[0-9]*$/, "Must be only digits"),
+    email: string()
+      .email("Invalid email format")
+      .required("Please Enter email"),
+    mother_parish: string(),
+    address: string().required("Address is required"),
+    occupation: string(),
+    dob: date()
+      .transform((value, originalValue) =>
+        originalValue === "" ? null : value
+      )
+      .required("Date of Birth is required"),
+    dom: date().nullable(),
+    blood: string().required("Please select a blood group"),
+    members: array().of(
+      object().shape({
+        name: string().required("Member Name is required"),
+        relation: string().required("Relation is required"),
+        occupation: string().required("Occupation is required"),
+        dob: date().required("Date of birth is required"),
+        dom: date().nullable(),
+        blood: string().required("Please select the blood group"),
+      })
+    ),
+  });
+
   const saveFamilyHandler = async (formvalues, memberID) => {
     console.log(formvalues);
-    if (memberID) {
-      await axios.put(`http://localhost:8000/family/${memberID}`, formvalues);
-      await fetchMembers();
-      setShowForm(false);
-    } else {
-      setFormData(FAMILY_INITIAL);
-      console.log(formvalues, "form-values");
-      await axios.post("http://localhost:8000/family", formvalues);
-      await fetchMembers();
-      setShowForm(false);
+    try {
+      await validationSchema.validate(formvalues, { abortEarly: false });
+      if (memberID) {
+        await axios.put(`http://localhost:8000/family/${memberID}`, formvalues);
+        await fetchMembers();
+        setShowForm(false);
+      } else {
+        setFormData(FAMILY_INITIAL);
+        console.log(formvalues, "form-values");
+        await axios.post("http://localhost:8000/family", formvalues);
+        await fetchMembers();
+        setShowForm(false);
+      }
+    } catch (validationErrors) {
+      const formattedErrors = {};
+      validationErrors.inner.forEach((error) => {
+        formattedErrors[error.path] = error.message;
+      });
+      console.log(formattedErrors, "error handling");
+      setErrors(formattedErrors);
     }
   };
 
@@ -94,6 +141,8 @@ const App = () => {
             setFormData={setFormData}
             saveFamilyHandler={saveFamilyHandler}
             showForm={showForm}
+            errors={errors}
+            setErrors={setErrors}
           />
         )}
         {!showForm && filteredMembers?.length !== 0 ? (

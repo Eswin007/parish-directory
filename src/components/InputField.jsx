@@ -1,8 +1,16 @@
 import React from "react";
 
-const InputField = ({ label, placeholder, type, name, value, onChange }) => {
+const InputField = ({
+  label,
+  placeholder,
+  type,
+  name,
+  value,
+  onChange,
+  errors,
+}) => {
   return (
-    <div className="input-group">
+    <div className={`input-group ${errors ? "invalid" : ""}`}>
       <label>{label}</label>
       <input
         placeholder={placeholder}
@@ -11,6 +19,7 @@ const InputField = ({ label, placeholder, type, name, value, onChange }) => {
         value={value}
         onChange={onChange}
       />
+      {errors && <div className="input-error">{errors}</div>}
     </div>
   );
 };
