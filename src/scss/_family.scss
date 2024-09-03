@@ -1,5 +1,6 @@
 .family {
   position: relative;
+  color: #333;
   & + & {
     margin-top: 3rem;
   }

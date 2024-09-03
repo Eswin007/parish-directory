@@ -14,15 +14,14 @@ const Searchbar = ({
   const searchClearHandler = () => {
     setSearchValue("");
     setFilteredMembers(members);
+    setSearchCount(null);
   };
 
   const memberFilterHandler = (filterRequest) => {
-    const searchedMembers = members?.filter(
-      (member) =>
-        member?.hof.toLowerCase().includes(filterRequest.toLowerCase()) ||
-        member?.members.some((person) =>
-          person.name.toLowerCase().includes(filterRequest.toLowerCase())
-        )
+    const searchedMembers = members?.filter((member) =>
+      member?.members.some((person) =>
+        person.name.toLowerCase().includes(filterRequest.toLowerCase())
+      )
     );
     setSearchCount(searchedMembers.length);
     setFilteredMembers(searchedMembers);
@@ -31,6 +30,7 @@ const Searchbar = ({
   const searchValueHandler = (e) => {
     setSearchValue(e.target.value);
   };
+
   return (
     <div className={`searchbar ${className}`}>
       <input
@@ -39,7 +39,13 @@ const Searchbar = ({
         placeholder={placeholder}
         onChange={searchValueHandler}
       />
-      {searchCount !== 0 && <span>{searchCount}</span>}
+      {searchCount > 0 && (
+        <div className="filter-count">
+          <span>{searchCount}</span>{" "}
+          <span>{searchCount > 1 ? "families" : "family"}</span>
+        </div>
+      )}
+
       {searchValue && (
         <div className="searchbar__clear" onClick={searchClearHandler}>
           Clear
