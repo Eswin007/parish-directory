@@ -10,7 +10,7 @@ const MemberForm = ({
   saveFamilyHandler,
   formData,
   setFormData,
-  setShowForm,
+  formRevealHandler,
   errors,
   setErrors,
 }) => {
@@ -18,23 +18,20 @@ const MemberForm = ({
     e.preventDefault();
     saveFamilyHandler(formData, formData.id);
   };
-  const onChangeHandler = (e, inputName, membersId) => {
+  const onChangeHandler = (e, inputName, membersId, index) => {
     setFormData((prev) => {
       if (membersId) {
         const updatedMembers = prev.members.map((member) => {
           if (member.id === membersId) {
-            setErrors((prev) => ({
-              ...prev,
-              [inputName]: undefined,
-            }));
             return { ...member, [inputName]: e.target.value };
           }
-          setErrors((prev) => ({
-            ...prev,
-            [inputName]: undefined,
-          }));
+
           return member;
         });
+        setErrors((prev) => ({
+          ...prev,
+          [`members[${index}].${inputName}`]: undefined,
+        }));
         return { ...prev, members: updatedMembers };
       } else {
         setErrors((prev) => ({
@@ -166,19 +163,22 @@ const MemberForm = ({
               placeholder="Name"
               label="Name"
               value={item.name || ""}
-              onChange={(e) => onChangeHandler(e, "name", item.id)}
+              onChange={(e) => onChangeHandler(e, "name", item.id, index)}
+              errors={errors?.[`members[${index}].name`]}
             />
             <InputField
               placeholder="Relation"
               label="Relation"
               value={item.relation}
-              onChange={(e) => onChangeHandler(e, "relation", item.id)}
+              onChange={(e) => onChangeHandler(e, "relation", item.id, index)}
+              errors={errors?.[`members[${index}].relation`]}
             />
             <InputField
               placeholder="Occupation"
               label="Occupation"
               value={item.occupation}
               onChange={(e) => onChangeHandler(e, "occupation", item.id)}
+              errors={errors?.[`members[${index}].occupation`]}
             />
             <InputField
               type="date"
@@ -186,6 +186,7 @@ const MemberForm = ({
               label="Date of Birth"
               value={item.dob}
               onChange={(e) => onChangeHandler(e, "dob", item.id)}
+              errors={errors?.[`members[${index}].dob`]}
             />
             <InputField
               type="date"
@@ -193,6 +194,7 @@ const MemberForm = ({
               label="Date of Marriage"
               value={item.dom}
               onChange={(e) => onChangeHandler(e, "dom", item.id)}
+              errors={errors?.[`members[${index}].dom`]}
             />
 
             <Dropdown
@@ -203,6 +205,7 @@ const MemberForm = ({
               onChange={(value) =>
                 onChangeHandler({ target: { value } }, "blood", item.id)
               }
+              errors={errors?.[`members[${index}].blood`]}
             />
             <Button
               variant="secondary"
@@ -222,7 +225,7 @@ const MemberForm = ({
         >
           Add More
         </Button>
-        <Button variant="secondary" onClick={() => setShowForm(false)}>
+        <Button variant="secondary" onClick={() => formRevealHandler(false)}>
           Cancel
         </Button>
         <Button>Save</Button>

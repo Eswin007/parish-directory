@@ -73,5 +73,6 @@
 .member-card {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 1rem;
+  gap: 2rem;
+  grid-column-gap: 1.5rem;
 }

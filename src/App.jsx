@@ -44,6 +44,11 @@ const App = () => {
     setFilteredMembers(membersList.data);
   };
 
+  const formRevealHandler = (value) => {
+    setShowForm(value);
+    setErrors({});
+  };
+
   useEffect(() => {
     fetchMembers();
   }, []);
@@ -69,15 +74,27 @@ const App = () => {
         originalValue === "" ? null : value
       )
       .required("Date of Birth is required"),
-    dom: date().nullable(),
+    dom: date()
+      .nullable()
+      .transform((value, originalValue) =>
+        originalValue === "" ? null : value
+      ),
     blood: string().required("Please select a blood group"),
     members: array().of(
       object().shape({
         name: string().required("Member Name is required"),
         relation: string().required("Relation is required"),
         occupation: string().required("Occupation is required"),
-        dob: date().required("Date of birth is required"),
-        dom: date().nullable(),
+        dob: date()
+          .required("Date of birth is required")
+          .transform((value, originalValue) =>
+            originalValue === "" ? null : value
+          ),
+        dom: date()
+          .nullable()
+          .transform((value, originalValue) =>
+            originalValue === "" ? null : value
+          ),
         blood: string().required("Please select the blood group"),
       })
     ),
@@ -90,13 +107,15 @@ const App = () => {
       if (memberID) {
         await axios.put(`http://localhost:8000/family/${memberID}`, formvalues);
         await fetchMembers();
-        setShowForm(false);
+        // setShowForm(false);
+        formRevealHandler(false);
       } else {
         setFormData(FAMILY_INITIAL);
         console.log(formvalues, "form-values");
         await axios.post("http://localhost:8000/family", formvalues);
         await fetchMembers();
-        setShowForm(false);
+        // setShowForm(false);
+        formRevealHandler(false);
       }
     } catch (validationErrors) {
       const formattedErrors = {};
@@ -105,6 +124,7 @@ const App = () => {
       });
       console.log(formattedErrors, "error handling");
       setErrors(formattedErrors);
+      console.log(errors, "new errors");
     }
   };
 
@@ -116,7 +136,8 @@ const App = () => {
   };
 
   const onEditFamily = (id) => {
-    setShowForm(true);
+    // setShowForm(true);
+    formRevealHandler(true);
     const editMember = members.filter((member) => member.id === id);
     console.log(editMember);
     setFormData(...editMember);
@@ -125,7 +146,8 @@ const App = () => {
   return (
     <>
       <Header
-        setShowForm={setShowForm}
+        // setShowForm={setShowForm}
+        formRevealHandler={formRevealHandler}
         showForm={showForm}
         setFormData={setFormData}
         members={members}
@@ -136,16 +158,17 @@ const App = () => {
       <div className="wrapper">
         {showForm && (
           <MemberForm
-            setShowForm={setShowForm}
+            // setShowForm={setShowForm}
             formData={formData}
             setFormData={setFormData}
             saveFamilyHandler={saveFamilyHandler}
-            showForm={showForm}
+            formRevealHandler={formRevealHandler}
             errors={errors}
             setErrors={setErrors}
           />
         )}
-        {!showForm && filteredMembers?.length !== 0 ? (
+        {!showForm &&
+          filteredMembers?.length > 0 &&
           filteredMembers?.map((member) => (
             <Family
               key={member.id}
@@ -166,9 +189,9 @@ const App = () => {
               onEditFamily={onEditFamily}
               membersList={formData?.members}
             />
-          ))
-        ) : (
-          <div>No data to show</div>
+          ))}
+        {!showForm && filteredMembers.length === 0 && (
+          <span>No data to show</span>
         )}
       </div>
     </>

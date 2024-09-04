@@ -4,6 +4,7 @@ import Button from "./Button";
 import { FAMILY_INITIAL } from "../App";
 const Header = ({
   setShowForm,
+  formRevealHandler,
   showForm,
   setFormData,
   members,
@@ -12,7 +13,8 @@ const Header = ({
   setFilteredMembers,
 }) => {
   const addNewMember = () => {
-    setShowForm(true);
+    // setShowForm(true);
+    formRevealHandler(true);
     setFormData(FAMILY_INITIAL);
   };
 
