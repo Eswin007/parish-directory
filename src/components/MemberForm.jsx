@@ -5,64 +5,86 @@ import axios from "axios";
 import Card from "./Card";
 import Dropdown from "./Dropdown";
 import { BLOOD_GROUP } from "../App";
+import Family from "./Family";
 
 const MemberForm = ({
   saveFamilyHandler,
   formData,
   setFormData,
   formRevealHandler,
+  setRelativesData,
+  relativesData,
   errors,
   setErrors,
 }) => {
   const onSubmitHanlder = (e) => {
     e.preventDefault();
-    saveFamilyHandler(formData, formData.id);
+    saveFamilyHandler(formData);
   };
-  const onChangeHandler = (e, inputName, membersId, index) => {
-    setFormData((prev) => {
-      if (membersId) {
-        const updatedMembers = prev.members.map((member) => {
-          if (member.id === membersId) {
-            return { ...member, [inputName]: e.target.value };
-          }
-
-          return member;
-        });
-        setErrors((prev) => ({
-          ...prev,
-          [`members[${index}].${inputName}`]: undefined,
-        }));
-        return { ...prev, members: updatedMembers };
-      } else {
-        setErrors((prev) => ({
-          ...prev,
-          [inputName]: undefined,
-        }));
-        return { ...prev, [inputName]: e.target.value };
-      }
-    });
+  const onChangeHandler = (e, inputName) => {
+    setFormData((prev) => ({
+      ...prev,
+      [inputName]: e.target.value,
+    }));
+    // setFormData((prev) => {
+    //   if (membersId) {
+    //     const updatedMembers = prev.members.map((member) => {
+    //       if (member.id === membersId) {
+    //         return { ...member, [inputName]: e.target.value };
+    //       }
+    //       return member;
+    //     });
+    // setErrors((prev) => ({
+    //   ...prev,
+    //   [`members[${index}].${inputName}`]: undefined,
+    // }));
+    // return { ...prev, members: updatedMembers };
+    // } else {
+    //   // setErrors((prev) => ({
+    //   //   ...prev,
+    //   //   [inputName]: undefined,
+    //   // }));
+    //   return { ...prev, [inputName]: e.target.value };
+    // }
+    // });
   };
 
   const addMoreHandler = (e, familyID) => {
     e.preventDefault();
-    if (formData?.id === familyID) {
-      setFormData((prev) => ({
-        ...prev,
-        members: [
-          ...(prev?.members || []),
-          {
-            id: Date.now().toString(),
-            name: "",
-            occupation: "",
-            relation: "",
-            dob: "",
-            dom: "",
-            blood: "",
-          },
-        ],
-      }));
-    }
+    setRelativesData((prev) => [
+      ...prev,
+      {
+        family_id: familyID,
+        name: "",
+        occupation: "",
+        relation: "",
+        dob: "",
+        dom: "",
+        blood: "",
+      },
+    ]);
   };
+
+  // const addMoreHandler = (e, familyID) => {
+  //   e.preventDefault();
+  //   if (formData?.id === familyID) {
+  //     setFormData((prev) => ({
+  //       ...prev,
+  //       members: [
+  //         ...(prev?.members || []),
+  //         {
+  //           id: Date.now().toString(),
+  //           name: "",
+  //           occupation: "",
+  //           relation: "",
+  //           dob: "",
+  //           dom: "",
+  //           blood: "",
+  //         },
+  //       ],
+  //     }));
+  //   }
+  // };
 
   const removeMemberHandler = (e, memberID, formId) => {
     e.preventDefault();
@@ -71,10 +93,10 @@ const MemberForm = ({
       const updatedData = formData?.members?.filter(
         (member) => member.id !== memberID
       );
-      setFormData((prev) => ({
-        ...prev,
-        members: [...updatedData],
-      }));
+      // setFormData((prev) => ({
+      //   ...prev,
+      //   members: [...updatedData],
+      // }));
     }
   };
 
@@ -156,7 +178,7 @@ const MemberForm = ({
         errors={errors?.blood}
       />
 
-      {formData?.members?.map((item, index) => {
+      {relativesData?.map((item, index) => {
         return (
           <Card key={index} className="full-width-col member-card">
             <InputField

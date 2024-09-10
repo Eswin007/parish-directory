@@ -7,6 +7,22 @@ import "./scss/main.scss";
 import MemberForm from "./components/MemberForm";
 import Dropdown from "./components/Dropdown";
 import { object, string, date, array } from "yup";
+import config from "./config";
+import { initializeApp } from "firebase/app";
+import { getFirestore } from "firebase/firestore";
+
+const apiKey =
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZmZndicnZpeGJtbGFibW96a3RwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MjU3MjkxMzgsImV4cCI6MjA0MTMwNTEzOH0.yU8fXAZa_x84GwdVhPVDdLhOWbAa6r2PoHxhnV5ebn0";
+const headerConfig = {
+  headers: {
+    apikey: apiKey,
+    Authorization: `Bearer ${apiKey}`,
+    Accept: "application/json",
+    "Content-Type": "application/json",
+  },
+};
+
+const supabaseURL = `https://vffwbrvixbmlabmozktp.supabase.co`;
 
 export const FAMILY_INITIAL = {
   hof: "",
@@ -17,16 +33,8 @@ export const FAMILY_INITIAL = {
   address: "",
   dob: "",
   blood: "",
-  members: [],
-  // members: [{
-  //     name: "",
-  //     relation: "",
-  //     occupation: "",
-  //     dob: "",
-  //     dom: "",
-  //     blood: "",
-  //   },
-  // ],
+  occupation: "",
+  relation: "",
 };
 
 export const BLOOD_GROUP = ["A+", "A-", "B-", "O+", "O-", "AB+", "AB-", "B+"];
@@ -35,13 +43,34 @@ const App = () => {
   const [members, setMembers] = useState([]);
   const [showForm, setShowForm] = useState(false);
   const [formData, setFormData] = useState(FAMILY_INITIAL);
+  const [relativesData, setRelativesData] = useState([]);
   const [filteredMembers, setFilteredMembers] = useState([]);
+  const [memberList, setMemberList] = useState([]);
   const [errors, setErrors] = useState();
   const bloodGroup = BLOOD_GROUP;
+
   const fetchMembers = async () => {
-    const membersList = await axios.get("http://localhost:8000/family");
-    setMembers(membersList.data);
-    setFilteredMembers(membersList.data);
+    const familyURL = `${supabaseURL}/rest/v1/family`;
+    const membersURL = `${supabaseURL}/rest/v1/familyMembers`;
+
+    const familyList = await axios.get(familyURL, {
+      headers: {
+        apikey: apiKey,
+        Authorization: `Bearer ${apiKey}`,
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+    });
+    const membersList = await axios.get(membersURL, {
+      headers: {
+        apikey: apiKey,
+        Authorization: `Bearer ${apiKey}`,
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+    });
+    setFilteredMembers(familyList.data);
+    setMemberList(membersList.data);
   };
 
   const formRevealHandler = (value) => {
@@ -100,49 +129,93 @@ const App = () => {
     ),
   });
 
-  const saveFamilyHandler = async (formvalues, memberID) => {
+  const saveFamilyHandler = async (formvalues, id) => {
     console.log(formvalues);
-    try {
-      await validationSchema.validate(formvalues, { abortEarly: false });
-      if (memberID) {
-        await axios.put(`http://localhost:8000/family/${memberID}`, formvalues);
-        await fetchMembers();
-        // setShowForm(false);
-        formRevealHandler(false);
-      } else {
-        setFormData(FAMILY_INITIAL);
-        console.log(formvalues, "form-values");
-        await axios.post("http://localhost:8000/family", formvalues);
-        await fetchMembers();
-        // setShowForm(false);
-        formRevealHandler(false);
-      }
-    } catch (validationErrors) {
-      const formattedErrors = {};
-      validationErrors.inner.forEach((error) => {
-        formattedErrors[error.path] = error.message;
-      });
-      console.log(formattedErrors, "error handling");
-      setErrors(formattedErrors);
-      console.log(errors, "new errors");
+    const familyURL = `${supabaseURL}/rest/v1/family`;
+    const membersURL = `${supabaseURL}/rest/v1/familyMembers`;
+    // try {
+    // await validationSchema.validate(formvalues, { abortEarly: false });
+    if (id) {
+      await axios.put(
+        `${familyURL}?family_id=eq.${id}`,
+        { ...formvalues },
+        headerConfig
+      );
+      console.log(formvalues, "formValues");
+    } else {
+      await axios.put(familyURL, { ...formvalues }, headerConfig);
+      console.log(formvalues, "formValues");
     }
+
+    // if (memberID) {
+    //   await axios.put(
+    //     `https://vffwbrvixbmlabmozktp.supabase.co/rest/v1/family/${memberID}`,
+    //     formvalues
+    //   );
+    //   await fetchMembers();
+    //   // setShowForm(false);
+    //   formRevealHandler(false);
+    // } else {
+    //   console.log(formvalues, "form-values");
+    //   debugger;
+    //   await axios.post(
+    //     familyURL,
+
+    //     ...formvalues,
+
+    //     {
+    //       headers: {
+    //         apikey: apiKey,
+    //         Authorization: `Bearer ${apiKey}`,
+    //         Accept: "application/json",
+    //         "Content-Type": "application/json",
+    //       },
+    //     }
+    //   );
+
+    //   // await axios.post(
+    //   //   `https://api.jsonbin.io/v3/b/66db631fad19ca34f8a10701`,
+    //   //   { id: new Date(), ...formvalues }
+    //   // );
+    await fetchMembers();
+    //   // setShowForm(false);
+    formRevealHandler(false);
+    setFormData(FAMILY_INITIAL);
+    // }
+    // } catch (validationErrors) {
+    //   console.log(validationErrors);
+    //   const formattedErrors = {};
+    //   validationErrors.inner.forEach((error) => {
+    //     formattedErrors[error.path] = error.message;
+    //   });
+    //   console.log(formattedErrors, "error handling");
+    //   setErrors(formattedErrors);
+    //   console.log(errors, "new errors");
+    // }
   };
 
+  // const onDeleteFamily = (id) => {
+  //   axios.delete(`http://localhost:8000/family/${id}`)
+  //     .then((res) => fetchMembers())
+  //     .catch((err) => console.log(err, "err"));
+  // };
   const onDeleteFamily = (id) => {
+    const familyURL = `${supabaseURL}/rest/v1/family`;
+    // const membersURL = `${supabaseURL}/rest/v1/familyMembers`;
     axios
-      .delete(`http://localhost:8000/family/${id}`)
-      .then((res) => fetchMembers())
-      .catch((err) => console.log(err, "err"));
+      .delete(`${familyURL}?family_id=eq.${id}`, headerConfig)
+      .then((res) => fetchMembers());
   };
 
   const onEditFamily = (id) => {
     // setShowForm(true);
     formRevealHandler(true);
+
     const editMember = members.filter((member) => member.id === id);
     console.log(editMember);
     setFormData(...editMember);
   };
-
+  console.log(relativesData, "relatives");
   return (
     <>
       <Header
@@ -165,14 +238,16 @@ const App = () => {
             formRevealHandler={formRevealHandler}
             errors={errors}
             setErrors={setErrors}
+            setRelativesData={setRelativesData}
+            relativesData={relativesData}
           />
         )}
         {!showForm &&
           filteredMembers?.length > 0 &&
           filteredMembers?.map((member) => (
             <Family
-              key={member.id}
-              id={member.id}
+              key={member.family_id}
+              id={member.family_id}
               hof={member?.hof}
               email={member?.email}
               parish={member?.mother_parish}
@@ -187,7 +262,8 @@ const App = () => {
               occupation={member?.occupation}
               onDeleteFamily={onDeleteFamily}
               onEditFamily={onEditFamily}
-              membersList={formData?.members}
+              // membersList={formData?.members}
+              memberList={memberList}
             />
           ))}
         {!showForm && filteredMembers.length === 0 && (
