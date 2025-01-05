@@ -200,11 +200,15 @@ const App = () => {
   //     .catch((err) => console.log(err, "err"));
   // };
   const onDeleteFamily = (id) => {
+    alert(id, "id");
     const familyURL = `${supabaseURL}/rest/v1/family`;
     // const membersURL = `${supabaseURL}/rest/v1/familyMembers`;
     axios
       .delete(`${familyURL}?family_id=eq.${id}`, headerConfig)
-      .then((res) => fetchMembers());
+      .then((res) => fetchMembers())
+      .catch((err) => {
+        console.log("error", err);
+      });
   };
 
   const onEditFamily = (id) => {
