@@ -106,49 +106,49 @@ const MemberForm = ({
       <InputField
         placeholder="Name"
         label="Name"
-        value={formData.hof || ""}
+        value={formData?.hof || ""}
         onChange={(e) => onChangeHandler(e, "hof")}
         errors={errors?.hof}
       />
       <InputField
         placeholder="Phone 1"
         label="Phone 1"
-        value={formData.phone1}
+        value={formData?.phone1}
         onChange={(e) => onChangeHandler(e, "phone1")}
         errors={errors?.phone1}
       />
       <InputField
         placeholder="Phone 2"
         label="Phone 2"
-        value={formData.phone2}
+        value={formData?.phone2}
         onChange={(e) => onChangeHandler(e, "phone2")}
         errors={errors?.phone2}
       />
       <InputField
         placeholder="Email"
         label="Email"
-        value={formData.email}
+        value={formData?.email}
         onChange={(e) => onChangeHandler(e, "email")}
         errors={errors?.email}
       />
       <InputField
         placeholder="Mother Parish"
         label="Mother Parish"
-        value={formData.mother_parish}
+        value={formData?.mother_parish}
         onChange={(e) => onChangeHandler(e, "mother_parish")}
         errors={errors?.mother_parish}
       />
       <InputField
         placeholder="Address"
         label="Address"
-        value={formData.address}
+        value={formData?.address}
         onChange={(e) => onChangeHandler(e, "address")}
         errors={errors?.address}
       />
       <InputField
         placeholder="Occupation"
         label="Occupation"
-        value={formData.occupation}
+        value={formData?.occupation}
         onChange={(e) => onChangeHandler(e, "occupation")}
         errors={errors?.occupation}
       />
@@ -156,7 +156,7 @@ const MemberForm = ({
         type="date"
         placeholder="DD/MM/YY"
         label="Date of Birth"
-        value={formData.dob}
+        value={formData?.dob}
         onChange={(e) => onChangeHandler(e, "dob")}
         errors={errors?.dob}
       />
@@ -164,7 +164,7 @@ const MemberForm = ({
         type="date"
         placeholder="DD/MM/YY"
         label="Date of Marriage"
-        value={formData.dom}
+        value={formData?.dom}
         onChange={(e) => onChangeHandler(e, "dom")}
         errors={errors?.dom}
       />
@@ -173,7 +173,7 @@ const MemberForm = ({
         label="Blood Group"
         placeholder="Select"
         options={BLOOD_GROUP}
-        value={formData.blood}
+        value={formData?.blood}
         onChange={(value) => onChangeHandler({ target: { value } }, "blood")}
         errors={errors?.blood}
       />

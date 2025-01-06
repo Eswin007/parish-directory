@@ -70,9 +70,8 @@ const App = () => {
       },
     });
     setFilteredMembers(familyList.data);
-    setMemberList(membersList.data);
+    setRelativesData(membersList.data);
   };
-
   const formRevealHandler = (value) => {
     setShowForm(value);
     setErrors({});
@@ -81,7 +80,6 @@ const App = () => {
   useEffect(() => {
     fetchMembers();
   }, []);
-
   const validationSchema = object().shape({
     hof: string().required("Name is required"),
     phone1: string()
@@ -133,72 +131,21 @@ const App = () => {
     console.log(formvalues);
     const familyURL = `${supabaseURL}/rest/v1/family`;
     const membersURL = `${supabaseURL}/rest/v1/familyMembers`;
-    // try {
-    // await validationSchema.validate(formvalues, { abortEarly: false });
     if (id) {
       await axios.put(
         `${familyURL}?family_id=eq.${id}`,
         { ...formvalues },
         headerConfig
       );
-      console.log(formvalues, "formValues");
     } else {
-      await axios.put(familyURL, { ...formvalues }, headerConfig);
-      console.log(formvalues, "formValues");
+      await axios.post(familyURL, { ...formvalues }, headerConfig);
     }
 
-    // if (memberID) {
-    //   await axios.put(
-    //     `https://vffwbrvixbmlabmozktp.supabase.co/rest/v1/family/${memberID}`,
-    //     formvalues
-    //   );
-    //   await fetchMembers();
-    //   // setShowForm(false);
-    //   formRevealHandler(false);
-    // } else {
-    //   console.log(formvalues, "form-values");
-    //   debugger;
-    //   await axios.post(
-    //     familyURL,
-
-    //     ...formvalues,
-
-    //     {
-    //       headers: {
-    //         apikey: apiKey,
-    //         Authorization: `Bearer ${apiKey}`,
-    //         Accept: "application/json",
-    //         "Content-Type": "application/json",
-    //       },
-    //     }
-    //   );
-
-    //   // await axios.post(
-    //   //   `https://api.jsonbin.io/v3/b/66db631fad19ca34f8a10701`,
-    //   //   { id: new Date(), ...formvalues }
-    //   // );
     await fetchMembers();
-    //   // setShowForm(false);
     formRevealHandler(false);
     setFormData(FAMILY_INITIAL);
-    // }
-    // } catch (validationErrors) {
-    //   console.log(validationErrors);
-    //   const formattedErrors = {};
-    //   validationErrors.inner.forEach((error) => {
-    //     formattedErrors[error.path] = error.message;
-    //   });
-    //   console.log(formattedErrors, "error handling");
-    //   setErrors(formattedErrors);
-    //   console.log(errors, "new errors");
-    // }
   };
 
-  // const onDeleteFamily = (id) => {
-  //   axios.delete(`http://localhost:8000/family/${id}`)
-  //     .then((res) => fetchMembers())
-  //     .catch((err) => console.log(err, "err"));
-  // };
   const onDeleteFamily = (id) => {
     alert(id, "id");
     const familyURL = `${supabaseURL}/rest/v1/family`;
@@ -214,12 +161,11 @@ const App = () => {
   const onEditFamily = (id) => {
     // setShowForm(true);
     formRevealHandler(true);
-
-    const editMember = members.filter((member) => member.id === id);
-    console.log(editMember);
+    const editMember = memberList.filter((member) => member.family_id === id);
+    console.log(editMember, id, "editdetails");
     setFormData(...editMember);
+    console.log(formData, "eswinformdata");
   };
-  console.log(relativesData, "relatives");
   return (
     <>
       <Header

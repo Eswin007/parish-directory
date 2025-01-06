@@ -40,7 +40,7 @@ const Members = ({
           //   (member) => member.faimly_id === id
           // );
 
-          console.log(relatives, "relatives");
+          // console.log(relatives, "relatives");
           return (
             relatives && (
               <tr key={member.id}>
