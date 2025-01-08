@@ -1,16 +1,10 @@
 import React from "react";
 
-const Members = ({
-  familyList,
-  dob,
-  id,
-  dom,
-  occupation,
-  name,
-  blood,
-}) => {
-  const relatives = familyList.filter((relative) => relative?.family_id === id);
-  console.log(id, "family id");
+const Members = ({ familyMembers, family }) => {
+  // const relatives = membersList?.filter(
+  //   (relative) => relative?.family_id === id
+  // );
+  // console.log(id, "family id");
   return (
     <table className="members">
       <thead>
@@ -25,17 +19,16 @@ const Members = ({
       </thead>
       <tbody>
         <tr>
-          <td>{name}</td>
+          <td>{family?.hof}</td>
           <td>HoF</td>
-          <td>{occupation}</td>
-          <td>{dob}</td>
-          <td>{dom}</td>
-          <td>{blood}</td>
+          <td>{family?.occupation}</td>
+          <td>{family?.dob}</td>
+          <td>{family?.dom}</td>
+          <td>{family?.blood}</td>
         </tr>
-        {relatives?.map((member) => {
-       
+        {familyMembers?.map((member) => {
           return (
-            relatives && (
+            familyMembers && (
               <tr key={member.id}>
                 <td>{member.name}</td>
                 <td>{member.relation}</td>

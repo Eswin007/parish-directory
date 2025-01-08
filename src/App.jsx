@@ -43,7 +43,7 @@ const App = () => {
   const [formData, setFormData] = useState(FAMILY_INITIAL);
   const [familyList, setFamilyList] = useState([]);
   const [familyMembersList, setFamilyMembersList] = useState([]);
-  const [filteredMembers, setFilteredMembers] = useState([]);
+  const [filteredFamily, setFilteredFamily] = useState([]);
   const [errors, setErrors] = useState();
   const bloodGroup = BLOOD_GROUP;
 
@@ -67,8 +67,8 @@ const App = () => {
         "Content-Type": "application/json",
       },
     });
-    setFilteredMembers(familyList.data);
-    setFamilyList(familyList.data)
+    setFilteredFamily(familyList.data);
+    setFamilyList(familyList.data);
     setFamilyMembersList(membersList.data);
   };
   const formRevealHandler = (value) => {
@@ -138,14 +138,18 @@ const App = () => {
         headerConfig
       );
     } else {
-      await axios.post(familyURL, familyMembersURL, { ...formvalues }, headerConfig);
+      await axios.post(
+        familyURL,
+        familyMembersURL,
+        { ...formvalues },
+        headerConfig
+      );
     }
 
     await fetchMembers();
     formRevealHandler(false);
     setFormData(FAMILY_INITIAL);
   };
-
   const onDeleteFamily = (id) => {
     alert(id, "id");
     const familyURL = `${supabaseURL}/rest/v1/family`;
@@ -160,24 +164,25 @@ const App = () => {
   const onEditFamily = (id) => {
     formRevealHandler(true);
     const editMember = familyList.filter((member) => member.family_id === id);
-    const editRelatives = familyMembersList.filter(relative => relative.family_id === id)
+    const editRelatives = familyMembersList.filter(
+      (relative) => relative.family_id === id
+    );
 
-    console.log(editMember, "edit relatives");
+    setFormData({ members: editRelatives, ...editMember });
+    console.log(formData, "edit relatives");
   };
   return (
     <>
       <Header
-        // setShowForm={setShowForm}
         formRevealHandler={formRevealHandler}
         showForm={showForm}
         setFormData={setFormData}
         fetchMembers={fetchMembers}
-        setFilteredMembers={setFilteredMembers}
+        setFilteredFamily={setFilteredFamily}
       />
       <div className="wrapper">
         {showForm && (
           <MemberForm
-            // setShowForm={setShowForm}
             formData={formData}
             setFormData={setFormData}
             saveFamilyHandler={saveFamilyHandler}
@@ -189,30 +194,19 @@ const App = () => {
           />
         )}
         {!showForm &&
-          filteredMembers?.length > 0 &&
-          filteredMembers?.map((member) => (
+          filteredFamily?.length > 0 &&
+          filteredFamily?.map((family) => (
             <Family
-              key={member.family_id}
-              id={member.family_id}
-              hof={member?.hof}
-              email={member?.email}
-              parish={member?.mother_parish}
-              address={member?.address}
-              phone1={member?.phone1}
-              phone2={member?.phone2}
-              members={member?.members}
-              dob={member?.dob}
-              dom={member?.dom}
-              name={member?.hof}
-              blood={member?.blood}
-              occupation={member?.occupation}
+              key={family?.family_id}
+              family={family}
+              familyMembers={familyMembersList.filter(
+                (member) => member?.family_id === family?.family_id
+              )}
               onDeleteFamily={onDeleteFamily}
               onEditFamily={onEditFamily}
-              // membersList={formData?.members}
-              familyList={familyList}
             />
           ))}
-        {!showForm && filteredMembers.length === 0 && (
+        {!showForm && filteredFamily.length === 0 && (
           <span>No data to show</span>
         )}
       </div>

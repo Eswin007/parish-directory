@@ -26,7 +26,6 @@ const MemberForm = ({
       ...prev,
       [inputName]: e.target.value,
     }));
-
   };
 
   const addMoreHandler = (e, familyID) => {
@@ -45,16 +44,15 @@ const MemberForm = ({
     ]);
   };
 
- 
-
   const removeMemberHandler = (e, memberID, formId) => {
-    e.preventDefault();
-    // console.log(formData.members);
-    if (formData?.id === formId) {
-      const updatedData = formData?.members?.filter(
-        (member) => member.id !== memberID
-      );
-    }
+    // e.preventDefault();
+    // console.log(formId, "eswinid");
+    // // console.log(formData.members);
+    // if (formData.members?.family_id === formId) {
+    //   const updatedData = formData?.members?.filter(
+    //     (member) => member.id !== memberID
+    //   );
+    // }
   };
 
   return (
@@ -189,7 +187,9 @@ const MemberForm = ({
             <Button
               variant="secondary"
               className="remove-member-btn"
-              onClick={(e) => removeMemberHandler(e, item.id, formData.id)}
+              onClick={(e) =>
+                removeMemberHandler(e, item.id, formData.family_id)
+              }
             >
               Remove
             </Button>
@@ -200,7 +200,7 @@ const MemberForm = ({
       <div className="button-wrap">
         <Button
           variant="secondary"
-          onClick={(e) => addMoreHandler(e, formData.id)}
+          onClick={(e) => addMoreHandler(e, formData.family_id)}
         >
           Add More
         </Button>

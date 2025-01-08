@@ -2,30 +2,25 @@ import React from "react";
 import Members from "./Members";
 
 const Family = ({
-  hof,
-  address,
-  email,
-  parish,
-  phone1,
-  phone2,
-  dom,
-  dob,
-  occupation,
-  name,
-  blood,
-  familyList, //newly added
-  id,
+  family,
+  familyMembers, //newly added
   onDeleteFamily,
   onEditFamily,
 }) => {
   return (
     <div className="family">
-      <h2 className="family__name">{hof}</h2>
+      <h2 className="family__name">{family?.hof}</h2>
       <div className="family__controls">
-        <button className="family__btn" onClick={() => onDeleteFamily(id)}>
+        <button
+          className="family__btn"
+          onClick={() => onDeleteFamily(family?.family_id)}
+        >
           Delete
         </button>
-        <button className="family__btn" onClick={() => onEditFamily(id)}>
+        <button
+          className="family__btn"
+          onClick={() => onEditFamily(family?.family_id)}
+        >
           Edit
         </button>
       </div>
@@ -33,33 +28,25 @@ const Family = ({
         <tbody>
           <tr>
             <td>Address</td>
-            <td>{address}</td>
+            <td>{family?.address}</td>
           </tr>
           <tr>
             <td>Mother Parish</td>
-            <td>{parish}</td>
+            <td>{family?.parish}</td>
           </tr>
           <tr>
             <td>Phone</td>
             <td>
-              <span>{`${phone1} / ${phone2}`}</span>
+              <span>{`${family?.phone1} / ${family?.phone2}`}</span>
             </td>
           </tr>
           <tr>
             <td>Email</td>
-            <td>{email}</td>
+            <td>{family?.email}</td>
           </tr>
         </tbody>
       </table>
-      <Members
-        id={id}
-        familyList={familyList}
-        dob={dob}
-        dom={dom}
-        occupation={occupation}
-        name={name}
-        blood={blood}
-      />
+      <Members family={family} familyMembers={familyMembers} />
     </div>
   );
 };
