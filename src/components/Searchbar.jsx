@@ -3,8 +3,6 @@ import React, { useState } from "react";
 const Searchbar = ({
   placeholder,
   className,
-  members,
-  setMembers,
   fetchMembers,
   setFilteredMembers,
 }) => {
@@ -12,19 +10,19 @@ const Searchbar = ({
   const [searchCount, setSearchCount] = useState(0);
 
   const searchClearHandler = () => {
-    setSearchValue("");
-    setFilteredMembers(members);
-    setSearchCount(null);
+    // setSearchValue("");
+    // setFilteredMembers(members);
+    // setSearchCount(null);
   };
 
   const memberFilterHandler = (filterRequest) => {
-    const searchedMembers = members?.filter((member) =>
-      member?.members.some((person) =>
-        person.name.toLowerCase().includes(filterRequest.toLowerCase())
-      )
-    );
-    setSearchCount(searchedMembers.length);
-    setFilteredMembers(searchedMembers);
+    // const searchedMembers = members?.filter((member) =>
+    //   member?.members.some((person) =>
+    //     person.name.toLowerCase().includes(filterRequest.toLowerCase())
+    //   )
+    // );
+    // setSearchCount(searchedMembers.length);
+    // setFilteredMembers(searchedMembers);
   };
 
   const searchValueHandler = (e) => {

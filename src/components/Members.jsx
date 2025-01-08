@@ -1,8 +1,7 @@
 import React from "react";
 
 const Members = ({
-  memberList,
-  members,
+  familyList,
   dob,
   id,
   dom,
@@ -10,10 +9,8 @@ const Members = ({
   name,
   blood,
 }) => {
-  const relatives = memberList.filter((relative) => relative?.family_id === id);
-  // const relatives = memberList.map((relative) => relative.family_id);
+  const relatives = familyList.filter((relative) => relative?.family_id === id);
   console.log(id, "family id");
-  // console.log(relatives, "relatives");
   return (
     <table className="members">
       <thead>
@@ -36,11 +33,7 @@ const Members = ({
           <td>{blood}</td>
         </tr>
         {relatives?.map((member) => {
-          // const theMembers = memberList.filter(
-          //   (member) => member.faimly_id === id
-          // );
-
-          // console.log(relatives, "relatives");
+       
           return (
             relatives && (
               <tr key={member.id}>

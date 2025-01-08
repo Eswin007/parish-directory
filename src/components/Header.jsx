@@ -7,13 +7,10 @@ const Header = ({
   formRevealHandler,
   showForm,
   setFormData,
-  members,
-  setMembers,
   fetchMembers,
   setFilteredMembers,
 }) => {
   const addNewMember = () => {
-    // setShowForm(true);
     formRevealHandler(true);
     setFormData(FAMILY_INITIAL);
   };
@@ -25,8 +22,6 @@ const Header = ({
         <Searchbar
           placeholder="search"
           setFormData={setFormData}
-          members={members}
-          setMembers={setMembers}
           fetchMembers={fetchMembers}
           setFilteredMembers={setFilteredMembers}
         />

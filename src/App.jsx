@@ -8,8 +8,6 @@ import MemberForm from "./components/MemberForm";
 import Dropdown from "./components/Dropdown";
 import { object, string, date, array } from "yup";
 import config from "./config";
-import { initializeApp } from "firebase/app";
-import { getFirestore } from "firebase/firestore";
 
 const apiKey =
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZmZndicnZpeGJtbGFibW96a3RwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MjU3MjkxMzgsImV4cCI6MjA0MTMwNTEzOH0.yU8fXAZa_x84GwdVhPVDdLhOWbAa6r2PoHxhnV5ebn0";
@@ -35,23 +33,23 @@ export const FAMILY_INITIAL = {
   blood: "",
   occupation: "",
   relation: "",
+  members: [],
 };
 
 export const BLOOD_GROUP = ["A+", "A-", "B-", "O+", "O-", "AB+", "AB-", "B+"];
 
 const App = () => {
-  const [members, setMembers] = useState([]);
   const [showForm, setShowForm] = useState(false);
   const [formData, setFormData] = useState(FAMILY_INITIAL);
-  const [relativesData, setRelativesData] = useState([]);
+  const [familyList, setFamilyList] = useState([]);
+  const [familyMembersList, setFamilyMembersList] = useState([]);
   const [filteredMembers, setFilteredMembers] = useState([]);
-  const [memberList, setMemberList] = useState([]);
   const [errors, setErrors] = useState();
   const bloodGroup = BLOOD_GROUP;
 
   const fetchMembers = async () => {
     const familyURL = `${supabaseURL}/rest/v1/family`;
-    const membersURL = `${supabaseURL}/rest/v1/familyMembers`;
+    const familyMembersURL = `${supabaseURL}/rest/v1/familyMembers`;
 
     const familyList = await axios.get(familyURL, {
       headers: {
@@ -61,7 +59,7 @@ const App = () => {
         "Content-Type": "application/json",
       },
     });
-    const membersList = await axios.get(membersURL, {
+    const membersList = await axios.get(familyMembersURL, {
       headers: {
         apikey: apiKey,
         Authorization: `Bearer ${apiKey}`,
@@ -70,7 +68,8 @@ const App = () => {
       },
     });
     setFilteredMembers(familyList.data);
-    setRelativesData(membersList.data);
+    setFamilyList(familyList.data)
+    setFamilyMembersList(membersList.data);
   };
   const formRevealHandler = (value) => {
     setShowForm(value);
@@ -130,15 +129,16 @@ const App = () => {
   const saveFamilyHandler = async (formvalues, id) => {
     console.log(formvalues);
     const familyURL = `${supabaseURL}/rest/v1/family`;
-    const membersURL = `${supabaseURL}/rest/v1/familyMembers`;
+    const familyMembersURL = `${supabaseURL}/rest/v1/familyMembers`;
     if (id) {
       await axios.put(
         `${familyURL}?family_id=eq.${id}`,
+        `${familyMembersURL}?family_id=eq.${id}`,
         { ...formvalues },
         headerConfig
       );
     } else {
-      await axios.post(familyURL, { ...formvalues }, headerConfig);
+      await axios.post(familyURL, familyMembersURL, { ...formvalues }, headerConfig);
     }
 
     await fetchMembers();
@@ -149,7 +149,6 @@ const App = () => {
   const onDeleteFamily = (id) => {
     alert(id, "id");
     const familyURL = `${supabaseURL}/rest/v1/family`;
-    // const membersURL = `${supabaseURL}/rest/v1/familyMembers`;
     axios
       .delete(`${familyURL}?family_id=eq.${id}`, headerConfig)
       .then((res) => fetchMembers())
@@ -159,12 +158,11 @@ const App = () => {
   };
 
   const onEditFamily = (id) => {
-    // setShowForm(true);
     formRevealHandler(true);
-    const editMember = memberList.filter((member) => member.family_id === id);
-    console.log(editMember, id, "editdetails");
-    setFormData(...editMember);
-    console.log(formData, "eswinformdata");
+    const editMember = familyList.filter((member) => member.family_id === id);
+    const editRelatives = familyMembersList.filter(relative => relative.family_id === id)
+
+    console.log(editMember, "edit relatives");
   };
   return (
     <>
@@ -173,8 +171,6 @@ const App = () => {
         formRevealHandler={formRevealHandler}
         showForm={showForm}
         setFormData={setFormData}
-        members={members}
-        setMembers={setMembers}
         fetchMembers={fetchMembers}
         setFilteredMembers={setFilteredMembers}
       />
@@ -188,8 +184,8 @@ const App = () => {
             formRevealHandler={formRevealHandler}
             errors={errors}
             setErrors={setErrors}
-            setRelativesData={setRelativesData}
-            relativesData={relativesData}
+            setFamilyMembersList={setFamilyMembersList}
+            familyMembersList={familyMembersList}
           />
         )}
         {!showForm &&
@@ -213,7 +209,7 @@ const App = () => {
               onDeleteFamily={onDeleteFamily}
               onEditFamily={onEditFamily}
               // membersList={formData?.members}
-              memberList={memberList}
+              familyList={familyList}
             />
           ))}
         {!showForm && filteredMembers.length === 0 && (

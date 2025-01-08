@@ -13,8 +13,7 @@ const Family = ({
   occupation,
   name,
   blood,
-  members,
-  memberList, //newly added
+  familyList, //newly added
   id,
   onDeleteFamily,
   onEditFamily,
@@ -53,9 +52,8 @@ const Family = ({
         </tbody>
       </table>
       <Members
-        // members={members}
         id={id}
-        memberList={memberList}
+        familyList={familyList}
         dob={dob}
         dom={dom}
         occupation={occupation}

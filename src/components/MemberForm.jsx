@@ -12,8 +12,8 @@ const MemberForm = ({
   formData,
   setFormData,
   formRevealHandler,
-  setRelativesData,
-  relativesData,
+  setFamilyMembersList,
+  familyMembersList,
   errors,
   setErrors,
 }) => {
@@ -26,32 +26,12 @@ const MemberForm = ({
       ...prev,
       [inputName]: e.target.value,
     }));
-    // setFormData((prev) => {
-    //   if (membersId) {
-    //     const updatedMembers = prev.members.map((member) => {
-    //       if (member.id === membersId) {
-    //         return { ...member, [inputName]: e.target.value };
-    //       }
-    //       return member;
-    //     });
-    // setErrors((prev) => ({
-    //   ...prev,
-    //   [`members[${index}].${inputName}`]: undefined,
-    // }));
-    // return { ...prev, members: updatedMembers };
-    // } else {
-    //   // setErrors((prev) => ({
-    //   //   ...prev,
-    //   //   [inputName]: undefined,
-    //   // }));
-    //   return { ...prev, [inputName]: e.target.value };
-    // }
-    // });
+
   };
 
   const addMoreHandler = (e, familyID) => {
     e.preventDefault();
-    setRelativesData((prev) => [
+    setFamilyMembersList((prev) => [
       ...prev,
       {
         family_id: familyID,
@@ -65,26 +45,7 @@ const MemberForm = ({
     ]);
   };
 
-  // const addMoreHandler = (e, familyID) => {
-  //   e.preventDefault();
-  //   if (formData?.id === familyID) {
-  //     setFormData((prev) => ({
-  //       ...prev,
-  //       members: [
-  //         ...(prev?.members || []),
-  //         {
-  //           id: Date.now().toString(),
-  //           name: "",
-  //           occupation: "",
-  //           relation: "",
-  //           dob: "",
-  //           dom: "",
-  //           blood: "",
-  //         },
-  //       ],
-  //     }));
-  //   }
-  // };
+ 
 
   const removeMemberHandler = (e, memberID, formId) => {
     e.preventDefault();
@@ -93,10 +54,6 @@ const MemberForm = ({
       const updatedData = formData?.members?.filter(
         (member) => member.id !== memberID
       );
-      // setFormData((prev) => ({
-      //   ...prev,
-      //   members: [...updatedData],
-      // }));
     }
   };
 
@@ -178,7 +135,7 @@ const MemberForm = ({
         errors={errors?.blood}
       />
 
-      {relativesData?.map((item, index) => {
+      {familyMembersList?.map((item, index) => {
         return (
           <Card key={index} className="full-width-col member-card">
             <InputField
