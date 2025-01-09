@@ -55,7 +55,7 @@ const App = () => {
       headers: {
         apikey: apiKey,
         Authorization: `Bearer ${apiKey}`,
-        Accept: "application/json",   
+        Accept: "application/json",
         "Content-Type": "application/json",
       },
     });
@@ -163,10 +163,13 @@ const App = () => {
 
   const onEditFamily = (id) => {
     formRevealHandler(true);
-    const editFamily = familyList?.filter(family=> family.family_id === id);
-    const editMember = familyMembersList.filter(members => members.family_id === id)
-    setFormData(editFamily);
-    console.log(formData)
+    const editFamily = familyList?.find((family) => family.family_id === id);
+    const editMember = familyMembersList?.filter(
+      (members) => members.family_id === id
+    );
+
+    setFormData({ ...editFamily, members: editMember });
+    console.log(editFamily, "formData");
   };
   return (
     <>
@@ -190,6 +193,7 @@ const App = () => {
             setFamilyMembersList={setFamilyMembersList}
           />
         )}
+        {console.log(formData, "formdata eswin")}
         {!showForm &&
           filteredFamily?.length > 0 &&
           filteredFamily?.map((family) => (

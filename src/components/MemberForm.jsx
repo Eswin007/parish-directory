@@ -17,9 +17,6 @@ const MemberForm = ({
   errors,
   setErrors,
 }) => {
-
-
-
   const onSubmitHanlder = (e) => {
     e.preventDefault();
     saveFamilyHandler(formData);
@@ -33,8 +30,9 @@ const MemberForm = ({
 
   const addMoreHandler = (e, familyID) => {
     e.preventDefault();
-    setFamilyMembersList((prev) => [
-      ...prev,
+    const { members } = formData;
+    const updatedMembers = [
+      ...members,
       {
         family_id: familyID,
         name: "",
@@ -43,19 +41,23 @@ const MemberForm = ({
         dob: "",
         dom: "",
         blood: "",
+        tempID: Date.now() + Math.random(),
       },
-    ]);
+    ];
+    setFormData((prev) => ({ ...prev, members: updatedMembers }));
+    console.log(members, "eswinmembers");
   };
 
-  const removeMemberHandler = (e, memberID, formId) => {
-    // e.preventDefault();
-    // console.log(formId, "eswinid");
-    // // console.log(formData.members);
-    // if (formData.members?.family_id === formId) {
-    //   const updatedData = formData?.members?.filter(
-    //     (member) => member.id !== memberID
-    //   );
-    // }
+  const removeMemberHandler = (e, membersID, tempID) => {
+    e.preventDefault();
+    const { members } = formData;
+    let afterRemoval = members || [];
+    if (membersID) {
+      afterRemoval = members.filter((item) => item.membersID !== membersID);
+    } else if (tempID) {
+      afterRemoval = members.filter((item) => item.tempID !== tempID);
+    }
+    setFormData((prev) => ({ ...prev, members: afterRemoval }));
   };
 
   return (
@@ -143,14 +145,18 @@ const MemberForm = ({
               placeholder="Name"
               label="Name"
               value={item.name || ""}
-              onChange={(e) => onChangeHandler(e, "name", item.membersID, index)}
+              onChange={(e) =>
+                onChangeHandler(e, "name", item.membersID, index)
+              }
               errors={errors?.[`members[${index}].name`]}
             />
             <InputField
               placeholder="Relation"
               label="Relation"
               value={item.relation}
-              onChange={(e) => onChangeHandler(e, "relation", item.membersID, index)}
+              onChange={(e) =>
+                onChangeHandler(e, "relation", item.membersID, index)
+              }
               errors={errors?.[`members[${index}].relation`]}
             />
             <InputField
@@ -191,7 +197,7 @@ const MemberForm = ({
               variant="secondary"
               className="remove-member-btn"
               onClick={(e) =>
-                removeMemberHandler(e, item.id, formData.family_id)
+                removeMemberHandler(e, item?.membersID, item?.tempID, index)
               }
             >
               Remove
