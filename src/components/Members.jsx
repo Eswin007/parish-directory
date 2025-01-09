@@ -26,10 +26,10 @@ const Members = ({ familyMembers, family }) => {
           <td>{family?.dom}</td>
           <td>{family?.blood}</td>
         </tr>
-        {familyMembers?.map((member) => {
+        {familyMembers?.map((member, index) => {
           return (
             familyMembers && (
-              <tr key={member.id}>
+              <tr key={index}>
                 <td>{member.name}</td>
                 <td>{member.relation}</td>
                 <td>{member.occupation}</td>

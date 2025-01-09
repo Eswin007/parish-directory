@@ -33,7 +33,7 @@ export const FAMILY_INITIAL = {
   blood: "",
   occupation: "",
   relation: "",
-  members: [],
+  // members: [],
 };
 
 export const BLOOD_GROUP = ["A+", "A-", "B-", "O+", "O-", "AB+", "AB-", "B+"];
@@ -55,7 +55,7 @@ const App = () => {
       headers: {
         apikey: apiKey,
         Authorization: `Bearer ${apiKey}`,
-        Accept: "application/json",
+        Accept: "application/json",   
         "Content-Type": "application/json",
       },
     });
@@ -163,13 +163,10 @@ const App = () => {
 
   const onEditFamily = (id) => {
     formRevealHandler(true);
-    const editMember = familyList.filter((member) => member.family_id === id);
-    const editRelatives = familyMembersList.filter(
-      (relative) => relative.family_id === id
-    );
-
-    setFormData({ members: editRelatives, ...editMember });
-    console.log(formData, "edit relatives");
+    const editFamily = familyList?.filter(family=> family.family_id === id);
+    const editMember = familyMembersList.filter(members => members.family_id === id)
+    setFormData(editFamily);
+    console.log(formData)
   };
   return (
     <>
@@ -189,8 +186,8 @@ const App = () => {
             formRevealHandler={formRevealHandler}
             errors={errors}
             setErrors={setErrors}
+            familyList={familyList}
             setFamilyMembersList={setFamilyMembersList}
-            familyMembersList={familyMembersList}
           />
         )}
         {!showForm &&
