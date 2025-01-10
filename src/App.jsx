@@ -33,7 +33,7 @@ export const FAMILY_INITIAL = {
   blood: "",
   occupation: "",
   relation: "",
-  // members: [],
+  members: [],
 };
 
 export const BLOOD_GROUP = ["A+", "A-", "B-", "O+", "O-", "AB+", "AB-", "B+"];
@@ -126,24 +126,41 @@ const App = () => {
     ),
   });
 
-  const saveFamilyHandler = async (formvalues, id) => {
-    console.log(formvalues);
+  const saveFamilyHandler = async (formData) => {
+    const {members, ...familyHead} = formData;
+    console.log(members, 'eswinMembers');
+    console.log(familyHead, 'eswinfamilyhead')
+    
     const familyURL = `${supabaseURL}/rest/v1/family`;
     const familyMembersURL = `${supabaseURL}/rest/v1/familyMembers`;
-    if (id) {
+
+
+    if (familyHead?.family_id) {
       await axios.put(
-        `${familyURL}?family_id=eq.${id}`,
-        `${familyMembersURL}?family_id=eq.${id}`,
-        { ...formvalues },
+        `${familyURL}?family_id=eq.${familyHead?.family_id}`,
+        { ...familyHead },
         headerConfig
       );
     } else {
       await axios.post(
         familyURL,
-        familyMembersURL,
-        { ...formvalues },
+        { ...familyHead },
         headerConfig
       );
+    }
+
+    if(members?.family_id){
+      await axios.put(
+        `${familyMembersURL}?family_id=eq.${members?.membersID}`,
+        {...members},
+        headerConfig
+      )
+    } else {
+      await axios.post(
+        familyMembersURL,
+        {...members},
+        headerConfig
+      )
     }
 
     await fetchMembers();
@@ -193,7 +210,6 @@ const App = () => {
             setFamilyMembersList={setFamilyMembersList}
           />
         )}
-        {console.log(formData, "formdata eswin")}
         {!showForm &&
           filteredFamily?.length > 0 &&
           filteredFamily?.map((family) => (
