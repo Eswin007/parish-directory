@@ -32,7 +32,7 @@ const Family = ({
           </tr>
           <tr>
             <td>Mother Parish</td>
-            <td>{family?.parish}</td>
+            <td>{family?.mother_parish}</td>
           </tr>
           <tr>
             <td>Phone</td>

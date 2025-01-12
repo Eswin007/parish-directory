@@ -20,24 +20,28 @@ const MemberForm = ({
     e.preventDefault();
     saveFamilyHandler(formData);
   };
-  const onChangeHandler = (e, inputName, index) => {
-    const {value} = e.target;
-    console.log(inputName, 'eswininputname')
-    setFormData((prev)=> {
-      const updatedMembers = [...prev.members]
-      updatedMembers[index] = {...updatedMembers[index], [inputName]: value}
+  const onChangeHandler = (e, inputName, index = null) => {
+    const { value } = e.target;
+    console.log(inputName, "eswininputname");
+    setFormData((prev) => {
+      if (index !== null) {
+        const updatedMembers = [...prev.members];
+        updatedMembers[index] = {
+          ...updatedMembers[index],
+          [inputName]: value,
+        };
 
-      return{
-        ...prev, 
-        members: updatedMembers
+        return {
+          ...prev,
+          members: updatedMembers,
+        };
+      } else {
+        return {
+          ...prev,
+          [inputName]: value,
+        };
       }
-    })
-
-    //  setFormData((prev) => ({
-    //   ...prev,
-    //   [inputName]: value,
-
-    // }));
+    });
   };
 
   const addMoreHandler = (e, familyID) => {
@@ -157,25 +161,21 @@ const MemberForm = ({
               placeholder="Name"
               label="Name"
               value={item.name || ""}
-              onChange={(e) =>
-                onChangeHandler(e, "name", index)
-              }
+              onChange={(e) => onChangeHandler(e, "name", index)}
               errors={errors?.[`members[${index}].name`]}
             />
             <InputField
               placeholder="Relation"
               label="Relation"
               value={item.relation}
-              onChange={(e) =>
-                onChangeHandler(e, "relation", index)
-              }
+              onChange={(e) => onChangeHandler(e, "relation", index)}
               errors={errors?.[`members[${index}].relation`]}
             />
             <InputField
               placeholder="Occupation"
               label="Occupation"
-              value={item.occupation}
-              onChange={(e) => onChangeHandler(e, "occupation")}
+              value={item?.occupation}
+              onChange={(e) => onChangeHandler(e, "occupation", index)}
               errors={errors?.[`members[${index}].occupation`]}
             />
             <InputField
@@ -183,7 +183,7 @@ const MemberForm = ({
               placeholder="DD/MM/YY"
               label="Date of Birth"
               value={item.dob}
-              onChange={(e) => onChangeHandler(e, "dob")}
+              onChange={(e) => onChangeHandler(e, "dob", index)}
               errors={errors?.[`members[${index}].dob`]}
             />
             <InputField
@@ -191,7 +191,7 @@ const MemberForm = ({
               placeholder="DD/MM/YY"
               label="Date of Marriage"
               value={item.dom}
-              onChange={(e) => onChangeHandler(e, "dom",)}
+              onChange={(e) => onChangeHandler(e, "dom", index)}
               errors={errors?.[`members[${index}].dom`]}
             />
 
@@ -201,7 +201,7 @@ const MemberForm = ({
               options={BLOOD_GROUP}
               value={item.blood}
               onChange={(value) =>
-                onChangeHandler({ target: { value } }, "blood",)
+                onChangeHandler({ target: { value } }, "blood", index)
               }
               errors={errors?.[`members[${index}].blood`]}
             />

@@ -32,7 +32,6 @@ export const FAMILY_INITIAL = {
   dob: "",
   blood: "",
   occupation: "",
-  relation: "",
   members: [],
 };
 
@@ -127,43 +126,40 @@ const App = () => {
   });
 
   const saveFamilyHandler = async (formData) => {
-    const {members, ...familyHead} = formData;
-    console.log(members, 'eswinMembers');
-    console.log(familyHead, 'eswinfamilyhead')
-    
+    console.log(formData, "eswinformdataonsave");
+    const { members, ...familyHead } = formData;
+    console.log(members, "eswinMembers");
+    console.log(familyHead, "eswinfamilyhead");
+
     const familyURL = `${supabaseURL}/rest/v1/family`;
     const familyMembersURL = `${supabaseURL}/rest/v1/familyMembers`;
 
+    try {
+      if (familyHead?.family_id) {
+        await axios.put(
+          `${familyURL}?family_id=eq.${familyHead?.family_id}`,
+          { ...familyHead },
+          headerConfig
+        );
+      } else {
+        await axios.post(familyURL, { ...familyHead }, headerConfig);
+      }
 
-    if (familyHead?.family_id) {
-      await axios.put(
-        `${familyURL}?family_id=eq.${familyHead?.family_id}`,
-        { ...familyHead },
-        headerConfig
-      );
-    } else {
-      await axios.post(
-        familyURL,
-        { ...familyHead },
-        headerConfig
-      );
+      if (members?.family_id) {
+        await axios.put(
+          `${familyMembersURL}?membersID=eq.${members?.membersID}`,
+          { ...members },
+          headerConfig
+        );
+      } else {
+        await axios.post(familyMembersURL, ...members, headerConfig);
+      }
+
+      await fetchMembers();
+    } catch (errors) {
+      console.log(errors.response.data.message, "errors");
     }
 
-    if(members?.family_id){
-      await axios.put(
-        `${familyMembersURL}?family_id=eq.${members?.membersID}`,
-        {...members},
-        headerConfig
-      )
-    } else {
-      await axios.post(
-        familyMembersURL,
-        {...members},
-        headerConfig
-      )
-    }
-
-    await fetchMembers();
     formRevealHandler(false);
     setFormData(FAMILY_INITIAL);
   };
