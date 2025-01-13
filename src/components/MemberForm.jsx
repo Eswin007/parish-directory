@@ -4,7 +4,7 @@ import Button from "./Button";
 import axios from "axios";
 import Card from "./Card";
 import Dropdown from "./Dropdown";
-import { BLOOD_GROUP } from "../App";
+import { BLOOD_GROUP, RELATION } from "../App";
 import Family from "./Family";
 
 const MemberForm = ({
@@ -50,7 +50,7 @@ const MemberForm = ({
     const updatedMembers = [
       ...members,
       {
-        family_id: familyID,
+        // family_id: familyID,
         name: "",
         occupation: "",
         relation: "",
@@ -164,13 +164,23 @@ const MemberForm = ({
               onChange={(e) => onChangeHandler(e, "name", index)}
               errors={errors?.[`members[${index}].name`]}
             />
-            <InputField
+            <Dropdown
+              label="Relation"
+              placeholder="Select"
+              options={RELATION}
+              value={item.relation}
+              onChange={(value) =>
+                onChangeHandler({ target: { value } }, "relation", index)
+              }
+              errors={errors?.[`members[${index}].relation`]}
+            />
+            {/* <InputField
               placeholder="Relation"
               label="Relation"
               value={item.relation}
-              onChange={(e) => onChangeHandler(e, "relation", index)}
+              onChange={() => onChangeHandler(e, "relation", index)}
               errors={errors?.[`members[${index}].relation`]}
-            />
+            /> */}
             <InputField
               placeholder="Occupation"
               label="Occupation"

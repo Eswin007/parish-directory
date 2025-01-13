@@ -8,6 +8,7 @@ import MemberForm from "./components/MemberForm";
 import Dropdown from "./components/Dropdown";
 import { object, string, date, array } from "yup";
 import config from "./config";
+import Loader from "./components/Loader";
 
 const apiKey =
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZmZndicnZpeGJtbGFibW96a3RwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MjU3MjkxMzgsImV4cCI6MjA0MTMwNTEzOH0.yU8fXAZa_x84GwdVhPVDdLhOWbAa6r2PoHxhnV5ebn0";
@@ -17,6 +18,7 @@ const headerConfig = {
     Authorization: `Bearer ${apiKey}`,
     Accept: "application/json",
     "Content-Type": "application/json",
+    Prefer: "return=representation",
   },
 };
 
@@ -36,6 +38,14 @@ export const FAMILY_INITIAL = {
 };
 
 export const BLOOD_GROUP = ["A+", "A-", "B-", "O+", "O-", "AB+", "AB-", "B+"];
+export const RELATION = [
+  "Wife",
+  "Son",
+  "Daughter",
+  "Grandson",
+  "Granddaughter",
+  "Daughter-In-Law",
+];
 
 const App = () => {
   const [showForm, setShowForm] = useState(false);
@@ -44,7 +54,7 @@ const App = () => {
   const [familyMembersList, setFamilyMembersList] = useState([]);
   const [filteredFamily, setFilteredFamily] = useState([]);
   const [errors, setErrors] = useState();
-  const bloodGroup = BLOOD_GROUP;
+  const [isLoading, setIsLoading] = useState(false);
 
   const fetchMembers = async () => {
     const familyURL = `${supabaseURL}/rest/v1/family`;
@@ -55,6 +65,7 @@ const App = () => {
         apikey: apiKey,
         Authorization: `Bearer ${apiKey}`,
         Accept: "application/json",
+
         "Content-Type": "application/json",
       },
     });
@@ -126,6 +137,7 @@ const App = () => {
   });
 
   const saveFamilyHandler = async (formData) => {
+    setIsLoading(true);
     console.log(formData, "eswinformdataonsave");
     const { members, ...familyHead } = formData;
     console.log(members, "eswinMembers");
@@ -134,34 +146,51 @@ const App = () => {
     const familyURL = `${supabaseURL}/rest/v1/family`;
     const familyMembersURL = `${supabaseURL}/rest/v1/familyMembers`;
 
+    const postMembers = (members, familyID) => {
+      const updatedMembers = members?.map((member) => {
+        if (member?.membersID) {
+          axios.put(
+            `${familyMembersURL}?membersID=eq.${member?.membersID}`,
+            member,
+            headerConfig
+          );
+        } else {
+          axios.post(
+            familyMembersURL,
+            { ...member, family_id: familyID },
+            headerConfig
+          );
+        }
+      });
+      return updatedMembers;
+    };
+    let returnedFamilyID;
     try {
       if (familyHead?.family_id) {
+        alert("hello");
         await axios.put(
           `${familyURL}?family_id=eq.${familyHead?.family_id}`,
-          { ...familyHead },
+          familyHead,
           headerConfig
         );
       } else {
-        await axios.post(familyURL, { ...familyHead }, headerConfig);
+        await axios
+          .post(familyURL, familyHead, headerConfig)
+          .then((response) => (returnedFamilyID = response.data[0].family_id));
       }
 
-      if (members?.family_id) {
-        await axios.put(
-          `${familyMembersURL}?membersID=eq.${members?.membersID}`,
-          { ...members },
-          headerConfig
-        );
-      } else {
-        await axios.post(familyMembersURL, ...members, headerConfig);
+      if (returnedFamilyID !== null) {
+        await postMembers(members, returnedFamilyID);
       }
-
-      await fetchMembers();
     } catch (errors) {
-      console.log(errors.response.data.message, "errors");
+      console.log(errors, "errors");
     }
+
+    await fetchMembers();
 
     formRevealHandler(false);
     setFormData(FAMILY_INITIAL);
+    setIsLoading(false);
   };
   const onDeleteFamily = (id) => {
     alert(id, "id");
@@ -174,7 +203,7 @@ const App = () => {
       });
   };
 
-  const onEditFamily = (id) => {
+  const onEditFamily = async (id) => {
     formRevealHandler(true);
     const editFamily = familyList?.find((family) => family.family_id === id);
     const editMember = familyMembersList?.filter(
@@ -194,6 +223,7 @@ const App = () => {
         setFilteredFamily={setFilteredFamily}
       />
       <div className="wrapper">
+        {isLoading && <Loader />}
         {showForm && (
           <MemberForm
             formData={formData}
