@@ -15,6 +15,7 @@ const MemberForm = ({
   setFamilyMembersList,
   errors,
   setErrors,
+  setMembersToBeRemoved
 }) => {
   const onSubmitHandler = (e) => {
     e.preventDefault();
@@ -50,7 +51,7 @@ const MemberForm = ({
     const updatedMembers = [
       ...members,
       {
-        // family_id: familyID,
+        family_id: familyID,
         name: "",
         occupation: "",
         relation: "",
@@ -70,7 +71,9 @@ const MemberForm = ({
     let afterRemoval = members || [];
     if (membersID) {
       afterRemoval = members.filter((item) => item.membersID !== membersID);
-    } else if (tempID) {
+      setMembersToBeRemoved(prev=> [...prev, membersID])
+
+    } else if (!membersID && tempID) {
       afterRemoval = members.filter((item) => item.tempID !== tempID);
     }
     setFormData((prev) => ({ ...prev, members: afterRemoval }));
@@ -231,7 +234,7 @@ const MemberForm = ({
       <div className="button-wrap">
         <Button
           variant="secondary"
-          onClick={(e) => addMoreHandler(e, formData.family_id)}
+          onClick={(e) => addMoreHandler(e, formData?.family_id)}
         >
           Add More
         </Button>

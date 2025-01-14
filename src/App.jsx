@@ -55,6 +55,7 @@ const App = () => {
   const [filteredFamily, setFilteredFamily] = useState([]);
   const [errors, setErrors] = useState();
   const [isLoading, setIsLoading] = useState(false);
+  const [membersToBeRemoved, setMembersToBeRemoved]= useState([]);
 
   const fetchMembers = async () => {
     const familyURL = `${supabaseURL}/rest/v1/family`;
@@ -137,11 +138,13 @@ const App = () => {
   });
 
   const saveFamilyHandler = async (formData) => {
+
     setIsLoading(true);
     console.log(formData, "eswinformdataonsave");
     const { members, ...familyHead } = formData;
     console.log(members, "eswinMembers");
     console.log(familyHead, "eswinfamilyhead");
+    console.log(membersToBeRemoved, 'toberemoved')
 
     const familyURL = `${supabaseURL}/rest/v1/family`;
     const familyMembersURL = `${supabaseURL}/rest/v1/familyMembers`;
@@ -154,20 +157,37 @@ const App = () => {
             member,
             headerConfig
           );
-        } else {
+        } else if(member?.family_id) {
           axios.post(
             familyMembersURL,
-            { ...member, family_id: familyID },
+            member ,
+            headerConfig
+          );
+        } else{
+          axios.post(
+            familyMembersURL,
+            {...member, family_id: familyID} ,
             headerConfig
           );
         }
       });
       return updatedMembers;
     };
+
+    const removeMembersFromForm = (ids) =>{
+      if(ids?.length > 0 ){
+        const removeMembers = ids?.map(id=> {
+          axios.delete(`${familyMembersURL}?membersID=eq.${id}`, headerConfig)
+        });
+        return removeMembers;
+      }
+    }
+
     let returnedFamilyID;
+
+
     try {
       if (familyHead?.family_id) {
-        alert("hello");
         await axios.put(
           `${familyURL}?family_id=eq.${familyHead?.family_id}`,
           familyHead,
@@ -182,18 +202,24 @@ const App = () => {
       if (returnedFamilyID !== null) {
         await postMembers(members, returnedFamilyID);
       }
+
+      if(membersToBeRemoved.length !== 0){
+        await removeMembersFromForm(membersToBeRemoved);
+      }
+
     } catch (errors) {
       console.log(errors, "errors");
     }
 
     await fetchMembers();
 
+
+    setMembersToBeRemoved([]);
     formRevealHandler(false);
     setFormData(FAMILY_INITIAL);
     setIsLoading(false);
   };
   const onDeleteFamily = (id) => {
-    alert(id, "id");
     const familyURL = `${supabaseURL}/rest/v1/family`;
     axios
       .delete(`${familyURL}?family_id=eq.${id}`, headerConfig)
@@ -207,11 +233,10 @@ const App = () => {
     formRevealHandler(true);
     const editFamily = familyList?.find((family) => family.family_id === id);
     const editMember = familyMembersList?.filter(
-      (members) => members.family_id === id
+      (members) => members?.family_id === id
     );
 
     setFormData({ ...editFamily, members: editMember });
-    console.log(editFamily, "formData");
   };
   return (
     <>
@@ -234,6 +259,7 @@ const App = () => {
             setErrors={setErrors}
             familyList={familyList}
             setFamilyMembersList={setFamilyMembersList}
+            setMembersToBeRemoved={setMembersToBeRemoved}
           />
         )}
         {!showForm &&
