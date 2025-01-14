@@ -4,15 +4,17 @@ const Searchbar = ({
   placeholder,
   className,
   fetchMembers,
-  setFilteredMembers,
+  setFilteredFamily,
+  familyList,
+  familyMembersList,
 }) => {
   const [searchValue, setSearchValue] = useState();
   const [searchCount, setSearchCount] = useState(0);
 
   const searchClearHandler = () => {
-    // setSearchValue("");
-    // setFilteredMembers(members);
-    // setSearchCount(null);
+    setSearchValue("");
+    setFilteredFamily(familyList);
+    setSearchCount(null);
   };
 
   const memberFilterHandler = (filterRequest) => {
@@ -21,8 +23,37 @@ const Searchbar = ({
     //     person.name.toLowerCase().includes(filterRequest.toLowerCase())
     //   )
     // );
-    // setSearchCount(searchedMembers.length);
-    // setFilteredMembers(searchedMembers);
+    const searchedFamily = familyList?.filter((family) =>
+      family.hof?.toLowerCase().includes(filterRequest.toLowerCase())
+    );
+
+    const searchedMembers = familyMembersList.filter((family) => {
+      let fromMembers;
+      if (family.name?.toLowerCase().includes(filterRequest.toLowerCase())) {
+        fromMembers = family.family_id;
+        console.log(fromMembers, "fromMembers");
+        return fromMembers;
+      }
+    });
+
+    const familyFromMembers = searchedMembers?.flatMap((id) => {
+      return familyList.filter((family) => family?.family_id === id.family_id);
+    });
+
+    console.log(familyFromMembers, "familyfrommembers");
+
+    const matchingMembers = [...searchedFamily, ...familyFromMembers];
+
+    const matchedMembers = matchingMembers.map((item) => {
+      let ar = [];
+      if (item?.family_id !== item?.family_id) {
+        ar.push(item);
+      }
+    });
+    console.log(matchedMembers, "matchedMembers");
+
+    // setSearchCount(searchedFamily.length);
+    setFilteredFamily(matchedMembers);
   };
 
   const searchValueHandler = (e) => {

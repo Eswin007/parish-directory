@@ -66,6 +66,10 @@
         background-color: #b13814;
         font-weight: 400;
       }
+
+      &:nth-child(even) {
+        background-color: #eee;
+      }
     }
   }
 }

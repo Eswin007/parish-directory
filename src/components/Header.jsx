@@ -9,6 +9,8 @@ const Header = ({
   setFormData,
   fetchMembers,
   setFilteredFamily,
+  familyList,
+  familyMembersList,
 }) => {
   const addNewMember = () => {
     formRevealHandler(true);
@@ -24,6 +26,8 @@ const Header = ({
           setFormData={setFormData}
           fetchMembers={fetchMembers}
           setFilteredFamily={setFilteredFamily}
+          familyList={familyList}
+          familyMembersList={familyMembersList}
         />
       )}
       {!showForm && <Button onClick={addNewMember}>Add Family</Button>}
