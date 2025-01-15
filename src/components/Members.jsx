@@ -4,7 +4,11 @@ const Members = ({ familyMembers, family }) => {
   // const relatives = membersList?.filter(
   //   (relative) => relative?.family_id === id
   // );
-  // console.log(id, "family id");
+  
+  const formattedDate = (date) => new Date().toLocaleDateString({  year: 'numeric',
+    month: 'long',
+    day: 'numeric'})
+
   return (
     <table className="members">
       <thead>
@@ -22,7 +26,7 @@ const Members = ({ familyMembers, family }) => {
           <td>{family?.hof}</td>
           <td>HoF</td>
           <td>{family?.occupation}</td>
-          <td>{family?.dob}</td>
+          <td>{formattedDate(family?.dob)}</td>
           <td>{family?.dom}</td>
           <td>{family?.blood}</td>
         </tr>

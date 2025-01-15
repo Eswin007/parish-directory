@@ -18,42 +18,27 @@ const Searchbar = ({
   };
 
   const memberFilterHandler = (filterRequest) => {
-    // const searchedMembers = members?.filter((member) =>
-    //   member?.members.some((person) =>
-    //     person.name.toLowerCase().includes(filterRequest.toLowerCase())
-    //   )
-    // );
+
     const searchedFamily = familyList?.filter((family) =>
       family.hof?.toLowerCase().includes(filterRequest.toLowerCase())
     );
 
-    const searchedMembers = familyMembersList.filter((family) => {
-      let fromMembers;
-      if (family.name?.toLowerCase().includes(filterRequest.toLowerCase())) {
-        fromMembers = family.family_id;
-        console.log(fromMembers, "fromMembers");
-        return fromMembers;
-      }
+    const searchedMembers = familyMembersList.filter((members)=>
+       members.name.toLowerCase().includes(filterRequest.toLowerCase())
+    );
+
+    const familyFromMembers = familyList.filter((family)=>{
+      return searchedMembers.some(member=> member.family_id === family.family_id)
     });
 
-    const familyFromMembers = searchedMembers?.flatMap((id) => {
-      return familyList.filter((family) => family?.family_id === id.family_id);
+    const consolidatedFamily = [...searchedFamily, ...familyFromMembers];
+
+    const searchResults = consolidatedFamily.filter((member, index, self)=>{
+      return index === self.findIndex(item=> item.family_id === member.family_id)
     });
 
-    console.log(familyFromMembers, "familyfrommembers");
-
-    const matchingMembers = [...searchedFamily, ...familyFromMembers];
-
-    const matchedMembers = matchingMembers.map((item) => {
-      let ar = [];
-      if (item?.family_id !== item?.family_id) {
-        ar.push(item);
-      }
-    });
-    console.log(matchedMembers, "matchedMembers");
-
-    // setSearchCount(searchedFamily.length);
-    setFilteredFamily(matchedMembers);
+    setFilteredFamily(searchResults);
+    setSearchCount(searchResults.length)
   };
 
   const searchValueHandler = (e) => {
