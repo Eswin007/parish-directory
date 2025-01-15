@@ -8,6 +8,7 @@ import MemberForm from "./components/MemberForm";
 import Dropdown from "./components/Dropdown";
 import { object, string, date, array } from "yup";
 import config from "./config";
+
 import Loader from "./components/Loader";
 
 const apiKey =
@@ -90,6 +91,7 @@ const App = () => {
   useEffect(() => {
     fetchMembers();
   }, []);
+
   const validationSchema = object().shape({
     hof: string().required("Name is required"),
     phone1: string()
@@ -181,6 +183,8 @@ const App = () => {
     let returnedFamilyID;
 
     try {
+      await validationSchema.validate(formData, { abortEarly: false });
+      setErrors({});
       if (familyHead?.family_id) {
         await axios.put(
           `${familyURL}?family_id=eq.${familyHead?.family_id}`,
@@ -200,12 +204,15 @@ const App = () => {
       if (membersToBeRemoved.length !== 0) {
         await removeMembersFromForm(membersToBeRemoved);
       }
-    } catch (errors) {
-      console.log(errors, "errors");
+      await fetchMembers();
+    } catch (validationErrors) {
+      const formErrors = {};
+      validationErrors.inner.forEach(
+        (error, i) => (formErrors[error.path][i] = error.message)
+      );
+      setErrors(formErrors);
+      console.log(formErrors, "fromSetErrors");
     }
-
-    await fetchMembers();
-
     setMembersToBeRemoved([]);
     formRevealHandler(false);
     setFormData(FAMILY_INITIAL);

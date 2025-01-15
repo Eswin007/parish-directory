@@ -1,13 +1,14 @@
 import React from "react";
 
 const Members = ({ familyMembers, family }) => {
-  // const relatives = membersList?.filter(
-  //   (relative) => relative?.family_id === id
-  // );
-  
-  const formattedDate = (date) => new Date().toLocaleDateString({  year: 'numeric',
-    month: 'long',
-    day: 'numeric'})
+  const formattedDate = (date) => {
+    if (date) {
+      return new Date(date).toLocaleDateString("en-US", {
+        day: "numeric",
+        month: "short",
+      });
+    } else return;
+  };
 
   return (
     <table className="members">
@@ -27,7 +28,7 @@ const Members = ({ familyMembers, family }) => {
           <td>HoF</td>
           <td>{family?.occupation}</td>
           <td>{formattedDate(family?.dob)}</td>
-          <td>{family?.dom}</td>
+          <td>{formattedDate(family?.dom) ?? "-"}</td>
           <td>{family?.blood}</td>
         </tr>
         {familyMembers?.map((member, index) => {
@@ -37,8 +38,8 @@ const Members = ({ familyMembers, family }) => {
                 <td>{member.name}</td>
                 <td>{member.relation}</td>
                 <td>{member.occupation}</td>
-                <td>{member.dob}</td>
-                <td>{member.dom ?? "-"}</td>
+                <td>{formattedDate(member.dob)}</td>
+                <td>{formattedDate(member.dom) ?? "-"}</td>
                 <td>{member.blood}</td>
               </tr>
             )
