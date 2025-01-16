@@ -205,17 +205,20 @@ const App = () => {
         await removeMembersFromForm(membersToBeRemoved);
       }
       await fetchMembers();
+      formRevealHandler(false);
+      setFormData(FAMILY_INITIAL);
+
+
     } catch (validationErrors) {
       const formErrors = {};
       validationErrors.inner.forEach(
-        (error, i) => (formErrors[error.path][i] = error.message)
+        (error) => formErrors[error.path] = error.message
+
       );
       setErrors(formErrors);
       console.log(formErrors, "fromSetErrors");
     }
     setMembersToBeRemoved([]);
-    formRevealHandler(false);
-    setFormData(FAMILY_INITIAL);
     setIsLoading(false);
   };
   const onDeleteFamily = (id) => {

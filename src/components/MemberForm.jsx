@@ -22,6 +22,7 @@ const MemberForm = ({
     saveFamilyHandler(formData);
   };
   const onChangeHandler = (e, inputName, index = null) => {
+    
     const { value } = e.target;
     console.log(inputName, "eswininputname");
     setFormData((prev) => {
