@@ -15,16 +15,21 @@ const MemberForm = ({
   setFamilyMembersList,
   errors,
   setErrors,
-  setMembersToBeRemoved
+  setMembersToBeRemoved,
 }) => {
   const onSubmitHandler = (e) => {
     e.preventDefault();
     saveFamilyHandler(formData);
   };
   const onChangeHandler = (e, inputName, index = null) => {
-    
     const { value } = e.target;
     console.log(inputName, "eswininputname");
+
+    setErrors((prev) => ({
+      ...prev,
+      [inputName]: null,
+    }));
+
     setFormData((prev) => {
       if (index !== null) {
         const updatedMembers = [...prev.members];
@@ -63,7 +68,6 @@ const MemberForm = ({
       },
     ];
     setFormData((prev) => ({ ...prev, members: updatedMembers }));
-    console.log(members, "eswinmembers");
   };
 
   const removeMemberHandler = (e, membersID, tempID) => {
@@ -72,8 +76,7 @@ const MemberForm = ({
     let afterRemoval = members || [];
     if (membersID) {
       afterRemoval = members.filter((item) => item.membersID !== membersID);
-      setMembersToBeRemoved(prev=> [...prev, membersID])
-
+      setMembersToBeRemoved((prev) => [...prev, membersID]);
     } else if (!membersID && tempID) {
       afterRemoval = members.filter((item) => item.tempID !== tempID);
     }
@@ -174,17 +177,16 @@ const MemberForm = ({
               options={RELATION}
               value={item.relation}
               onChange={(value) =>
-                onChangeHandler({ target: { value } }, "relation", index)
+                onChangeHandler(
+                  { target: { value } },
+                  "relation",
+                  index,
+                  "member"
+                )
               }
               errors={errors?.[`members[${index}].relation`]}
             />
-            {/* <InputField
-              placeholder="Relation"
-              label="Relation"
-              value={item.relation}
-              onChange={() => onChangeHandler(e, "relation", index)}
-              errors={errors?.[`members[${index}].relation`]}
-            /> */}
+
             <InputField
               placeholder="Occupation"
               label="Occupation"
