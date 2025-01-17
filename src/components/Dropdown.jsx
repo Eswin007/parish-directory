@@ -1,11 +1,10 @@
 import React, { useState } from "react";
 
-const Dropdown = ({ options, placeholder, label, value, onChange }) => {
+const Dropdown = ({ options, placeholder, label, value, onChange, errors }) => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [selectedValue, setSelectedValue] = useState(value);
 
   const openMenuHandler = () => {
-    console.log("first");
     setMenuOpen((prev) => !prev);
   };
 
@@ -14,9 +13,8 @@ const Dropdown = ({ options, placeholder, label, value, onChange }) => {
     onChange(item);
   };
 
-  console.log(menuOpen, "eswin");
   return (
-    <div className="dropdown">
+    <div className={`dropdown ${errors ? "invalid" : ""}`}>
       <label htmlFor="">{label}</label>
       <div className=" dd" onClick={openMenuHandler}>
         <div className="dd__field">
@@ -47,6 +45,7 @@ const Dropdown = ({ options, placeholder, label, value, onChange }) => {
         )}
         <div className="dd__arrow">&#9660;</div>
       </div>
+      {errors && <div className="input-error">{errors}</div>}
     </div>
   );
 };

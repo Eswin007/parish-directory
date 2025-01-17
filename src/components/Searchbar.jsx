@@ -3,28 +3,42 @@ import React, { useState } from "react";
 const Searchbar = ({
   placeholder,
   className,
-  members,
-  setMembers,
   fetchMembers,
-  setFilteredMembers,
+  setFilteredFamily,
+  familyList,
+  familyMembersList,
 }) => {
   const [searchValue, setSearchValue] = useState();
   const [searchCount, setSearchCount] = useState(0);
 
   const searchClearHandler = () => {
     setSearchValue("");
-    setFilteredMembers(members);
+    setFilteredFamily(familyList);
     setSearchCount(null);
   };
 
   const memberFilterHandler = (filterRequest) => {
-    const searchedMembers = members?.filter((member) =>
-      member?.members.some((person) =>
-        person.name.toLowerCase().includes(filterRequest.toLowerCase())
-      )
+
+    const searchedFamily = familyList?.filter((family) =>
+      family.hof?.toLowerCase().includes(filterRequest.toLowerCase())
     );
-    setSearchCount(searchedMembers.length);
-    setFilteredMembers(searchedMembers);
+
+    const searchedMembers = familyMembersList.filter((members)=>
+       members.name.toLowerCase().includes(filterRequest.toLowerCase())
+    );
+
+    const familyFromMembers = familyList.filter((family)=>{
+      return searchedMembers.some(member=> member.family_id === family.family_id)
+    });
+
+    const consolidatedFamily = [...searchedFamily, ...familyFromMembers];
+
+    const searchResults = consolidatedFamily.filter((member, index, self)=>{
+      return index === self.findIndex(item=> item.family_id === member.family_id)
+    });
+
+    setFilteredFamily(searchResults);
+    setSearchCount(searchResults.length)
   };
 
   const searchValueHandler = (e) => {
