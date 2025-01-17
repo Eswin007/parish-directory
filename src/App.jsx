@@ -207,15 +207,13 @@ const App = () => {
       await fetchMembers();
       formRevealHandler(false);
       setFormData(FAMILY_INITIAL);
-
-
     } catch (validationErrors) {
       const formErrors = {};
       validationErrors.inner.forEach(
-        (error) => formErrors[error.path] = error.message
-
+        (error) => (formErrors[error.path] = error.message)
       );
       setErrors(formErrors);
+
       console.log(formErrors, "fromSetErrors");
     }
     setMembersToBeRemoved([]);
