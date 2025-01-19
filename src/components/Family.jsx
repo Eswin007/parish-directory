@@ -1,5 +1,6 @@
 import React from "react";
 import Members from "./Members";
+import { photoURL } from "../App";
 
 const Family = ({
   family,
@@ -10,6 +11,11 @@ const Family = ({
   return (
     <div className="family">
       <h2 className="family__name">{family?.hof}</h2>
+      <img
+        src={`${photoURL}/${family?.photo}`}
+        style={{ width: "100%" }}
+        alt=""
+      />
       <div className="family__controls">
         <button
           className="family__btn"

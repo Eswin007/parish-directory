@@ -23,6 +23,9 @@ const headerConfig = {
   },
 };
 
+export const photoURL =
+  "https://vffwbrvixbmlabmozktp.supabase.co/storage/v1/object/public/famlyPhotos/";
+
 const supabaseURL = `https://vffwbrvixbmlabmozktp.supabase.co`;
 
 export const FAMILY_INITIAL = {
@@ -57,10 +60,13 @@ const App = () => {
   const [errors, setErrors] = useState();
   const [isLoading, setIsLoading] = useState(false);
   const [membersToBeRemoved, setMembersToBeRemoved] = useState([]);
+  const [photosList, setPhotosList] = useState([]);
 
   const fetchMembers = async () => {
     const familyURL = `${supabaseURL}/rest/v1/family`;
     const familyMembersURL = `${supabaseURL}/rest/v1/familyMembers`;
+    const photosURL =
+      "https://vffwbrvixbmlabmozktp.supabase.co/storage/v1/object/public/famlyPhotos";
 
     const familyList = await axios.get(familyURL, {
       headers: {
@@ -79,6 +85,15 @@ const App = () => {
         "Content-Type": "application/json",
       },
     });
+    // const photosList = await axios.get(photosURL, {
+    //   headers: {
+    //     apikey: "7e924511c7acb1ff45b55f1ca582f4bd",
+    //     // Authorization: `Bearer 7e924511c7acb1ff45b55f1ca582f4bd`,
+    //     "Content-Type": "multipart/form-data",
+    //   },
+    // });
+
+    setPhotosList(photosList, "photosList");
     setFilteredFamily(familyList.data);
     setFamilyList(familyList.data);
     setFamilyMembersList(membersList.data);
