@@ -4,8 +4,10 @@ import Button from "./Button";
 import axios from "axios";
 import Card from "./Card";
 import Dropdown from "./Dropdown";
-import { BLOOD_GROUP, RELATION } from "../App";
+import { BLOOD_GROUP, RELATION, photoURL, apiKey } from "../App";
 import Family from "./Family";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCamera } from "@fortawesome/free-solid-svg-icons";
 
 const MemberForm = ({
   saveFamilyHandler,
@@ -17,6 +19,38 @@ const MemberForm = ({
   setErrors,
   setMembersToBeRemoved,
 }) => {
+  const [file, setFile] = useState(null);
+  const [familyPhoto, setFamilyPhoto] = useState({});
+
+  const fileUploadHandler = async (e) => {
+    const selectedFile = e.target.files[0];
+    setFile(selectedFile);
+    if (selectedFile) {
+      const formData = new FormData();
+      formData.append("file", selectedFile);
+
+      try {
+        await axios.post(`${photoURL}/${selectedFile?.name}`, formData, {
+          headers: {
+            apikey: apiKey,
+            Authorization: `Bearer ${apiKey}`,
+          },
+        });
+
+        setFamilyPhoto({
+          name: selectedFile?.name,
+          path: `${photoURL}/${selectedFile?.name}`,
+        });
+      } catch (err) {
+        console.log(err.response.data, "err");
+      }
+    }
+  };
+
+  const removeImage = () => {
+    setFile(null);
+  };
+
   const onSubmitHandler = (e) => {
     e.preventDefault();
     saveFamilyHandler(formData);
@@ -94,6 +128,26 @@ const MemberForm = ({
   return (
     <form onSubmit={onSubmitHandler} className="add-members">
       <h3>Basic Details</h3>
+      <div className="photo">
+        {file === null ? (
+          <div className="photo__upload">
+            <FontAwesomeIcon icon={faCamera} style={{ fontSize: "4rem" }} />
+            <input
+              type="file"
+              name=""
+              id=""
+              onChange={(e) => fileUploadHandler(e)}
+            />
+          </div>
+        ) : (
+          <div className="photo__family">
+            <img src={familyPhoto?.path} />
+            <button onClick={removeImage} className="photo__remove">
+              Remove Photo
+            </button>
+          </div>
+        )}
+      </div>
       <InputField
         placeholder="Name"
         label="Name"

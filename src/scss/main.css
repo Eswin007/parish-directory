@@ -1,0 +1,355 @@
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: inherit;
+}
+
+body {
+  box-sizing: border-box;
+}
+
+.header {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.5rem 6rem;
+}
+.header button {
+  justify-self: flex-end;
+}
+.header .searchbar {
+  display: flex;
+  align-items: stretch;
+  border: 1px solid #333;
+  border-radius: 0.25rem;
+  overflow: hidden;
+}
+.header .searchbar input {
+  padding: 0.5rem;
+  outline: 0;
+  border: 0;
+  width: 100%;
+  font-size: 0.875rem;
+}
+.header .searchbar button {
+  all: unset;
+  padding: 0.5rem;
+  height: 100%;
+  background-color: #ccc;
+  cursor: pointer;
+}
+.header .searchbar .filter-count {
+  display: flex;
+  align-items: center;
+  align-self: center;
+  gap: 4px;
+  font-style: italic;
+  opacity: 0.5;
+}
+.header .searchbar__clear {
+  align-self: center;
+  padding-inline: 0.5rem;
+  padding-block: 3px;
+  cursor: pointer;
+}
+
+table {
+  text-align: left;
+}
+
+.wrapper {
+  max-width: 700px;
+  background-color: white;
+  border: 1px solid #ccc;
+  box-shadow: 2px 2px 1rem 0 rgba(0, 0, 0, 0.1);
+  border-radius: 1rem;
+  margin: auto;
+  padding: 1rem;
+}
+
+.full-width-col {
+  grid-column: 1/-1;
+}
+
+.card {
+  padding: 1rem;
+  border: 1px solid #ccc;
+}
+
+.btn {
+  all: unset;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.25rem;
+  line-height: 1;
+  font-size: 0.875rem;
+  cursor: pointer;
+  text-transform: uppercase;
+  --clr-base: #b13814;
+}
+
+.btn-primary {
+  background-color: var(--clr-base);
+  color: white;
+}
+
+.btn-secondary {
+  color: var(--clr-base);
+  border: 1px solid var(--clr-base);
+}
+
+.remove-member-btn {
+  align-self: flex-end;
+}
+
+.family {
+  position: relative;
+  color: #333;
+}
+.family + .family {
+  margin-top: 3rem;
+}
+.family:hover .family__controls {
+  opacity: 1;
+}
+.family__name {
+  font-size: 1.75rem;
+  margin-bottom: 0.5rem;
+  color: #b13814;
+}
+.family__detail table {
+  border-collapse: collapse;
+}
+.family__detail tr td {
+  padding-block: 3px;
+}
+.family__detail tr td:first-child {
+  width: 7rem;
+}
+.family__detail tr td:last-child {
+  font-weight: bold;
+}
+.family__controls {
+  font-size: 1rem;
+  color: rgb(47, 47, 238);
+  text-decoration: underline;
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  opacity: 0;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+.family__controls button {
+  all: unset;
+}
+.family .members {
+  margin-top: 1rem;
+  width: 100%;
+  border-collapse: collapse;
+}
+.family .members tr td,
+.family .members tr th {
+  padding: 0.5rem;
+}
+.family .members tr:last-child td {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+.family .members tr th {
+  color: white;
+  background-color: #b13814;
+  font-weight: 400;
+}
+.family .members tr:nth-child(even) {
+  background-color: #eee;
+}
+
+.member-card {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+  grid-column-gap: 1.5rem;
+}
+
+.input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  position: relative;
+}
+.input-group.invalid {
+  color: rgb(226, 0, 0);
+}
+.input-group.invalid input {
+  border-color: rgb(226, 0, 0);
+}
+.input-group label {
+  font-size: 0.875rem;
+}
+.input-group input {
+  padding: 0.5rem;
+  border: var(--input-border);
+  border-radius: 0.25rem;
+}
+.input-group input:focus {
+  outline: 0;
+  box-shadow: 0 0 2px 0 #68bbff;
+  border-color: #68bbff;
+}
+
+.dropdown {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  font-size: 0.875rem;
+  position: relative;
+}
+.dropdown.invalid label {
+  color: rgb(226, 0, 0);
+}
+.dropdown.invalid .dd {
+  border-color: rgb(226, 0, 0);
+}
+
+.dd {
+  all: unset;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem;
+  border-radius: 0.25rem;
+  border: var(--input-border);
+  position: relative;
+  min-width: 5rem;
+  background-color: white;
+}
+.dd:has(.dd__options) {
+  border-radius: 0.25rem 0.25rem 0 0;
+  border-bottom: 1px solid transparent;
+}
+.dd__options {
+  position: absolute;
+  top: 100%;
+  left: -1px;
+  width: 100%;
+  border: var(--input-border);
+  border-top: 0;
+  border-radius: 0 0 0.25rem 0.25rem;
+  background-color: white;
+  z-index: 100;
+}
+.dd__menu {
+  list-style: none;
+}
+.dd__menu-item {
+  padding: 0.185rem 0.5rem;
+}
+.dd__menu-item:first-child {
+  border-top: 1px solid #eee;
+}
+.dd__menu-item:hover {
+  background-color: #ddd;
+}
+.dd__placeholder {
+  color: #838383;
+}
+.dd__no-data {
+  padding: 0.5rem;
+  color: #838383;
+}
+
+.input-error {
+  color: rgb(226, 0, 0);
+  font-size: 13px;
+  position: absolute;
+  left: 0.5rem;
+  bottom: 0;
+  transform: translateY(105%);
+}
+
+.add-members {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-column-gap: 1.5rem;
+  grid-row-gap: 2rem;
+}
+.add-members .photo {
+  width: 100%;
+  height: 300px;
+  background-color: #ddd;
+  grid-column: 1/3;
+  display: grid;
+  place-content: center;
+  border-radius: 0.5rem;
+  position: relative;
+}
+.add-members .photo__remove {
+  line-height: 1;
+  background-color: white;
+  padding: 0.25rem 1rem;
+  border-radius: 100vmax;
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  outline: 0;
+}
+.add-members .photo__upload {
+  width: 10rem;
+  height: 10rem;
+  background-color: #ccc;
+  border-radius: 100%;
+  position: relative;
+  display: grid;
+  place-content: center;
+}
+.add-members .photo__upload:hover svg path {
+  fill: rgb(76, 76, 255);
+}
+.add-members .photo__upload svg path {
+  fill: #4a4a4a;
+  transition: all 0.2s ease;
+}
+.add-members .photo__upload input {
+  opacity: 0;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  inset: 0;
+}
+.add-members button {
+  justify-self: flex-start;
+}
+.add-members h3 {
+  grid-column: 1/-1;
+  color: #4a4a4a;
+  text-transform: uppercase;
+  font-size: 0.875rem;
+}
+.add-members .button-wrap {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 1rem;
+  grid-column: span 2;
+}
+
+:root {
+  --input-border: 1px solid #838383;
+  --input-border-focus: 1px solid #68bbff;
+}
+
+.loader {
+  position: fixed;
+  inset: 0;
+  display: grid;
+  place-content: center;
+  font-size: 5rem;
+  color: #000;
+  background-color: rgba(0, 0, 0, 0.4);
+  z-index: 1000;
+  font-weight: bold;
+}/*# sourceMappingURL=main.css.map */

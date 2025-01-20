@@ -7,11 +7,12 @@ import "./scss/main.scss";
 import MemberForm from "./components/MemberForm";
 import Dropdown from "./components/Dropdown";
 import { object, string, date, array } from "yup";
+
 import config from "./config";
 
 import Loader from "./components/Loader";
 
-const apiKey =
+export const apiKey =
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZmZndicnZpeGJtbGFibW96a3RwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MjU3MjkxMzgsImV4cCI6MjA0MTMwNTEzOH0.yU8fXAZa_x84GwdVhPVDdLhOWbAa6r2PoHxhnV5ebn0";
 const headerConfig = {
   headers: {
@@ -23,10 +24,8 @@ const headerConfig = {
   },
 };
 
-export const photoURL =
-  "https://vffwbrvixbmlabmozktp.supabase.co/storage/v1/object/public/famlyPhotos/";
-
 const supabaseURL = `https://vffwbrvixbmlabmozktp.supabase.co`;
+export const photoURL = `${supabaseURL}/storage/v1/object/public/family-photos`;
 
 export const FAMILY_INITIAL = {
   hof: "",
@@ -65,8 +64,6 @@ const App = () => {
   const fetchMembers = async () => {
     const familyURL = `${supabaseURL}/rest/v1/family`;
     const familyMembersURL = `${supabaseURL}/rest/v1/familyMembers`;
-    const photosURL =
-      "https://vffwbrvixbmlabmozktp.supabase.co/storage/v1/object/public/famlyPhotos";
 
     const familyList = await axios.get(familyURL, {
       headers: {
