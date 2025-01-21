@@ -38,6 +38,7 @@ export const FAMILY_INITIAL = {
   blood: "",
   occupation: "",
   members: [],
+  photo: "",
 };
 
 export const BLOOD_GROUP = ["A+", "A-", "B-", "O+", "O-", "AB+", "AB-", "B+"];
@@ -60,7 +61,6 @@ const App = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [membersToBeRemoved, setMembersToBeRemoved] = useState([]);
   const [familyPhoto, setFamilyPhoto] = useState(null);
-  
 
   const fetchMembers = async () => {
     const familyURL = `${supabaseURL}/rest/v1/family`;
@@ -83,13 +83,6 @@ const App = () => {
         "Content-Type": "application/json",
       },
     });
-    // const photosList = await axios.get(photosURL, {
-    //   headers: {
-    //     apikey: "7e924511c7acb1ff45b55f1ca582f4bd",
-    //     // Authorization: `Bearer 7e924511c7acb1ff45b55f1ca582f4bd`,
-    //     "Content-Type": "multipart/form-data",
-    //   },
-    // });
 
     setFilteredFamily(familyList.data);
     setFamilyList(familyList.data);
@@ -156,7 +149,8 @@ const App = () => {
     console.log(formData, "eswinformdataonsave");
     const { members, ...familyHead } = formData;
     console.log(members, "eswinMembers");
-    const finalFamilyHead = {...familyHead, photo: familyPhoto.name}
+    const finalFamilyHead = { ...familyHead, photo: familyPhoto?.name };
+    console.log(finalFamilyHead, "finalfamilyhead");
     console.log(familyHead, "eswinfamilyhead");
     console.log(membersToBeRemoved, "toberemoved");
 
@@ -197,16 +191,21 @@ const App = () => {
 
     try {
       await validationSchema.validate(formData, { abortEarly: false });
+      console.log(formData, "formdata on save family");
       setErrors({});
       if (finalFamilyHead?.family_id) {
         await axios.put(
           `${familyURL}?family_id=eq.${finalFamilyHead?.family_id}`,
-          finalFamilyHead,
+          { ...finalFamilyHead, photo: familyPhoto || "" },
           headerConfig
         );
       } else {
         await axios
-          .post(familyURL, finalFamilyHead, headerConfig)
+          .post(
+            familyURL,
+            { ...finalFamilyHead, photo: familyPhoto || "" },
+            headerConfig
+          )
           .then((response) => (returnedFamilyID = response.data[0].family_id));
       }
 
@@ -249,7 +248,11 @@ const App = () => {
       (members) => members?.family_id === id
     );
 
-    setFormData({ ...editFamily, members: editMember });
+    setFormData({
+      photo: editFamily?.photo,
+      ...editFamily,
+      members: editMember,
+    });
   };
   return (
     <>

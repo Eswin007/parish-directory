@@ -19,44 +19,49 @@ const MemberForm = ({
   setErrors,
   setMembersToBeRemoved,
   familyPhoto,
-  setFamilyPhoto
+  setFamilyPhoto,
 }) => {
-  const [file, setFile] = useState(null);
-  // const [familyPhoto, setFamilyPhoto] = useState({});
-
   const fileUploadHandler = async (e) => {
     const selectedFile = e.target.files[0];
-    setFile(selectedFile);
     if (selectedFile) {
-      const formData = new FormData();
-      formData.append("file", selectedFile);
+      const uploadFormData = new FormData();
+      uploadFormData.append("file", selectedFile);
 
       try {
-        await axios.put(`${photoURL}/${selectedFile?.name}`, formData, {
+        await axios.put(`${photoURL}/${selectedFile?.name}`, uploadFormData, {
           headers: {
             apikey: apiKey,
             Authorization: `Bearer ${apiKey}`,
-           'Content-Type': 'multipart/form-data'
+            "Content-Type": "multipart/form-data",
           },
         });
 
-        setFamilyPhoto({
-          name: selectedFile?.name,
-          path: `${photoURL}/${selectedFile?.name}`,
-        });
+        setFamilyPhoto(selectedFile?.name);
+        setFormData((prev) => ({
+          ...prev,
+          photo: selectedFile?.name,
+        }));
       } catch (err) {
         console.log(err.response.data, "err");
       }
     }
   };
 
-  const removeImage = () => {
-    setFile(null);
+  const removeImage = (e) => {
+    e.preventDefault();
+    setFamilyPhoto(null);
+    // const { photo, ...withoutPhoto } = formData;
+    // setFormData(withoutPhoto);
+    setFormData((prev) => ({
+      ...prev,
+      photo: "",
+    }));
   };
 
   const onSubmitHandler = (e) => {
     e.preventDefault();
     saveFamilyHandler(formData);
+    console.log(formData, "formdataonsubmit");
   };
   const onChangeHandler = (e, inputName, index = null, isMember) => {
     const { value } = e.target;
@@ -128,16 +133,28 @@ const MemberForm = ({
     setFormData((prev) => ({ ...prev, members: afterRemoval }));
   };
 
+  const yesImage =
+    formData?.photo !== "" &&
+    familyPhoto !== null &&
+    familyPhoto !== undefined &&
+    formData?.photo !== null;
+
+  const noImage =
+    formData?.photo === "" || familyPhoto === null || familyPhoto === undefined;
+
   return (
     <form onSubmit={onSubmitHandler} className="add-members">
       <h3>Basic Details</h3>
       <div className="photo">
-        {familyPhoto !== null ? <div className="photo__family">
-            <img src={familyPhoto?.path} />
-            <button onClick={removeImage} className="photo__remove">
+        {formData?.photo !== "" ? (
+          <div className="photo__family">
+            <img src={`${photoURL}/${formData?.photo}`} />
+            <button onClick={(e) => removeImage(e)} className="photo__remove">
               Remove Photo
             </button>
-          </div> : <div className="photo__upload">
+          </div>
+        ) : (
+          <div className="photo__upload">
             <FontAwesomeIcon icon={faCamera} style={{ fontSize: "4rem" }} />
             <input
               type="file"
@@ -146,9 +163,7 @@ const MemberForm = ({
               onChange={(e) => fileUploadHandler(e)}
             />
           </div>
-          }
-         
-   
+        )}
       </div>
       <InputField
         placeholder="Name"
