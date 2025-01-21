@@ -18,9 +18,11 @@ const MemberForm = ({
   errors,
   setErrors,
   setMembersToBeRemoved,
+  familyPhoto,
+  setFamilyPhoto
 }) => {
   const [file, setFile] = useState(null);
-  const [familyPhoto, setFamilyPhoto] = useState({});
+  // const [familyPhoto, setFamilyPhoto] = useState({});
 
   const fileUploadHandler = async (e) => {
     const selectedFile = e.target.files[0];
@@ -30,10 +32,11 @@ const MemberForm = ({
       formData.append("file", selectedFile);
 
       try {
-        await axios.post(`${photoURL}/${selectedFile?.name}`, formData, {
+        await axios.put(`${photoURL}/${selectedFile?.name}`, formData, {
           headers: {
             apikey: apiKey,
             Authorization: `Bearer ${apiKey}`,
+           'Content-Type': 'multipart/form-data'
           },
         });
 
@@ -129,8 +132,12 @@ const MemberForm = ({
     <form onSubmit={onSubmitHandler} className="add-members">
       <h3>Basic Details</h3>
       <div className="photo">
-        {file === null ? (
-          <div className="photo__upload">
+        {familyPhoto !== null ? <div className="photo__family">
+            <img src={familyPhoto?.path} />
+            <button onClick={removeImage} className="photo__remove">
+              Remove Photo
+            </button>
+          </div> : <div className="photo__upload">
             <FontAwesomeIcon icon={faCamera} style={{ fontSize: "4rem" }} />
             <input
               type="file"
@@ -139,14 +146,9 @@ const MemberForm = ({
               onChange={(e) => fileUploadHandler(e)}
             />
           </div>
-        ) : (
-          <div className="photo__family">
-            <img src={familyPhoto?.path} />
-            <button onClick={removeImage} className="photo__remove">
-              Remove Photo
-            </button>
-          </div>
-        )}
+          }
+         
+   
       </div>
       <InputField
         placeholder="Name"

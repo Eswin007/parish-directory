@@ -25,7 +25,7 @@ const headerConfig = {
 };
 
 const supabaseURL = `https://vffwbrvixbmlabmozktp.supabase.co`;
-export const photoURL = `${supabaseURL}/storage/v1/object/public/family-photos`;
+export const photoURL = `${supabaseURL}/storage/v1/object/family-photos`;
 
 export const FAMILY_INITIAL = {
   hof: "",
@@ -59,7 +59,8 @@ const App = () => {
   const [errors, setErrors] = useState();
   const [isLoading, setIsLoading] = useState(false);
   const [membersToBeRemoved, setMembersToBeRemoved] = useState([]);
-  const [photosList, setPhotosList] = useState([]);
+  const [familyPhoto, setFamilyPhoto] = useState(null);
+  
 
   const fetchMembers = async () => {
     const familyURL = `${supabaseURL}/rest/v1/family`;
@@ -90,7 +91,6 @@ const App = () => {
     //   },
     // });
 
-    setPhotosList(photosList, "photosList");
     setFilteredFamily(familyList.data);
     setFamilyList(familyList.data);
     setFamilyMembersList(membersList.data);
@@ -156,6 +156,7 @@ const App = () => {
     console.log(formData, "eswinformdataonsave");
     const { members, ...familyHead } = formData;
     console.log(members, "eswinMembers");
+    const finalFamilyHead = {...familyHead, photo: familyPhoto.name}
     console.log(familyHead, "eswinfamilyhead");
     console.log(membersToBeRemoved, "toberemoved");
 
@@ -197,15 +198,15 @@ const App = () => {
     try {
       await validationSchema.validate(formData, { abortEarly: false });
       setErrors({});
-      if (familyHead?.family_id) {
+      if (finalFamilyHead?.family_id) {
         await axios.put(
-          `${familyURL}?family_id=eq.${familyHead?.family_id}`,
-          familyHead,
+          `${familyURL}?family_id=eq.${finalFamilyHead?.family_id}`,
+          finalFamilyHead,
           headerConfig
         );
       } else {
         await axios
-          .post(familyURL, familyHead, headerConfig)
+          .post(familyURL, finalFamilyHead, headerConfig)
           .then((response) => (returnedFamilyID = response.data[0].family_id));
       }
 
@@ -274,6 +275,8 @@ const App = () => {
             familyList={familyList}
             setFamilyMembersList={setFamilyMembersList}
             setMembersToBeRemoved={setMembersToBeRemoved}
+            familyPhoto={familyPhoto}
+            setFamilyPhoto={setFamilyPhoto}
           />
         )}
         {!showForm &&
