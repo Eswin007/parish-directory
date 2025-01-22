@@ -219,6 +219,7 @@ const App = () => {
       await fetchMembers();
       formRevealHandler(false);
       setFormData(FAMILY_INITIAL);
+      setFamilyPhoto(null)
     } catch (validationErrors) {
       const formErrors = {};
       validationErrors.inner.forEach(
