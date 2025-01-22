@@ -219,7 +219,7 @@ const App = () => {
       await fetchMembers();
       formRevealHandler(false);
       setFormData(FAMILY_INITIAL);
-      setFamilyPhoto(null)
+      setFamilyPhoto(null);
     } catch (validationErrors) {
       const formErrors = {};
       validationErrors.inner.forEach(
@@ -257,48 +257,52 @@ const App = () => {
   };
   return (
     <>
-      <Header
-        formRevealHandler={formRevealHandler}
-        showForm={showForm}
-        setFormData={setFormData}
-        fetchMembers={fetchMembers}
-        setFilteredFamily={setFilteredFamily}
-        familyList={familyList}
-        familyMembersList={familyMembersList}
-      />
-      <div className="wrapper">
-        {isLoading && <Loader />}
-        {showForm && (
-          <MemberForm
-            formData={formData}
-            setFormData={setFormData}
-            saveFamilyHandler={saveFamilyHandler}
-            formRevealHandler={formRevealHandler}
-            errors={errors}
-            setErrors={setErrors}
-            familyList={familyList}
-            setFamilyMembersList={setFamilyMembersList}
-            setMembersToBeRemoved={setMembersToBeRemoved}
-            familyPhoto={familyPhoto}
-            setFamilyPhoto={setFamilyPhoto}
-          />
-        )}
-        {!showForm &&
-          filteredFamily?.length > 0 &&
-          filteredFamily?.map((family) => (
-            <Family
-              key={family?.family_id}
-              family={family}
-              familyMembers={familyMembersList.filter(
-                (member) => member?.family_id === family?.family_id
-              )}
-              onDeleteFamily={onDeleteFamily}
-              onEditFamily={onEditFamily}
+      <div className="logo">Parish Directory 2025</div>
+
+      <div className="body-wrap">
+        <Header
+          formRevealHandler={formRevealHandler}
+          showForm={showForm}
+          setFormData={setFormData}
+          fetchMembers={fetchMembers}
+          setFilteredFamily={setFilteredFamily}
+          familyList={familyList}
+          familyMembersList={familyMembersList}
+        />
+        <div className="wrapper">
+          {isLoading && <Loader />}
+          {showForm && (
+            <MemberForm
+              formData={formData}
+              setFormData={setFormData}
+              saveFamilyHandler={saveFamilyHandler}
+              formRevealHandler={formRevealHandler}
+              errors={errors}
+              setErrors={setErrors}
+              familyList={familyList}
+              setFamilyMembersList={setFamilyMembersList}
+              setMembersToBeRemoved={setMembersToBeRemoved}
+              familyPhoto={familyPhoto}
+              setFamilyPhoto={setFamilyPhoto}
             />
-          ))}
-        {!showForm && filteredFamily.length === 0 && (
-          <span>No data to show</span>
-        )}
+          )}
+          {!showForm &&
+            filteredFamily?.length > 0 &&
+            filteredFamily?.map((family) => (
+              <Family
+                key={family?.family_id}
+                family={family}
+                familyMembers={familyMembersList.filter(
+                  (member) => member?.family_id === family?.family_id
+                )}
+                onDeleteFamily={onDeleteFamily}
+                onEditFamily={onEditFamily}
+              />
+            ))}
+          {!showForm && filteredFamily.length === 0 && (
+            <span>No data to show</span>
+          )}
+        </div>
       </div>
     </>
   );

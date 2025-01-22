@@ -3,6 +3,7 @@
   flex-direction: column;
   gap: 3px;
   position: relative;
+  font-family: var(--fs-secondary);
 
   &.invalid {
     color: rgb(226, 0, 0);
@@ -20,6 +21,9 @@
     padding: 0.5rem;
     border: var(--input-border);
     border-radius: 0.25rem;
+    font-family: var(--fs-secondary);
+    font-size: 0.875rem;
+
     &:focus {
       outline: 0;
       box-shadow: 0 0 2px 0 #68bbff;
@@ -49,19 +53,39 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0.5rem;
+  // padding: 0.5rem;
   border-radius: 0.25rem;
   border: var(--input-border);
   position: relative;
   min-width: 5rem;
   background-color: white;
+  height: 40px;
+  padding-right: 0.5rem;
 
   &:has(.dd__options) {
     border-radius: 0.25rem 0.25rem 0 0;
     border-bottom: 1px solid transparent;
   }
 
-  &__field {
+  &__arrow {
+    position: relative;
+    z-index: 5;
+  }
+
+  &:focus-within {
+    outline: 0;
+    box-shadow: 0 0 2px 0 #68bbff;
+    border-color: #68bbff;
+  }
+
+  &__selected-value {
+    background-color: transparent;
+    height: 100%;
+    width: 100%;
+    padding-inline: 0.5rem;
+    box-sizing: border-box;
+    border: 0;
+    outline: 0;
   }
 
   &__options {

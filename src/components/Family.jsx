@@ -11,20 +11,24 @@ const Family = ({
   return (
     <div className="family">
       <h2 className="family__name">{family?.hof}</h2>
-      <img
-        src={`${photoURL}/${family?.photo}`}
-        style={{ width: "100%" }}
-        alt=""
-      />
+      {family?.photo && (
+        <div className="family__photo">
+          <img
+            src={`${photoURL}/${family?.photo}`}
+            style={{ width: "100%" }}
+            alt=""
+          />
+        </div>
+      )}
       <div className="family__controls">
         <button
-          className="family__btn"
+          className="family__btn btn-fancy"
           onClick={() => onDeleteFamily(family?.family_id)}
         >
           Delete
         </button>
         <button
-          className="family__btn"
+          className="family__btn btn-fancy"
           onClick={() => onEditFamily(family?.family_id)}
         >
           Edit
@@ -38,7 +42,7 @@ const Family = ({
           </tr>
           <tr>
             <td>Mother Parish</td>
-            <td>{family?.mother_parish}</td>
+            <td>{family?.mother_parish || "-"}</td>
           </tr>
           <tr>
             <td>Phone</td>

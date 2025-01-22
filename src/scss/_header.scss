@@ -1,9 +1,17 @@
+.logo {
+  font-family: var(--fs-primary);
+  text-transform: uppercase;
+  font-weight: 700;
+  text-align: center;
+  margin-top: 2.5rem;
+  font-size: 1rem;
+}
 .header {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: 2fr 1fr;
   align-items: center;
   justify-content: space-between;
-  padding: 1.5rem 6rem;
+  margin-block: 1rem;
 
   button {
     justify-self: flex-end;
@@ -25,8 +33,9 @@
       all: unset;
       padding: 0.5rem;
       height: 100%;
-      background-color: #ccc;
+      background-color: #ddd;
       cursor: pointer;
+      font-family: var(--fs-primary);
     }
 
     .filter-count {
@@ -43,6 +52,7 @@
       padding-inline: 0.5rem;
       padding-block: 3px;
       cursor: pointer;
+      font-family: var(--fs-primary);
     }
   }
 }

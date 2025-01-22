@@ -14,16 +14,25 @@ const Dropdown = ({ options, placeholder, label, value, onChange, errors }) => {
   };
 
   return (
-    <div className={`dropdown ${errors ? "invalid" : ""}`}>
+    <div className={`dropdown ${errors ? "invalid" : ""}`} tabIndex={-1}>
       <label htmlFor="">{label}</label>
       <div className=" dd" onClick={openMenuHandler}>
-        <div className="dd__field">
-          {selectedValue ? (
-            <div className="dd__selected-value">{selectedValue}</div>
-          ) : (
-            <div className="dd__placeholder">{placeholder}</div>
-          )}
-        </div>
+        {selectedValue ? (
+          <input
+            type="text"
+            className="dd__selected-value"
+            value={selectedValue}
+          />
+        ) : (
+          // <div className="dd__selected-value">{selectedValue}</div>
+          // <div className="dd__placeholder">{placeholder}</div>
+          <input
+            type="text"
+            className="dd__selected-value"
+            placeholder={placeholder}
+            value={selectedValue}
+          />
+        )}
         {menuOpen && (
           <div className="dd__options">
             {options?.length > 0 ? (

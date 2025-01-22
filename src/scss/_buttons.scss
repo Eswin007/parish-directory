@@ -6,6 +6,8 @@
   font-size: 0.875rem;
   cursor: pointer;
   text-transform: uppercase;
+  font-family: var(--fs-primary);
+  font-weight: 600;
   --clr-base: #b13814;
 }
 
@@ -21,4 +23,18 @@
 
 .remove-member-btn {
   align-self: flex-end;
+}
+
+.btn-fancy {
+  all: unset;
+  text-decoration: none;
+  padding: 0.5rem 1rem;
+  border-radius: 100vmax;
+  color: #4a4a4a;
+  font-family: var(--fs-primary);
+
+  &:hover {
+    background-color: #af1b3f;
+    color: white;
+  }
 }

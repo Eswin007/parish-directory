@@ -3,6 +3,9 @@
   grid-template-columns: repeat(2, 1fr);
   grid-column-gap: 1.5rem;
   grid-row-gap: 2rem;
+  border: 1px solid #ccc;
+  padding: 1rem;
+  border-radius: 0.5rem;
 
   .photo {
     width: 100%;

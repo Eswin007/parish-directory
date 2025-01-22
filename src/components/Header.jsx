@@ -19,10 +19,9 @@ const Header = ({
 
   return (
     <div className="header">
-      <div className="logo">DIRECTORY</div>
       {!showForm && (
         <Searchbar
-          placeholder="search"
+          placeholder="Search..."
           setFormData={setFormData}
           fetchMembers={fetchMembers}
           setFilteredFamily={setFilteredFamily}
