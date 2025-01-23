@@ -7,10 +7,22 @@
   border-radius: 0.5rem;
   padding: 1rem;
 
-  font-family: var(--fs-parimary);
+  font-family: var(--fs-primary);
 
   & + & {
     margin-top: 2rem;
+  }
+
+  &__header {
+    display: flex;
+    align-items: center;
+  }
+
+  &__controls {
+    opacity: 0;
+    display: flex;
+    align-items: center;
+    margin-left: auto;
   }
 
   &:hover {
@@ -22,6 +34,8 @@
   &__photo {
     aspect-ratio: 16 / 9;
     overflow: hidden;
+    margin-bottom: 1rem;
+    border-radius: 1rem;
 
     img {
       width: 100%;
@@ -50,18 +64,6 @@
     tr td:last-child {
       font-weight: bold;
     }
-  }
-
-  &__controls {
-    // font-size: 1rem;
-    // color: rgb(47, 47, 238);
-    // text-decoration: underline;
-    position: absolute;
-    top: 1rem;
-    right: 1rem;
-    opacity: 0;
-    display: flex;
-    align-items: center;
   }
 
   .members {
@@ -95,4 +97,14 @@
   gap: 2rem;
   border-radius: 0.5rem;
   grid-column-gap: 1.5rem;
+}
+
+.empty-results {
+  width: 100%;
+  margin-inline: auto;
+  text-align: center;
+  font-family: var(--fs-secondary);
+  font-size: 1.25rem;
+  font-weight: bold;
+  padding: 3rem;
 }

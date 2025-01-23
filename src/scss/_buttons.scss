@@ -28,10 +28,12 @@
 .btn-fancy {
   all: unset;
   text-decoration: none;
-  padding: 0.5rem 1rem;
+  padding: 0.4rem 1rem;
   border-radius: 100vmax;
+  font-size: 1rem;
   color: #4a4a4a;
   font-family: var(--fs-primary);
+  transition: all 0.15s ease;
 
   &:hover {
     background-color: #af1b3f;

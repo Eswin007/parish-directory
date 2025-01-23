@@ -21,7 +21,9 @@ const MemberForm = ({
   familyPhoto,
   setFamilyPhoto,
 }) => {
+  const [imageUploading, setImageUploading] = useState(false);
   const fileUploadHandler = async (e) => {
+    setImageUploading(true);
     const selectedFile = e.target.files[0];
     if (selectedFile) {
       const uploadFormData = new FormData();
@@ -41,6 +43,7 @@ const MemberForm = ({
           ...prev,
           photo: selectedFile?.name,
         }));
+        setImageUploading(false);
       } catch (err) {
         console.log(err.response.data, "err");
       }
@@ -133,15 +136,6 @@ const MemberForm = ({
     setFormData((prev) => ({ ...prev, members: afterRemoval }));
   };
 
-  const yesImage =
-    formData?.photo !== "" &&
-    familyPhoto !== null &&
-    familyPhoto !== undefined &&
-    formData?.photo !== null;
-
-  const noImage =
-    formData?.photo === "" || familyPhoto === null || familyPhoto === undefined;
-
   return (
     <form onSubmit={onSubmitHandler} className="add-members">
       <h3>Basic Details</h3>
@@ -154,11 +148,13 @@ const MemberForm = ({
             </button>
           </div>
         ) : (
-          <div className="photo__upload">
+          <div className={`photo__upload ${imageUploading && "pulse"}`}>
+            {imageUploading && <div className="photo__loader"></div>}
             <FontAwesomeIcon icon={faCamera} style={{ fontSize: "4rem" }} />
             <input
               type="file"
               name=""
+              accept=".jpg, .jpeg, .png"
               id=""
               onChange={(e) => fileUploadHandler(e)}
             />

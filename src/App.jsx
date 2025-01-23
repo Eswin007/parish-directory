@@ -128,7 +128,7 @@ const App = () => {
       object().shape({
         name: string().required("Member Name is required"),
         relation: string().required("Relation is required"),
-        occupation: string().required("Occupation is required"),
+        occupation: string().nullable(),
         dob: date()
           .required("Date of birth is required")
           .transform((value, originalValue) =>
@@ -300,7 +300,7 @@ const App = () => {
               />
             ))}
           {!showForm && filteredFamily.length === 0 && (
-            <span>No data to show</span>
+            <div className="empty-results">No Results</div>
           )}
         </div>
       </div>

@@ -10,7 +10,23 @@ const Family = ({
 }) => {
   return (
     <div className="family">
-      <h2 className="family__name">{family?.hof}</h2>
+      <div className="family__header">
+        <h2 className="family__name">{family?.hof}</h2>
+        <div className="family__controls">
+          <button
+            className="family__btn btn-fancy"
+            onClick={() => onDeleteFamily(family?.family_id)}
+          >
+            Delete
+          </button>
+          <button
+            className="family__btn btn-fancy"
+            onClick={() => onEditFamily(family?.family_id)}
+          >
+            Edit
+          </button>
+        </div>
+      </div>
       {family?.photo && (
         <div className="family__photo">
           <img
@@ -20,20 +36,7 @@ const Family = ({
           />
         </div>
       )}
-      <div className="family__controls">
-        <button
-          className="family__btn btn-fancy"
-          onClick={() => onDeleteFamily(family?.family_id)}
-        >
-          Delete
-        </button>
-        <button
-          className="family__btn btn-fancy"
-          onClick={() => onEditFamily(family?.family_id)}
-        >
-          Edit
-        </button>
-      </div>
+
       <table className="family__detail">
         <tbody>
           <tr>
