@@ -47,8 +47,8 @@
     margin-bottom: 0.5rem;
     color: #b13814;
     font-family: var(--fs-secondary);
-    font-weight: 700;
-    text-transform: capitalize;
+    font-weight: 900;
+    text-transform: uppercase;
   }
 
   &__detail {
@@ -93,7 +93,7 @@
 .member-card {
   display: grid;
   background-color: rgb(240, 242, 247);
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr));
   gap: 2rem;
   border-radius: 0.5rem;
   grid-column-gap: 1.5rem;

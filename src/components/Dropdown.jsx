@@ -21,16 +21,16 @@ const Dropdown = ({ options, placeholder, label, value, onChange, errors }) => {
           <input
             type="text"
             className="dd__selected-value"
-            value={selectedValue}
+            readOnly
+            value={selectedValue || ""}
           />
         ) : (
-          // <div className="dd__selected-value">{selectedValue}</div>
-          // <div className="dd__placeholder">{placeholder}</div>
           <input
             type="text"
             className="dd__selected-value"
             placeholder={placeholder}
-            value={selectedValue}
+            value={selectedValue || ""}
+            readOnly
           />
         )}
         {menuOpen && (

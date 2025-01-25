@@ -11,6 +11,7 @@ import { object, string, date, array } from "yup";
 import config from "./config";
 
 import Loader from "./components/Loader";
+import Toast from "./components/Toast";
 
 export const apiKey =
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZmZndicnZpeGJtbGFibW96a3RwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MjU3MjkxMzgsImV4cCI6MjA0MTMwNTEzOH0.yU8fXAZa_x84GwdVhPVDdLhOWbAa6r2PoHxhnV5ebn0";
@@ -61,6 +62,8 @@ const App = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [membersToBeRemoved, setMembersToBeRemoved] = useState([]);
   const [familyPhoto, setFamilyPhoto] = useState(null);
+  const [showToast, setShowToast] = useState(false);
+  const [toastMessage, setToastMessage] = useState(null);
 
   const fetchMembers = async () => {
     const familyURL = `${supabaseURL}/rest/v1/family`;
@@ -97,6 +100,11 @@ const App = () => {
     fetchMembers();
   }, []);
 
+  const toastRevealer = (message) => {
+    setToastMessage(message);
+    setShowToast(true);
+  };
+
   const validationSchema = object().shape({
     hof: string().required("Name is required"),
     phone1: string()
@@ -112,7 +120,7 @@ const App = () => {
       .required("Please Enter email"),
     mother_parish: string(),
     address: string().required("Address is required"),
-    occupation: string(),
+    occupation: string().nullable(),
     dob: date()
       .transform((value, originalValue) =>
         originalValue === "" ? null : value
@@ -123,7 +131,7 @@ const App = () => {
       .transform((value, originalValue) =>
         originalValue === "" ? null : value
       ),
-    blood: string().required("Please select a blood group"),
+    blood: string().nullable(),
     members: array().of(
       object().shape({
         name: string().required("Member Name is required"),
@@ -139,7 +147,7 @@ const App = () => {
           .transform((value, originalValue) =>
             originalValue === "" ? null : value
           ),
-        blood: string().required("Please select the blood group"),
+        blood: string().nullable(),
       })
     ),
   });
@@ -148,11 +156,7 @@ const App = () => {
     setIsLoading(true);
     console.log(formData, "eswinformdataonsave");
     const { members, ...familyHead } = formData;
-    console.log(members, "eswinMembers");
-    const finalFamilyHead = { ...familyHead, photo: familyPhoto?.name };
-    console.log(finalFamilyHead, "finalfamilyhead");
-    console.log(familyHead, "eswinfamilyhead");
-    console.log(membersToBeRemoved, "toberemoved");
+    const finalFamilyHead = { ...familyHead, photo: familyPhoto };
 
     const familyURL = `${supabaseURL}/rest/v1/family`;
     const familyMembersURL = `${supabaseURL}/rest/v1/familyMembers`;
@@ -194,11 +198,21 @@ const App = () => {
       console.log(formData, "formdata on save family");
       setErrors({});
       if (finalFamilyHead?.family_id) {
-        await axios.put(
-          `${familyURL}?family_id=eq.${finalFamilyHead?.family_id}`,
-          { ...finalFamilyHead, photo: familyPhoto || "" },
-          headerConfig
-        );
+        // this is a check to see if the family head already has a photo value in place, if it has the value, then it is just updating the form data, and if not, we're updaing it as family ehad and adding the family photo separately.
+
+        if (familyHead.photo !== "") {
+          await axios.put(
+            `${familyURL}?family_id=eq.${familyHead?.family_id}`,
+            { ...familyHead },
+            headerConfig
+          );
+        } else {
+          await axios.put(
+            `${familyURL}?family_id=eq.${finalFamilyHead?.family_id}`,
+            { ...finalFamilyHead, photo: familyPhoto || "" },
+            headerConfig
+          );
+        }
       } else {
         await axios
           .post(
@@ -216,6 +230,7 @@ const App = () => {
       if (membersToBeRemoved.length !== 0) {
         await removeMembersFromForm(membersToBeRemoved);
       }
+      toastRevealer("Directory Updated");
       await fetchMembers();
       formRevealHandler(false);
       setFormData(FAMILY_INITIAL);
@@ -226,20 +241,23 @@ const App = () => {
         (error) => (formErrors[error.path] = error.message)
       );
       setErrors(formErrors);
-
-      console.log(formErrors, "fromSetErrors");
     }
     setMembersToBeRemoved([]);
     setIsLoading(false);
   };
   const onDeleteFamily = (id) => {
     const familyURL = `${supabaseURL}/rest/v1/family`;
-    axios
-      .delete(`${familyURL}?family_id=eq.${id}`, headerConfig)
-      .then((res) => fetchMembers())
-      .catch((err) => {
-        console.log("error", err);
-      });
+    try {
+      axios
+        .delete(`${familyURL}?family_id=eq.${id}`, headerConfig)
+        .then((res) => fetchMembers())
+        .catch((err) => {
+          console.log("error", err);
+        });
+    } catch (err) {
+    } finally {
+      toastRevealer(`Family Removed`);
+    }
   };
 
   const onEditFamily = async (id) => {
@@ -250,15 +268,16 @@ const App = () => {
     );
 
     setFormData({
-      photo: editFamily?.photo,
+      // photo: editFamily?.photo,
       ...editFamily,
       members: editMember,
     });
+    console.log(formData, "formData on edit");
   };
   return (
     <>
       <div className="logo">Parish Directory 2025</div>
-
+      {showToast && <Toast setShowToast={setShowToast}>{toastMessage}</Toast>}
       <div className="body-wrap">
         <Header
           formRevealHandler={formRevealHandler}

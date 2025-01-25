@@ -324,10 +324,11 @@ const MemberForm = ({
 
       <div className="button-wrap">
         <Button
+          style={{ marginRight: "auto" }}
           variant="secondary"
           onClick={(e) => addMoreHandler(e, formData?.family_id)}
         >
-          Add More
+          {formData?.members?.length > 0 ? `Add More Members` : `Add Members`}
         </Button>
         <Button variant="secondary" onClick={() => formRevealHandler(false)}>
           Cancel

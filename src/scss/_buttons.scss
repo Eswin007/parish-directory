@@ -9,16 +9,24 @@
   font-family: var(--fs-primary);
   font-weight: 600;
   --clr-base: #b13814;
+  transition: all 0.15s ease;
 }
 
 .btn-primary {
   background-color: var(--clr-base);
   color: white;
+
+  &:hover {
+    --clr-base: hsl(14, 80%, 33%);
+  }
 }
 
 .btn-secondary {
   color: var(--clr-base);
   border: 1px solid var(--clr-base);
+  &:hover {
+    background-color: hsl(14, 80%, 95%);
+  }
 }
 
 .remove-member-btn {
@@ -28,15 +36,15 @@
 .btn-fancy {
   all: unset;
   text-decoration: none;
-  padding: 0.4rem 1rem;
+  padding: 0.25rem 0.75rem;
   border-radius: 100vmax;
-  font-size: 1rem;
+  font-size: 0.875rem;
   color: #4a4a4a;
   font-family: var(--fs-primary);
   transition: all 0.15s ease;
 
   &:hover {
-    background-color: #af1b3f;
-    color: white;
+    background-color: #dfdfdf;
+    // color: white;
   }
 }

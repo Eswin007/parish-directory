@@ -1,0 +1,39 @@
+.toast {
+  position: fixed;
+  bottom: 1rem;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 1rem;
+  background-color: white;
+  box-shadow: 2px 2px 1rem rgba(black, 0.25);
+  border-radius: 0.5rem;
+  width: 30rem;
+  max-width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+
+  &__body {
+    color: white;
+    font-family: var(--fs-secondary);
+    font-weight: 600;
+    flex: 1;
+  }
+
+  &__icon {
+    font-size: 1.125rem;
+    line-height: 1;
+  }
+
+  &__close {
+    all: unset;
+    cursor: pointer;
+    margin-left: auto;
+    font-size: 1.125rem;
+  }
+
+  &.success {
+    background-color: rgb(57, 172, 72);
+    color: white;
+  }
+}
