@@ -1,8 +1,28 @@
 .family {
   position: relative;
   color: #333;
+
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 0.5rem;
+  padding: 1rem;
+
+  font-family: var(--fs-primary);
+
   & + & {
-    margin-top: 3rem;
+    margin-top: 2rem;
+  }
+
+  &__header {
+    display: flex;
+    align-items: center;
+  }
+
+  &__controls {
+    opacity: 0;
+    display: flex;
+    align-items: center;
+    margin-left: auto;
   }
 
   &:hover {
@@ -11,10 +31,24 @@
     }
   }
 
+  &__photo {
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    margin-bottom: 1rem;
+    border-radius: 1rem;
+
+    img {
+      width: 100%;
+    }
+  }
+
   &__name {
     font-size: 1.75rem;
     margin-bottom: 0.5rem;
     color: #b13814;
+    font-family: var(--fs-secondary);
+    font-weight: 900;
+    text-transform: uppercase;
   }
 
   &__detail {
@@ -32,33 +66,15 @@
     }
   }
 
-  &__controls {
-    font-size: 1rem;
-    color: rgb(47, 47, 238);
-    text-decoration: underline;
-    position: absolute;
-    top: 1rem;
-    right: 1rem;
-    opacity: 0;
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    button {
-      all: unset;
-    }
-  }
-
   .members {
     margin-top: 1rem;
     width: 100%;
     border-collapse: collapse;
+    font-family: var(--fs-primary);
     tr {
       td,
       th {
         padding: 0.5rem;
-      }
-      &:last-child td {
-        border-bottom: 1px solid rgba(black, 0.1);
       }
 
       th {
@@ -76,7 +92,19 @@
 
 .member-card {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  background-color: rgb(240, 242, 247);
+  grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr));
   gap: 2rem;
+  border-radius: 0.5rem;
   grid-column-gap: 1.5rem;
+}
+
+.empty-results {
+  width: 100%;
+  margin-inline: auto;
+  text-align: center;
+  font-family: var(--fs-secondary);
+  font-size: 1.25rem;
+  font-weight: bold;
+  padding: 3rem;
 }

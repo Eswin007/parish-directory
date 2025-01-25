@@ -1,0 +1,48 @@
+#overlay {
+  position: relative;
+  z-index: 100;
+}
+.overlay-backdrop {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(black, 0.1);
+}
+
+.modal {
+  width: clamp(25rem, 25vw, 50rem);
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  padding: 1rem;
+  font-family: var(--fs-primary);
+  color: #4a4a4a;
+  border-radius: 0.5rem;
+  box-shadow: 5px 5px 1rem rgba(black, 0.2);
+
+  &__head {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: inherit;
+    text-transform: uppercase;
+    font-weight: 700;
+    font-size: 1.125rem;
+  }
+  &__body {
+    padding-block: 1rem;
+    line-height: 1.5;
+
+    .highlight {
+      font-weight: bold;
+    }
+  }
+
+  &__footer {
+    display: flex;
+    gap: 1rem;
+    width: 100%;
+    justify-content: flex-end;
+  }
+}

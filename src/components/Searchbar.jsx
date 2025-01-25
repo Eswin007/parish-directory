@@ -18,31 +18,38 @@ const Searchbar = ({
   };
 
   const memberFilterHandler = (filterRequest) => {
-
     const searchedFamily = familyList?.filter((family) =>
       family.hof?.toLowerCase().includes(filterRequest.toLowerCase())
     );
 
-    const searchedMembers = familyMembersList.filter((members)=>
-       members.name.toLowerCase().includes(filterRequest.toLowerCase())
+    const searchedMembers = familyMembersList.filter((members) =>
+      members.name.toLowerCase().includes(filterRequest.toLowerCase())
     );
 
-    const familyFromMembers = familyList.filter((family)=>{
-      return searchedMembers.some(member=> member.family_id === family.family_id)
+    const familyFromMembers = familyList.filter((family) => {
+      return searchedMembers.some(
+        (member) => member.family_id === family.family_id
+      );
     });
 
     const consolidatedFamily = [...searchedFamily, ...familyFromMembers];
 
-    const searchResults = consolidatedFamily.filter((member, index, self)=>{
-      return index === self.findIndex(item=> item.family_id === member.family_id)
+    const searchResults = consolidatedFamily.filter((member, index, self) => {
+      return (
+        index === self.findIndex((item) => item.family_id === member.family_id)
+      );
     });
 
     setFilteredFamily(searchResults);
-    setSearchCount(searchResults.length)
+    setSearchCount(searchResults.length);
   };
 
   const searchValueHandler = (e) => {
     setSearchValue(e.target.value);
+    if (e.target.value === "") {
+      setSearchCount(null);
+      setFilteredFamily(familyList);
+    }
   };
 
   return (
@@ -53,7 +60,7 @@ const Searchbar = ({
         placeholder={placeholder}
         onChange={searchValueHandler}
       />
-      {searchCount > 0 && (
+      {searchValue !== "" && searchCount > 0 && (
         <div className="filter-count">
           <span>{searchCount}</span>{" "}
           <span>{searchCount > 1 ? "families" : "family"}</span>
@@ -65,7 +72,12 @@ const Searchbar = ({
           Clear
         </div>
       )}
-      <button onClick={() => memberFilterHandler(searchValue)}>Search</button>
+      <button
+        disabled={searchValue === ""}
+        onClick={() => memberFilterHandler(searchValue)}
+      >
+        Search
+      </button>
     </div>
   );
 };

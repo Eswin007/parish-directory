@@ -26,8 +26,8 @@ const Members = ({ familyMembers, family }) => {
         <tr>
           <td>{family?.hof}</td>
           <td>HoF</td>
-          <td>{family?.occupation}</td>
-          <td>{formattedDate(family?.dob)}</td>
+          <td>{family?.occupation || "-"}</td>
+          <td>{formattedDate(family?.dob) || "-"}</td>
           <td>{formattedDate(family?.dom) ?? "-"}</td>
           <td>{family?.blood}</td>
         </tr>
@@ -37,10 +37,10 @@ const Members = ({ familyMembers, family }) => {
               <tr key={index}>
                 <td>{member.name}</td>
                 <td>{member.relation}</td>
-                <td>{member.occupation}</td>
-                <td>{formattedDate(member.dob)}</td>
+                <td>{member.occupation || "-"}</td>
+                <td>{formattedDate(member.dob) || "-"}</td>
                 <td>{formattedDate(member.dom) ?? "-"}</td>
-                <td>{member.blood}</td>
+                <td>{member.blood || "-"}</td>
               </tr>
             )
           );

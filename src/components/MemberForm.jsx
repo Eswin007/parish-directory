@@ -4,8 +4,10 @@ import Button from "./Button";
 import axios from "axios";
 import Card from "./Card";
 import Dropdown from "./Dropdown";
-import { BLOOD_GROUP, RELATION } from "../App";
+import { BLOOD_GROUP, RELATION, photoURL, apiKey } from "../App";
 import Family from "./Family";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCamera } from "@fortawesome/free-solid-svg-icons";
 
 const MemberForm = ({
   saveFamilyHandler,
@@ -16,10 +18,53 @@ const MemberForm = ({
   errors,
   setErrors,
   setMembersToBeRemoved,
+  familyPhoto,
+  setFamilyPhoto,
 }) => {
+  const [imageUploading, setImageUploading] = useState(false);
+  const fileUploadHandler = async (e) => {
+    setImageUploading(true);
+    const selectedFile = e.target.files[0];
+    if (selectedFile) {
+      const uploadFormData = new FormData();
+      uploadFormData.append("file", selectedFile);
+
+      try {
+        await axios.put(`${photoURL}/${selectedFile?.name}`, uploadFormData, {
+          headers: {
+            apikey: apiKey,
+            Authorization: `Bearer ${apiKey}`,
+            "Content-Type": "multipart/form-data",
+          },
+        });
+
+        setFamilyPhoto(selectedFile?.name);
+        setFormData((prev) => ({
+          ...prev,
+          photo: selectedFile?.name,
+        }));
+        setImageUploading(false);
+      } catch (err) {
+        console.log(err.response.data, "err");
+      }
+    }
+  };
+
+  const removeImage = (e) => {
+    e.preventDefault();
+    setFamilyPhoto(null);
+    // const { photo, ...withoutPhoto } = formData;
+    // setFormData(withoutPhoto);
+    setFormData((prev) => ({
+      ...prev,
+      photo: "",
+    }));
+  };
+
   const onSubmitHandler = (e) => {
     e.preventDefault();
     saveFamilyHandler(formData);
+    console.log(formData, "formdataonsubmit");
   };
   const onChangeHandler = (e, inputName, index = null, isMember) => {
     const { value } = e.target;
@@ -94,6 +139,28 @@ const MemberForm = ({
   return (
     <form onSubmit={onSubmitHandler} className="add-members">
       <h3>Basic Details</h3>
+      <div className="photo">
+        {formData?.photo !== "" ? (
+          <div className="photo__family">
+            <img src={`${photoURL}/${formData?.photo}`} />
+            <button onClick={(e) => removeImage(e)} className="photo__remove">
+              Remove Photo
+            </button>
+          </div>
+        ) : (
+          <div className={`photo__upload ${imageUploading && "pulse"}`}>
+            {imageUploading && <div className="photo__loader"></div>}
+            <FontAwesomeIcon icon={faCamera} style={{ fontSize: "4rem" }} />
+            <input
+              type="file"
+              name=""
+              accept=".jpg, .jpeg, .png"
+              id=""
+              onChange={(e) => fileUploadHandler(e)}
+            />
+          </div>
+        )}
+      </div>
       <InputField
         placeholder="Name"
         label="Name"
@@ -257,10 +324,11 @@ const MemberForm = ({
 
       <div className="button-wrap">
         <Button
+          style={{ marginRight: "auto" }}
           variant="secondary"
           onClick={(e) => addMoreHandler(e, formData?.family_id)}
         >
-          Add More
+          {formData?.members?.length > 0 ? `Add More Members` : `Add Members`}
         </Button>
         <Button variant="secondary" onClick={() => formRevealHandler(false)}>
           Cancel
