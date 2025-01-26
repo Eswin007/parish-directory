@@ -1,11 +1,71 @@
+$duration: (
+  1: 0.1s,
+  2: 0.2s,
+  3: 0.3s,
+  4: 0.4s,
+  5: 0.5s,
+);
 .loader {
+  background-color: white;
+  padding: 2rem 4rem;
+  display: block;
   position: fixed;
-  inset: 0;
-  display: grid;
-  place-content: center;
-  font-size: 5rem;
-  color: #000;
-  background-color: rgba(black, 0.4);
-  z-index: 1000;
+  border-radius: 0.5rem;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
   font-weight: bold;
+  font-family: var(--fs-primary);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+
+  &__circles {
+    position: relative;
+    --size: 5rem;
+    width: var(--size);
+    height: var(--size);
+    transform: rotate(-90deg);
+
+    .circle {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      --circleSize: 0.5rem;
+      width: var(--circleSize);
+      height: var(--circleSize);
+      border-radius: 100%;
+      transform: translate(-50%, -50%);
+      animation: loaderAnim 2s ease infinite;
+
+      @each $item, $value in $duration {
+        &.circle-#{$item} {
+          animation-delay: $value;
+        }
+      }
+
+      &::after {
+        content: "";
+        width: var(--circleSize);
+        height: var(--circleSize);
+        background-color: grey;
+        display: block;
+        position: absolute;
+        left: calc(var(--size) / 2);
+        top: 50%;
+        transform: translate(-50%, -50%);
+        border-radius: 100%;
+      }
+    }
+  }
+}
+
+@keyframes loaderAnim {
+  0% {
+    transform: translate(-50%, -50%) rotate(0);
+  }
+  100% {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
 }

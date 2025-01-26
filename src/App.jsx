@@ -59,7 +59,7 @@ const App = () => {
   const [familyMembersList, setFamilyMembersList] = useState([]);
   const [filteredFamily, setFilteredFamily] = useState([]);
   const [errors, setErrors] = useState();
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [membersToBeRemoved, setMembersToBeRemoved] = useState([]);
   const [familyPhoto, setFamilyPhoto] = useState(null);
   const [showToast, setShowToast] = useState(false);
@@ -230,11 +230,13 @@ const App = () => {
       if (membersToBeRemoved.length !== 0) {
         await removeMembersFromForm(membersToBeRemoved);
       }
-      toastRevealer("Directory Updated");
       await fetchMembers();
       formRevealHandler(false);
       setFormData(FAMILY_INITIAL);
       setFamilyPhoto(null);
+      setTimeout(() => {
+        toastRevealer("Directory Updated");
+      }, 700);
     } catch (validationErrors) {
       const formErrors = {};
       validationErrors.inner.forEach(
@@ -248,6 +250,7 @@ const App = () => {
   const onDeleteFamily = (id) => {
     const familyURL = `${supabaseURL}/rest/v1/family`;
     try {
+      setIsLoading(true);
       axios
         .delete(`${familyURL}?family_id=eq.${id}`, headerConfig)
         .then((res) => fetchMembers())
@@ -256,7 +259,10 @@ const App = () => {
         });
     } catch (err) {
     } finally {
-      toastRevealer(`Family Removed`);
+      setIsLoading(false);
+      setTimeout(() => {
+        toastRevealer(`Family Removed`);
+      }, 700);
     }
   };
 
