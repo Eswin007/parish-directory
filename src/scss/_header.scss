@@ -9,9 +9,13 @@
 .header {
   display: grid;
   grid-template-columns: 2fr 1fr;
+  background-color: white;
   align-items: center;
   justify-content: space-between;
-  margin-block: 1rem;
+  padding-block: 1rem;
+  position: sticky;
+  top: 0;
+  z-index: 10;
 
   button {
     justify-self: flex-end;
@@ -36,6 +40,18 @@
       background-color: #ddd;
       cursor: pointer;
       font-family: var(--fs-primary);
+      color: #4a4a4a;
+
+      &:hover,
+      &:focus-visible {
+        background-color: #ccc;
+      }
+
+      &:disabled {
+        color: #838383 !important;
+        background-color: #eee;
+        cursor: default;
+      }
     }
 
     .filter-count {
@@ -45,6 +61,7 @@
       gap: 4px;
       font-style: italic;
       opacity: 0.5;
+      font-family: var(--fs-primary);
     }
 
     &__clear {

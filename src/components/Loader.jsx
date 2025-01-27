@@ -2,7 +2,7 @@ import React from "react";
 import OverlayBackdrop from "./OverlayBackdrop";
 import { createPortal } from "react-dom";
 
-const Loader = () => {
+const Loader = ({ message = "Please Wait..." }) => {
   return createPortal(
     <>
       <OverlayBackdrop />
@@ -14,7 +14,7 @@ const Loader = () => {
           <div className="circle circle-4"></div>
           <div className="circle circle-5"></div>
         </div>
-        Please Wait...
+        {message}
       </div>
     </>,
     document.getElementById("overlay")

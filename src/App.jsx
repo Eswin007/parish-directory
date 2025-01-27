@@ -59,13 +59,14 @@ const App = () => {
   const [familyMembersList, setFamilyMembersList] = useState([]);
   const [filteredFamily, setFilteredFamily] = useState([]);
   const [errors, setErrors] = useState();
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const [membersToBeRemoved, setMembersToBeRemoved] = useState([]);
   const [familyPhoto, setFamilyPhoto] = useState(null);
   const [showToast, setShowToast] = useState(false);
   const [toastMessage, setToastMessage] = useState(null);
 
   const fetchMembers = async () => {
+    setIsLoading(true);
     const familyURL = `${supabaseURL}/rest/v1/family`;
     const familyMembersURL = `${supabaseURL}/rest/v1/familyMembers`;
 
@@ -90,6 +91,7 @@ const App = () => {
     setFilteredFamily(familyList.data);
     setFamilyList(familyList.data);
     setFamilyMembersList(membersList.data);
+    setIsLoading(false);
   };
   const formRevealHandler = (value) => {
     setShowForm(value);
