@@ -59,6 +59,14 @@ const Searchbar = ({
         value={searchValue || ""}
         placeholder={placeholder}
         onChange={searchValueHandler}
+        onKeyDown={(e) => {
+          if (e.key === "Enter") {
+            memberFilterHandler(searchValue);
+          }
+          if (e.key === "Escape") {
+            searchClearHandler();
+          }
+        }}
       />
       {searchValue !== "" && searchCount > 0 && (
         <div className="filter-count">
