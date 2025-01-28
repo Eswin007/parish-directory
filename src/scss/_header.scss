@@ -7,11 +7,13 @@
   font-size: 1rem;
 }
 .header {
-  display: grid;
-  grid-template-columns: 2fr 1fr;
+  // display: grid;
+  display: flex;
+  gap: 2rem;
+  justify-content: center;
+  // grid-template-columns: 1fr 1fr;
   background-color: white;
   align-items: center;
-  justify-content: space-between;
   padding-block: 1rem;
   position: sticky;
   top: 0;
@@ -19,8 +21,13 @@
 
   button {
     justify-self: flex-end;
+
+    @media screen and (max-width: 500px) {
+      display: none;
+    }
   }
   .searchbar {
+    min-width: 20rem;
     display: flex;
     align-items: stretch;
     border: 1px solid #333;

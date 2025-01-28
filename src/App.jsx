@@ -7,6 +7,7 @@ import "./scss/main.scss";
 import MemberForm from "./components/MemberForm";
 import Dropdown from "./components/Dropdown";
 import { object, string, date, array } from "yup";
+import Masonry, { ResponsiveMasonry } from "react-responsive-masonry";
 
 import config from "./config";
 
@@ -313,19 +314,27 @@ const App = () => {
               setFamilyPhoto={setFamilyPhoto}
             />
           )}
-          {!showForm &&
-            filteredFamily?.length > 0 &&
-            filteredFamily?.map((family) => (
-              <Family
-                key={family?.family_id}
-                family={family}
-                familyMembers={familyMembersList.filter(
-                  (member) => member?.family_id === family?.family_id
-                )}
-                onDeleteFamily={onDeleteFamily}
-                onEditFamily={onEditFamily}
-              />
-            ))}
+        </div>
+        <div className="family-listing-wrap">
+          <ResponsiveMasonry
+            columnsCountBreakPoints={{ 650: 1, 700: 2, 1800: 3, 2200: 4 }}
+          >
+            <Masonry gutter="2">
+              {!showForm &&
+                filteredFamily?.length > 0 &&
+                filteredFamily?.map((family) => (
+                  <Family
+                    key={family?.family_id}
+                    family={family}
+                    familyMembers={familyMembersList.filter(
+                      (member) => member?.family_id === family?.family_id
+                    )}
+                    onDeleteFamily={onDeleteFamily}
+                    onEditFamily={onEditFamily}
+                  />
+                ))}
+            </Masonry>
+          </ResponsiveMasonry>
           {!showForm && filteredFamily.length === 0 && (
             <div className="empty-results">No Results</div>
           )}

@@ -1,9 +1,13 @@
 .body-wrap {
-  max-width: 700px;
-  margin: auto;
   padding: 1rem;
+
+  @media screen and (max-width: 500px) {
+    padding: 0.5rem;
+  }
 }
 .wrapper {
+  max-width: 700px;
+  margin: auto;
   // background-color: white;
   // border: 1px solid #ccc;
   // box-shadow: 2px 2px 1rem 0 rgba(black, 0.1);
