@@ -3,6 +3,7 @@ import Members from "./Members";
 import { photoURL } from "../App";
 import Modal from "./Modal";
 import { createPortal } from "react-dom";
+import { AnimatePresence } from "framer-motion";
 
 const Family = ({
   family,
@@ -13,17 +14,19 @@ const Family = ({
   const [showModal, setShowModal] = useState(false);
   return (
     <>
-      {showModal && (
-        <Modal
-          title="Confirm Delete"
-          confirmModal={() => onDeleteFamily(family?.family_id)}
-          cancelModal={() => setShowModal(false)}
-        >
-          Are you sure you want to delete{" "}
-          <span className="highlight">{family?.hof}</span> and Family from the
-          Parish Directory?
-        </Modal>
-      )}
+      <AnimatePresence mode="wait" initial={false}>
+        {showModal && (
+          <Modal
+            title="Confirm Delete"
+            confirmModal={() => onDeleteFamily(family?.family_id)}
+            cancelModal={() => setShowModal(false)}
+          >
+            Are you sure you want to delete{" "}
+            <span className="highlight">{family?.hof}</span> and Family from the
+            Parish Directory?
+          </Modal>
+        )}
+      </AnimatePresence>
       <div className="family">
         <div className="family__header">
           <h2 className="family__name">{family?.hof}</h2>
