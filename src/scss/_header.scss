@@ -30,15 +30,23 @@
     min-width: 20rem;
     display: flex;
     align-items: stretch;
-    border: 1px solid #333;
+    border: 1px solid #838383;
     border-radius: 0.25rem;
     overflow: hidden;
+    align-items: center;
+    padding-left: 0.5rem;
+
+    &__search-icon {
+      color: #838383;
+    }
     input {
       padding: 0.5rem;
       outline: 0;
       border: 0;
       width: 100%;
-      font-size: 0.875rem;
+      font-size: 1rem;
+      font-family: var(--fs-primary);
+      color: #4a4a4a;
     }
     button {
       all: unset;
@@ -77,6 +85,11 @@
       padding-block: 3px;
       cursor: pointer;
       font-family: var(--fs-primary);
+      color: #838383;
+
+      &:hover {
+        color: #4a4a4a;
+      }
     }
   }
 }

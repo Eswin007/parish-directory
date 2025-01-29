@@ -6,7 +6,7 @@
   border: 1px solid #ddd;
   border-radius: 0.5rem;
   padding: 1rem;
-
+  width: 100%;
   font-family: var(--fs-primary);
 
   // & + & {
@@ -95,9 +95,15 @@
   }
 }
 
+.member-card-wrap {
+  transform-origin: top;
+  background-color: #f0f2f7;
+  // background-color: #ffc3c1;
+  // background-color: #d5ffd8;
+}
+
 .member-card {
   display: grid;
-  background-color: rgb(240, 242, 247);
   grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr));
   gap: 2rem;
   border-radius: 0.5rem;

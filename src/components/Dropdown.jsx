@@ -23,6 +23,11 @@ const Dropdown = ({ options, placeholder, label, value, onChange, errors }) => {
             className="dd__selected-value"
             readOnly
             value={selectedValue || ""}
+            onKeyDown={(e) => {
+              if (e.key === "Escape") {
+                setMenuOpen(false);
+              }
+            }}
           />
         ) : (
           <input

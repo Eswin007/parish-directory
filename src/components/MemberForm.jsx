@@ -8,6 +8,41 @@ import { BLOOD_GROUP, RELATION, photoURL, apiKey } from "../App";
 import Family from "./Family";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCamera } from "@fortawesome/free-solid-svg-icons";
+import { AnimatePresence, delay, motion } from "framer-motion";
+
+const addMemberCardAnim = {
+  initial: {
+    // background: "#d5ffd8",
+    opacity: 0,
+    // scaleY: 0,
+  },
+  animate: {
+    opacity: 1,
+    background: "#f0f2f7",
+    // scaleY: 1,
+    transition: {
+      duration: 0.2,
+      background: {
+        delay: 0.5,
+        duration: 1,
+      },
+    },
+  },
+
+  exit: {
+    opacity: 0,
+    // scaleY: 0,
+    background: "#ffc3c1",
+    duration: 0.3,
+    transition: {
+      duration: 0.2,
+      delay: 0.5,
+      background: {
+        duration: 0.5,
+      },
+    },
+  },
+};
 
 const MemberForm = ({
   saveFamilyHandler,
@@ -236,91 +271,106 @@ const MemberForm = ({
         errors={errors?.blood}
       />
 
-      {formData?.members?.map((item, index) => {
-        return (
-          <Card key={index} className="full-width-col member-card">
-            <InputField
-              placeholder="Name"
-              label="Name"
-              value={item.name || ""}
-              onChange={(e) => onChangeHandler(e, "name", index, "isMember")}
-              errors={errors?.[`members[${index}].name`]}
-            />
-            <Dropdown
-              label="Relation"
-              placeholder="Select"
-              options={RELATION}
-              value={item.relation}
-              onChange={(value) =>
-                onChangeHandler(
-                  { target: { value } },
-                  "relation",
-                  index,
-                  "isMember"
-                )
-              }
-              errors={errors?.[`members[${index}].relation`]}
-            />
-
-            <InputField
-              placeholder="Occupation"
-              label="Occupation"
-              value={item?.occupation}
-              onChange={(e) =>
-                onChangeHandler(e, "occupation", index, "isMember")
-              }
-              errors={errors?.[`members[${index}].occupation`]}
-            />
-            <InputField
-              type="date"
-              placeholder="DD/MM/YY"
-              label="Date of Birth"
-              value={item.dob}
-              onChange={(e) => onChangeHandler(e, "dob", index, "isMember")}
-              errors={errors?.[`members[${index}].dob`]}
-            />
-            <InputField
-              type="date"
-              placeholder="DD/MM/YY"
-              label="Date of Marriage"
-              value={item.dom}
-              onChange={(e) => onChangeHandler(e, "dom", index, "isMember")}
-              errors={errors?.[`members[${index}].dom`]}
-            />
-
-            <Dropdown
-              label="Blood Group"
-              placeholder="Select"
-              options={BLOOD_GROUP}
-              value={item.blood}
-              onChange={(value) =>
-                onChangeHandler(
-                  { target: { value } },
-                  "blood",
-                  index,
-                  "isMember"
-                )
-              }
-              errors={errors?.[`members[${index}].blood`]}
-            />
-            <Button
-              variant="secondary"
-              className="remove-member-btn"
-              onClick={(e) =>
-                removeMemberHandler(
-                  e,
-                  item?.membersID,
-                  item?.tempID,
-                  index,
-                  "isMember"
-                )
-              }
+      <AnimatePresence mode="wait" initial={false}>
+        {formData?.members?.map((item, index) => {
+          return (
+            <motion.div
+              key={item?.membersID || item?.tempID || index}
+              layoutId={`-member${item?.membersID || item?.tempID || index}`}
+              className="full-width-col member-card-wrap"
+              variants={addMemberCardAnim}
+              initial="initial"
+              animate="animate"
+              exit="exit"
+              layout
             >
-              Remove
-            </Button>
-          </Card>
-        );
-      })}
+              <Card className="member-card">
+                <InputField
+                  placeholder="Name"
+                  label="Name"
+                  value={item.name || ""}
+                  onChange={(e) =>
+                    onChangeHandler(e, "name", index, "isMember")
+                  }
+                  errors={errors?.[`members[${index}].name`]}
+                />
+                <Dropdown
+                  label="Relation"
+                  placeholder="Select"
+                  options={RELATION}
+                  value={item.relation}
+                  onChange={(value) =>
+                    onChangeHandler(
+                      { target: { value } },
+                      "relation",
+                      index,
+                      "isMember"
+                    )
+                  }
+                  errors={errors?.[`members[${index}].relation`]}
+                />
+
+                <InputField
+                  placeholder="Occupation"
+                  label="Occupation"
+                  value={item?.occupation}
+                  onChange={(e) =>
+                    onChangeHandler(e, "occupation", index, "isMember")
+                  }
+                  errors={errors?.[`members[${index}].occupation`]}
+                />
+                <InputField
+                  type="date"
+                  placeholder="DD/MM/YY"
+                  label="Date of Birth"
+                  value={item.dob}
+                  onChange={(e) => onChangeHandler(e, "dob", index, "isMember")}
+                  errors={errors?.[`members[${index}].dob`]}
+                />
+                <InputField
+                  type="date"
+                  placeholder="DD/MM/YY"
+                  label="Date of Marriage"
+                  value={item.dom}
+                  onChange={(e) => onChangeHandler(e, "dom", index, "isMember")}
+                  errors={errors?.[`members[${index}].dom`]}
+                />
+
+                <Dropdown
+                  label="Blood Group"
+                  placeholder="Select"
+                  options={BLOOD_GROUP}
+                  value={item.blood}
+                  onChange={(value) =>
+                    onChangeHandler(
+                      { target: { value } },
+                      "blood",
+                      index,
+                      "isMember"
+                    )
+                  }
+                  errors={errors?.[`members[${index}].blood`]}
+                />
+                <Button
+                  variant="secondary"
+                  className="remove-member-btn"
+                  onClick={(e) =>
+                    removeMemberHandler(
+                      e,
+                      item?.membersID,
+                      item?.tempID,
+                      index,
+                      "isMember"
+                    )
+                  }
+                >
+                  Remove
+                </Button>
+              </Card>
+            </motion.div>
+          );
+        })}
+      </AnimatePresence>
 
       <div className="button-wrap">
         <Button

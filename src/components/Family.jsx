@@ -3,7 +3,22 @@ import Members from "./Members";
 import { photoURL } from "../App";
 import Modal from "./Modal";
 import { createPortal } from "react-dom";
-import { AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
+
+const familyAnim = {
+  initial: {
+    opacity: 0,
+    duration: 0.2,
+  },
+  animate: {
+    opacity: 1,
+    duration: 0.2,
+  },
+  exit: {
+    opacity: 0,
+    duration: 0.2,
+  },
+};
 
 const Family = ({
   family,
@@ -27,7 +42,13 @@ const Family = ({
           </Modal>
         )}
       </AnimatePresence>
-      <div className="family">
+      <motion.div
+        variants={familyAnim}
+        initial="initial"
+        animate="animate"
+        exit="exit"
+        className="family"
+      >
         <div className="family__header">
           <h2 className="family__name">{family?.hof}</h2>
           <div className="family__controls">
@@ -64,8 +85,8 @@ const Family = ({
             <tr>
               <td>Phone</td>
               <td>
-                <span>{`${family?.phone1 || ""}  / ${
-                  family?.phone2 || "-"
+                <span>{`${family?.phone1 || ""}  ${
+                  family?.phone2 && " / " + family?.phone2
                 }`}</span>
               </td>
             </tr>
@@ -76,7 +97,7 @@ const Family = ({
           </tbody>
         </table>
         <Members family={family} familyMembers={familyMembers} />
-      </div>
+      </motion.div>
     </>
   );
 };
