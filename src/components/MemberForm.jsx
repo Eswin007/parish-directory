@@ -32,15 +32,15 @@ const addMemberCardAnim = {
   exit: {
     opacity: 0,
     // scaleY: 0,
-    background: "#ffc3c1",
+    // background: "#ffc3c1",
     duration: 0.3,
-    transition: {
-      duration: 0.2,
-      delay: 0.5,
-      background: {
-        duration: 0.5,
-      },
-    },
+    // transition: {
+    //   duration: 0.2,
+    //   delay: 0.5,
+    //   background: {
+    //     duration: 0.5,
+    //   },
+    // },
   },
 };
 
