@@ -15,6 +15,7 @@
 
   label {
     font-size: 0.875rem;
+    color: #4a4a4a;
   }
 
   input {
@@ -23,6 +24,7 @@
     border-radius: 0.25rem;
     font-family: var(--fs-secondary);
     font-size: 0.875rem;
+    color: #4a4a4a;
 
     &:focus {
       outline: 0;
@@ -43,11 +45,13 @@
     label {
       color: rgb(226, 0, 0);
     }
+
     .dd {
       border-color: rgb(226, 0, 0);
     }
   }
 }
+
 .dd {
   all: unset;
   display: flex;
@@ -106,9 +110,11 @@
 
   &__menu-item {
     padding: 0.185rem 0.5rem;
+
     &:first-child {
       border-top: 1px solid #eee;
     }
+
     &:hover {
       background-color: #ddd;
     }

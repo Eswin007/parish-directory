@@ -1,3 +1,5 @@
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faClose, faSearch } from "@fortawesome/free-solid-svg-icons";
 import React, { useState } from "react";
 
 const Searchbar = ({
@@ -8,7 +10,7 @@ const Searchbar = ({
   familyList,
   familyMembersList,
 }) => {
-  const [searchValue, setSearchValue] = useState();
+  const [searchValue, setSearchValue] = useState("");
   const [searchCount, setSearchCount] = useState(0);
 
   const searchClearHandler = () => {
@@ -54,6 +56,10 @@ const Searchbar = ({
 
   return (
     <div className={`searchbar ${className}`}>
+      <FontAwesomeIcon
+        icon={faSearch}
+        className="searchbar__search-icon"
+      ></FontAwesomeIcon>
       <input
         type="text"
         value={searchValue || ""}
@@ -77,7 +83,7 @@ const Searchbar = ({
 
       {searchValue && (
         <div className="searchbar__clear" onClick={searchClearHandler}>
-          Clear
+          <FontAwesomeIcon icon={faClose} />
         </div>
       )}
       <button

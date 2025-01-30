@@ -13,6 +13,7 @@ import config from "./config";
 
 import Loader from "./components/Loader";
 import Toast from "./components/Toast";
+import { AnimatePresence } from "framer-motion";
 
 export const apiKey =
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZmZndicnZpeGJtbGFibW96a3RwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MjU3MjkxMzgsImV4cCI6MjA0MTMwNTEzOH0.yU8fXAZa_x84GwdVhPVDdLhOWbAa6r2PoHxhnV5ebn0";
@@ -45,6 +46,7 @@ export const FAMILY_INITIAL = {
 
 export const BLOOD_GROUP = ["A+", "A-", "B-", "O+", "O-", "AB+", "AB-", "B+"];
 export const RELATION = [
+  "Mother",
   "Wife",
   "Son",
   "Daughter",
@@ -286,7 +288,10 @@ const App = () => {
   return (
     <>
       <div className="logo">Parish Directory 2025</div>
-      {showToast && <Toast setShowToast={setShowToast}>{toastMessage}</Toast>}
+      <AnimatePresence mode="wait" initial={false}>
+        {showToast && <Toast setShowToast={setShowToast}>{toastMessage}</Toast>}
+      </AnimatePresence>
+
       <div className="body-wrap">
         <Header
           formRevealHandler={formRevealHandler}
@@ -299,6 +304,7 @@ const App = () => {
         />
         <div className="wrapper">
           {isLoading && <Loader />}
+          <AnimatePresence mode="wait" initial={false}>
           {showForm && (
             <MemberForm
               formData={formData}
@@ -314,27 +320,30 @@ const App = () => {
               setFamilyPhoto={setFamilyPhoto}
             />
           )}
+          </AnimatePresence>
         </div>
         <div className="family-listing-wrap">
-          <ResponsiveMasonry
-            columnsCountBreakPoints={{ 650: 1, 700: 2, 1800: 3, 2200: 4 }}
-          >
-            <Masonry gutter="2">
-              {!showForm &&
-                filteredFamily?.length > 0 &&
-                filteredFamily?.map((family) => (
-                  <Family
-                    key={family?.family_id}
-                    family={family}
-                    familyMembers={familyMembersList.filter(
-                      (member) => member?.family_id === family?.family_id
-                    )}
-                    onDeleteFamily={onDeleteFamily}
-                    onEditFamily={onEditFamily}
-                  />
-                ))}
-            </Masonry>
-          </ResponsiveMasonry>
+          <AnimatePresence mode="wait" initial={false}>
+            <ResponsiveMasonry
+              columnsCountBreakPoints={{ 650: 1, 700: 2, 1800: 3, 2200: 4 }}
+            >
+              <Masonry itemTag="section" gutter="2">
+                {!showForm &&
+                  filteredFamily?.length > 0 &&
+                  filteredFamily?.map((family) => (
+                    <Family
+                      key={family?.family_id}
+                      family={family}
+                      familyMembers={familyMembersList.filter(
+                        (member) => member?.family_id === family?.family_id
+                      )}
+                      onDeleteFamily={onDeleteFamily}
+                      onEditFamily={onEditFamily}
+                    />
+                  ))}
+              </Masonry>
+            </ResponsiveMasonry>
+          </AnimatePresence>
           {!showForm && filteredFamily.length === 0 && (
             <div className="empty-results">No Results</div>
           )}
