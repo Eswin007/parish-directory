@@ -1,3 +1,5 @@
+import { faAngleDown } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useState } from "react";
 
 const Dropdown = ({ options, placeholder, label, value, onChange, errors }) => {
@@ -57,7 +59,10 @@ const Dropdown = ({ options, placeholder, label, value, onChange, errors }) => {
             )}
           </div>
         )}
-        <div className="dd__arrow">&#9660;</div>
+        <div className="dd__arrow">
+          <FontAwesomeIcon icon={faAngleDown} />
+        </div>
+
       </div>
       {errors && <div className="input-error">{errors}</div>}
     </div>

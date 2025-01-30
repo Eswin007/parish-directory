@@ -304,6 +304,7 @@ const App = () => {
         />
         <div className="wrapper">
           {isLoading && <Loader />}
+          <AnimatePresence mode="wait" initial={false}>
           {showForm && (
             <MemberForm
               formData={formData}
@@ -319,13 +320,14 @@ const App = () => {
               setFamilyPhoto={setFamilyPhoto}
             />
           )}
+          </AnimatePresence>
         </div>
         <div className="family-listing-wrap">
           <AnimatePresence mode="wait" initial={false}>
             <ResponsiveMasonry
               columnsCountBreakPoints={{ 650: 1, 700: 2, 1800: 3, 2200: 4 }}
             >
-              <Masonry gutter="2">
+              <Masonry itemTag="section" gutter="2">
                 {!showForm &&
                   filteredFamily?.length > 0 &&
                   filteredFamily?.map((family) => (

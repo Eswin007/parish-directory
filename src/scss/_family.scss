@@ -1,3 +1,5 @@
+.family-listing-wrap {}
+
 .family {
   position: relative;
   color: #333;
@@ -36,10 +38,34 @@
     overflow: hidden;
     margin-bottom: 1rem;
     border-radius: 1rem;
+    position: relative;
 
     img {
       width: 100%;
     }
+
+    &:hover {
+      .family__photo-enlarge {
+        opacity: 1;
+      }
+    }
+  }
+
+
+
+  &__photo-enlarge {
+    all: unset;
+    opacity: 0;
+    cursor: pointer;
+    position: absolute;
+    width: 4rem;
+    height: 4rem;
+    display: grid;
+    place-content: center;
+    top: 0;
+    right: 0;
+    z-index: 10;
+    color: white;
   }
 
   &__name {
@@ -59,13 +85,16 @@
     table {
       border-collapse: collapse;
     }
+
     tr td {
       padding-block: 3px;
       vertical-align: top;
     }
+
     tr td:first-child {
       width: 7rem;
     }
+
     tr td:last-child {
       font-weight: bold;
     }
@@ -76,7 +105,9 @@
     width: 100%;
     border-collapse: collapse;
     font-family: var(--fs-primary);
+
     tr {
+
       td,
       th {
         padding: 0.5rem;

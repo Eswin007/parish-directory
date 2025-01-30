@@ -172,7 +172,12 @@ const MemberForm = ({
   };
 
   return (
-    <form onSubmit={onSubmitHandler} className="add-members">
+    <motion.form onSubmit={onSubmitHandler} className="add-members" 
+    initial={{opacity: 0, duration: .2, delay: .2 }}
+    animate={{opacity: 1, duration: .2 }}
+    exit={{opacity: 0, duration: .2 }}
+    >
+    
       <h3>Basic Details</h3>
       <div className="photo">
         {formData?.photo !== "" ? (
@@ -385,7 +390,7 @@ const MemberForm = ({
         </Button>
         <Button>Save</Button>
       </div>
-    </form>
+    </motion.form>
   );
 };
 

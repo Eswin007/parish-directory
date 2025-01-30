@@ -4,6 +4,10 @@ import { photoURL } from "../App";
 import Modal from "./Modal";
 import { createPortal } from "react-dom";
 import { motion, AnimatePresence } from "framer-motion";
+import ImageViewer from "./ImageViewer";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faExpand, faSquare } from "@fortawesome/free-solid-svg-icons";
+
 
 const familyAnim = {
   initial: {
@@ -27,8 +31,14 @@ const Family = ({
   onEditFamily,
 }) => {
   const [showModal, setShowModal] = useState(false);
+  const [showLargeImage, setShowLargeImage] = useState(false)
   return (
     <>
+    <AnimatePresence mode="wait" initial={false}>
+       {showLargeImage && 
+        <ImageViewer title={`${family?.hof} and Family`} image={`${photoURL}/${family?.photo}`} showLargeImage={showLargeImage} setShowLargeImage={setShowLargeImage} />
+        }
+    </AnimatePresence>
       <AnimatePresence mode="wait" initial={false}>
         {showModal && (
           <Modal
@@ -67,10 +77,14 @@ const Family = ({
           </div>
         </div>
         {family?.photo !== "" && (
-          <div className="family__photo">
-            <img src={`${photoURL}/${family?.photo}`} alt="" />
+          <div className="family__photo" >
+            <img src={`${photoURL}/${family?.photo}`} alt=""/>
+            <button className="family__photo-enlarge" onClick={()=>setShowLargeImage(true)}>
+              <FontAwesomeIcon icon={faExpand} />
+            </button>
           </div>
         )}
+        
 
         <table className="family__detail">
           <tbody>
