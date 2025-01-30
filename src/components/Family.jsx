@@ -8,7 +8,6 @@ import ImageViewer from "./ImageViewer";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faExpand, faSquare } from "@fortawesome/free-solid-svg-icons";
 
-
 const familyAnim = {
   initial: {
     opacity: 0,
@@ -29,16 +28,22 @@ const Family = ({
   familyMembers, //newly added
   onDeleteFamily,
   onEditFamily,
+  type,
 }) => {
   const [showModal, setShowModal] = useState(false);
-  const [showLargeImage, setShowLargeImage] = useState(false)
+  const [showLargeImage, setShowLargeImage] = useState(false);
   return (
     <>
-    <AnimatePresence mode="wait" initial={false}>
-       {showLargeImage && 
-        <ImageViewer title={`${family?.hof} and Family`} image={`${photoURL}/${family?.photo}`} showLargeImage={showLargeImage} setShowLargeImage={setShowLargeImage} />
-        }
-    </AnimatePresence>
+      <AnimatePresence mode="wait" initial={false}>
+        {showLargeImage && (
+          <ImageViewer
+            title={`${family?.hof} and Family`}
+            image={`${photoURL}/${family?.photo}`}
+            showLargeImage={showLargeImage}
+            setShowLargeImage={setShowLargeImage}
+          />
+        )}
+      </AnimatePresence>
       <AnimatePresence mode="wait" initial={false}>
         {showModal && (
           <Modal
@@ -57,7 +62,7 @@ const Family = ({
         initial="initial"
         animate="animate"
         exit="exit"
-        className="family"
+        className={`family ${type === "list" ? "list" : ""}`}
       >
         <div className="family__header">
           <h2 className="family__name">{family?.hof}</h2>
@@ -77,14 +82,16 @@ const Family = ({
           </div>
         </div>
         {family?.photo !== "" && (
-          <div className="family__photo" >
-            <img src={`${photoURL}/${family?.photo}`} alt=""/>
-            <button className="family__photo-enlarge" onClick={()=>setShowLargeImage(true)}>
+          <div className="family__photo">
+            <img src={`${photoURL}/${family?.photo}`} alt="" />
+            <button
+              className="family__photo-enlarge"
+              onClick={() => setShowLargeImage(true)}
+            >
               <FontAwesomeIcon icon={faExpand} />
             </button>
           </div>
         )}
-        
 
         <table className="family__detail">
           <tbody>
