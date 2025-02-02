@@ -7,6 +7,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import ImageViewer from "./ImageViewer";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faExpand, faSquare } from "@fortawesome/free-solid-svg-icons";
+import { RELATION } from "../App";
 
 const familyAnim = {
   initial: {
@@ -32,6 +33,7 @@ const Family = ({
 }) => {
   const [showModal, setShowModal] = useState(false);
   const [showLargeImage, setShowLargeImage] = useState(false);
+
   return (
     <>
       <AnimatePresence mode="wait" initial={false}>

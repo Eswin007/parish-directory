@@ -172,12 +172,13 @@ const MemberForm = ({
   };
 
   return (
-    <motion.form onSubmit={onSubmitHandler} className="add-members" 
-    initial={{opacity: 0, duration: .2, delay: .2 }}
-    animate={{opacity: 1, duration: .2 }}
-    exit={{opacity: 0, duration: .2 }}
+    <motion.form
+      onSubmit={onSubmitHandler}
+      className="add-members"
+      initial={{ opacity: 0, duration: 0.2, delay: 0.2 }}
+      animate={{ opacity: 1, duration: 0.2 }}
+      exit={{ opacity: 0, duration: 0.2 }}
     >
-    
       <h3>Basic Details</h3>
       <div className="photo">
         {formData?.photo !== "" ? (
@@ -385,10 +386,14 @@ const MemberForm = ({
         >
           {formData?.members?.length > 0 ? `Add More Members` : `Add Members`}
         </Button>
-        <Button variant="secondary" onClick={() => formRevealHandler(false)}>
+        <Button
+          type="button"
+          variant="secondary"
+          onClick={() => formRevealHandler(false)}
+        >
           Cancel
         </Button>
-        <Button>Save</Button>
+        <Button type="submit">Save</Button>
       </div>
     </motion.form>
   );

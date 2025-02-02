@@ -6,7 +6,14 @@
 
   // width: 60%;
   // border: 1px solid #dfdfdf;
-
+  .header {
+    grid-column: 1/2;
+    grid-row: 1/2;
+  }
+  .family-primary-data {
+    grid-column: 1/2;
+    grid-row: 2/3;
+  }
   .family-list {
     font-family: var(--fs-primary);
     color: #333;
@@ -30,6 +37,20 @@
       grid-template-columns: subgrid;
       border: 1px solid #dfdfdf;
       border-top: 1px solid #dfdfdf;
+      transition: background-color 0.15s ease;
+
+      &:hover {
+        background-color: #efefef;
+      }
+
+      &.first {
+        order: -1;
+      }
+
+      &.active {
+        background-color: #ecf5ff;
+        transition: background-color 0.15s ease;
+      }
       &:last-child {
         border-bottom-left-radius: 0.75rem;
         border-bottom-right-radius: 0.75rem;
@@ -95,6 +116,7 @@
     &__address {
       line-height: 1.4;
       color: #838383;
+      font-size: 0.875rem;
     }
 
     &__action {
@@ -123,6 +145,11 @@
     }
   }
 
+  .family-details {
+    grid-row: 2/3;
+    grid-column: 2/3;
+  }
+
   // .family.list {
   //   display: grid;
 
@@ -134,8 +161,10 @@
 }
 
 .family {
-  position: relative;
+  // position: relative;
   color: #333;
+  position: sticky;
+  top: 1rem;
 
   background-color: white;
   border: 1px solid #ddd;

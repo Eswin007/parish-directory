@@ -9,6 +9,7 @@ const Searchbar = ({
   setFilteredFamily,
   familyList,
   familyMembersList,
+  setActiveMember,
 }) => {
   const [searchValue, setSearchValue] = useState("");
   const [searchCount, setSearchCount] = useState(0);
@@ -48,6 +49,8 @@ const Searchbar = ({
 
   const searchValueHandler = (e) => {
     setSearchValue(e.target.value);
+    setActiveMember(null);
+
     if (e.target.value === "") {
       setSearchCount(null);
       setFilteredFamily(familyList);
@@ -56,10 +59,6 @@ const Searchbar = ({
 
   return (
     <div className={`searchbar ${className}`}>
-      <FontAwesomeIcon
-        icon={faSearch}
-        className="searchbar__search-icon"
-      ></FontAwesomeIcon>
       <input
         type="text"
         value={searchValue || ""}
@@ -90,7 +89,10 @@ const Searchbar = ({
         disabled={searchValue === ""}
         onClick={() => memberFilterHandler(searchValue)}
       >
-        Search
+        <FontAwesomeIcon
+          icon={faSearch}
+          className="searchbar__search-icon"
+        ></FontAwesomeIcon>
       </button>
     </div>
   );

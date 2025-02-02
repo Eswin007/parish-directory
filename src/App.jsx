@@ -15,6 +15,7 @@ import Loader from "./components/Loader";
 import Toast from "./components/Toast";
 import { AnimatePresence } from "framer-motion";
 import FamilyList from "./components/FamilyList";
+import { motion } from "framer-motion";
 
 export const apiKey =
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZmZndicnZpeGJtbGFibW96a3RwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MjU3MjkxMzgsImV4cCI6MjA0MTMwNTEzOH0.yU8fXAZa_x84GwdVhPVDdLhOWbAa6r2PoHxhnV5ebn0";
@@ -68,6 +69,7 @@ const App = () => {
   const [familyPhoto, setFamilyPhoto] = useState(null);
   const [showToast, setShowToast] = useState(false);
   const [toastMessage, setToastMessage] = useState(null);
+  const [activeMember, setActiveMember] = useState(null);
 
   const fetchMembers = async () => {
     setIsLoading(true);
@@ -92,13 +94,26 @@ const App = () => {
       },
     });
 
-    setFilteredFamily(familyList.data);
-    setFamilyList(familyList.data);
+    setFilteredFamily(
+      familyList.data.sort((a, b) => a.hof.localeCompare(b.hof))
+    );
+    setFamilyList(familyList.data.sort((a, b) => a.hof.localeCompare(b.hof)));
     setFamilyMembersList(membersList.data);
     setIsLoading(false);
   };
+
+  const activeMemberHandler = (family) => {
+    if (family === activeMember) return;
+    setActiveMember(null);
+
+    setTimeout(() => {
+      setActiveMember(family);
+    }, 200);
+  };
+
   const formRevealHandler = (value) => {
     setShowForm(value);
+    setActiveMember(null);
     setErrors({});
   };
 
@@ -286,15 +301,15 @@ const App = () => {
     });
     console.log(formData, "formData on edit");
   };
+
   return (
     <>
-      <div className="logo">Parish Directory 2025</div>
       <AnimatePresence mode="wait" initial={false}>
         {showToast && <Toast setShowToast={setShowToast}>{toastMessage}</Toast>}
       </AnimatePresence>
 
       <div className="body-wrap">
-        <Header
+        {/* <Header
           formRevealHandler={formRevealHandler}
           showForm={showForm}
           setFormData={setFormData}
@@ -302,8 +317,9 @@ const App = () => {
           setFilteredFamily={setFilteredFamily}
           familyList={familyList}
           familyMembersList={familyMembersList}
-        />
-        <div className="wrapper">
+          setActiveMember={setActiveMember}
+        /> */}
+        {/* <div className="wrapper">
           {isLoading && <Loader />}
           <AnimatePresence mode="wait" initial={false}>
             {showForm && (
@@ -322,34 +338,74 @@ const App = () => {
               />
             )}
           </AnimatePresence>
-        </div>
+        </div> */}
         <div className="family-listing-wrap">
-          {
-            !showForm && (
-              // filteredFamily?.length > 0 &&
-              // filteredFamily?.map((family) => (
-              // <Family
-              //   key={family?.family_id}
-              //   family={family}
-              //   familyMembers={familyMembersList.filter(
-              //     (member) => member?.family_id === family?.family_id
-              //   )}
-              //   type="list"
-              //   onDeleteFamily={onDeleteFamily}
-              //   onEditFamily={onEditFamily}
-              // />
-              <FamilyList
-                // key={family?.family_id}
-                // setShowLargeImage={setShowLargeImage}
-                filteredFamily={filteredFamily}
-                onEditFamily={onEditFamily}
-                onDeleteFamily={onDeleteFamily}
-              />
-            )
-            // ))
-          }
+          <Header
+            formRevealHandler={formRevealHandler}
+            showForm={showForm}
+            setFormData={setFormData}
+            fetchMembers={fetchMembers}
+            setFilteredFamily={setFilteredFamily}
+            familyList={familyList}
+            familyMembersList={familyMembersList}
+            setActiveMember={setActiveMember}
+          />
+          <div className="family-primary-data">
+            <FamilyList
+              // key={family?.family_id}
+              // setShowLargeImage={setShowLargeImage}
+              activeMemberHandler={activeMemberHandler}
+              activeMember={activeMember}
+              filteredFamily={filteredFamily}
+              onEditFamily={onEditFamily}
+              onDeleteFamily={onDeleteFamily}
+            />
+            {!showForm && filteredFamily.length === 0 && (
+              <div className="empty-results">No Results</div>
+            )}
+          </div>
           <div className="family-details">
-            {!showForm &&
+            <AnimatePresence mode="wait" initial={false}>
+              {showForm && (
+                <MemberForm
+                  formData={formData}
+                  setFormData={setFormData}
+                  saveFamilyHandler={saveFamilyHandler}
+                  formRevealHandler={formRevealHandler}
+                  errors={errors}
+                  setErrors={setErrors}
+                  familyList={familyList}
+                  setFamilyMembersList={setFamilyMembersList}
+                  setMembersToBeRemoved={setMembersToBeRemoved}
+                  familyPhoto={familyPhoto}
+                  setFamilyPhoto={setFamilyPhoto}
+                />
+              )}
+            </AnimatePresence>
+
+            <AnimatePresence mode="wait" initial={false}>
+              {!showForm && activeMember !== null && (
+                <Family
+                  family={activeMember}
+                  familyMembers={familyMembersList
+                    .filter(
+                      (member) => member?.family_id === activeMember?.family_id
+                    )
+                    .sort(
+                      (a, b) =>
+                        RELATION.indexOf(a.relation) -
+                        RELATION.indexOf(b.relation)
+                    )}
+                  onDeleteFamily={onDeleteFamily}
+                  onEditFamily={onEditFamily}
+                />
+              )}
+            </AnimatePresence>
+
+            {!activeMember && <div>No Data</div>}
+
+            {}
+            {/* {!showForm &&
               filteredFamily?.length > 0 &&
               filteredFamily?.map((family) => (
                 <Family
@@ -361,11 +417,8 @@ const App = () => {
                   onDeleteFamily={onDeleteFamily}
                   onEditFamily={onEditFamily}
                 />
-              ))}
+              ))} */}
           </div>
-          {!showForm && filteredFamily.length === 0 && (
-            <div className="empty-results">No Results</div>
-          )}
         </div>
       </div>
     </>

@@ -5,10 +5,17 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faExpand, faSquare, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { AnimatePresence } from "framer-motion";
 import { faEdit } from "@fortawesome/free-solid-svg-icons";
-
-const FamilyList = ({ filteredFamily }) => {
+import Modal from "./Modal";
+const FamilyList = ({
+  filteredFamily,
+  activeMemberHandler,
+  activeMember,
+  onEditFamily,
+  onDeleteFamily,
+}) => {
   const [showLargeImage, setShowLargeImage] = useState(false);
   const [viewingFamily, setViewingFamily] = useState({});
+  const [showModal, setShowModal] = useState(false);
   const openImageHandler = (id) => {
     const familyForImage = filteredFamily?.filter(
       (item) => item?.family_id === id
@@ -17,6 +24,7 @@ const FamilyList = ({ filteredFamily }) => {
     console.log(familyForImage, "familyforimage");
     setShowLargeImage(true);
   };
+
   return (
     <>
       <AnimatePresence mode="wait" initial={false}>
@@ -27,6 +35,19 @@ const FamilyList = ({ filteredFamily }) => {
             showLargeImage={showLargeImage}
             setShowLargeImage={setShowLargeImage}
           />
+        )}
+      </AnimatePresence>
+      <AnimatePresence mode="wait" initial={false}>
+        {showModal && (
+          <Modal
+            title="Confirm Delete"
+            confirmModal={() => onDeleteFamily(activeMember?.family_id)}
+            cancelModal={() => setShowModal(false)}
+          >
+            Are you sure you want to delete{" "}
+            <span className="highlight">{activeMember?.hof}</span> and Family
+            from the Parish Directory?
+          </Modal>
         )}
       </AnimatePresence>
       <div className="family-list">
@@ -40,10 +61,17 @@ const FamilyList = ({ filteredFamily }) => {
           </div>
           {filteredFamily?.length > 0 &&
             filteredFamily?.map((family) => {
+              let firstInLine;
+              if (family?.hof.toLowerCase().includes("rev")) {
+                firstInLine = true;
+              }
               return (
                 <div
-                  className="family-list__table-row"
-                  key={family?.family__id}
+                  className={`family-list__table-row ${
+                    activeMember?.family_id === family.family_id ? "active" : ""
+                  } ${firstInLine ? "first" : ""}`}
+                  key={family?.family_id}
+                  onClick={() => activeMemberHandler(family)}
                 >
                   <div className="family-list__table-cell">
                     <div className="family-list__photo">
@@ -85,14 +113,20 @@ const FamilyList = ({ filteredFamily }) => {
                     <div className="family-list__email">{family?.email}</div>
                   </div>
                   <div className="family-list__table-cell">
-                    <div className="family-list__action">
-                      <button className="family-list__action--edit">
+                    {/* <div className="family-list__action">
+                      <button
+                        className="family-list__action--edit"
+                        onClick={() => onEditFamily(family?.family_id)}
+                      >
                         <FontAwesomeIcon icon={faEdit} />
                       </button>
-                      <button className="family-list__action--delete">
+                      <button
+                        className="family-list__action--delete"
+                        onClick={() => setShowModal(true)}
+                      >
                         <FontAwesomeIcon icon={faTrash} />
                       </button>
-                    </div>
+                    </div> */}
                   </div>
                   {/* <div className="family-list__table-cell">
                     <div className="family-list__email">{family?.email}</div>

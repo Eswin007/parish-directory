@@ -1,4 +1,5 @@
 import React from "react";
+import { RELATION } from "../App";
 
 const Members = ({ familyMembers, family }) => {
   const formattedDate = (date) => {
@@ -9,6 +10,10 @@ const Members = ({ familyMembers, family }) => {
       });
     } else return;
   };
+
+  const orderedFamilyMembers = familyMembers.sort(
+    (a, b) => RELATION.indexOf(a) - RELATION.indexOf(b)
+  );
 
   return (
     <table className="members">
@@ -31,7 +36,7 @@ const Members = ({ familyMembers, family }) => {
           <td>{formattedDate(family?.dom) ?? "-"}</td>
           <td>{family?.blood}</td>
         </tr>
-        {familyMembers?.map((member, index) => {
+        {orderedFamilyMembers?.map((member, index) => {
           return (
             familyMembers && (
               <tr key={index}>

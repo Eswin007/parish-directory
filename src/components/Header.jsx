@@ -11,6 +11,7 @@ const Header = ({
   setFilteredFamily,
   familyList,
   familyMembersList,
+  setActiveMember,
 }) => {
   const addNewMember = () => {
     formRevealHandler(true);
@@ -19,14 +20,17 @@ const Header = ({
 
   return (
     <div className="header">
+      <div className="logo">Parish Directory 2025</div>
       {!showForm && (
         <Searchbar
           placeholder="Search..."
+          className="header__searchbar"
           setFormData={setFormData}
           fetchMembers={fetchMembers}
           setFilteredFamily={setFilteredFamily}
           familyList={familyList}
           familyMembersList={familyMembersList}
+          setActiveMember={setActiveMember}
         />
       )}
       {!showForm && <Button onClick={addNewMember}>Add Family</Button>}
