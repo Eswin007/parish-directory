@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Members from "./Members";
 import { photoURL } from "../App";
 import Modal from "./Modal";
@@ -8,6 +8,7 @@ import ImageViewer from "./ImageViewer";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faExpand, faSquare } from "@fortawesome/free-solid-svg-icons";
 import { RELATION } from "../App";
+import PulseLoader from "./PulseLoader";
 
 const familyAnim = {
   initial: {
@@ -33,6 +34,11 @@ const Family = ({
 }) => {
   const [showModal, setShowModal] = useState(false);
   const [showLargeImage, setShowLargeImage] = useState(false);
+  const [imageLoading, setImageLoading] = useState(true);
+
+  useEffect(() => {
+    setImageLoading(true);
+  }, [family?.family_id]);
 
   return (
     <>
@@ -85,7 +91,13 @@ const Family = ({
         </div>
         {family?.photo !== "" && (
           <div className="family__photo">
-            <img src={`${photoURL}/${family?.photo}`} alt="" />
+            <img
+              src={`${photoURL}/${family?.photo}`}
+              alt=""
+              key={family?.photo}
+              onLoad={() => setImageLoading(false)}
+            />
+            {/* {!imageLoading ? null : <PulseLoader />} */}
             <button
               className="family__photo-enlarge"
               onClick={() => setShowLargeImage(true)}

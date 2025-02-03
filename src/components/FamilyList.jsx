@@ -12,7 +12,7 @@ const FamilyList = ({
   activeMember,
   onEditFamily,
   onDeleteFamily,
-  showForm
+  showForm,
 }) => {
   const [showLargeImage, setShowLargeImage] = useState(false);
   const [viewingFamily, setViewingFamily] = useState({});
@@ -67,16 +67,18 @@ const FamilyList = ({
                 firstInLine = true;
               }
               let clickDisabled;
-              if(showForm && activeMember){
+              if (showForm && activeMember) {
                 clickDisabled = true;
-                console.log(clickDisabled, 'click')
+                console.log(clickDisabled, "click");
               }
 
               return (
                 <div
                   className={`family-list__table-row ${
                     activeMember?.family_id === family.family_id ? "active" : ""
-                  } ${firstInLine ? "first" : ""} ${clickDisabled ? 'disabled' : ''}` }
+                  } ${firstInLine ? "first" : ""} ${
+                    clickDisabled ? "disabled" : ""
+                  }`}
                   key={family?.family_id}
                   onClick={() => activeMemberHandler(family)}
                 >

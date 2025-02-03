@@ -74,3 +74,22 @@ $duration: (
     opacity: 0.1;
   }
 }
+
+.image-pulse-loader {
+  position: absolute;
+  inset: 0;
+  animation: imagePulse 2s linear infinite;
+}
+
+@keyframes imagePulse {
+  0% {
+    background-color: transparent;
+  }
+  50% {
+    background-color: #dfdfdf;
+  }
+
+  100% {
+    background-color: transparent;
+  }
+}
