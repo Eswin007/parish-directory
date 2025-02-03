@@ -14,6 +14,7 @@ const Header = ({
   setActiveMember,
 }) => {
   const addNewMember = () => {
+    setActiveMember(null)
     formRevealHandler(true);
     setFormData(FAMILY_INITIAL);
   };

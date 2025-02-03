@@ -10,10 +10,12 @@
     grid-column: 1/2;
     grid-row: 1/2;
   }
+
   .family-primary-data {
     grid-column: 1/2;
     grid-row: 2/3;
   }
+
   .family-list {
     font-family: var(--fs-primary);
     color: #333;
@@ -39,6 +41,10 @@
       border-top: 1px solid #dfdfdf;
       transition: background-color 0.15s ease;
 
+      &.disabled {
+        pointer-events: none;
+      }
+
       &:hover {
         background-color: #efefef;
       }
@@ -51,10 +57,11 @@
         background-color: #ecf5ff;
         transition: background-color 0.15s ease;
       }
-      &:last-child {
-        border-bottom-left-radius: 0.75rem;
-        border-bottom-right-radius: 0.75rem;
-      }
+
+      // &:last-child {
+      //   border-bottom-left-radius: 0.75rem;
+      //   border-bottom-right-radius: 0.75rem;
+      // }
 
       &:nth-child(2) {
         border-top-color: #e7e7e7 !important;
@@ -139,6 +146,7 @@
       &--edit:hover {
         color: rgb(80, 106, 255);
       }
+
       &--delete:hover {
         color: rgb(255, 80, 80);
       }
@@ -266,6 +274,7 @@
     font-family: var(--fs-primary);
 
     tr {
+
       td,
       th {
         padding: 0.5rem;

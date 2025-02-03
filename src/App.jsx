@@ -113,7 +113,6 @@ const App = () => {
 
   const formRevealHandler = (value) => {
     setShowForm(value);
-    setActiveMember(null);
     setErrors({});
   };
 
@@ -359,6 +358,7 @@ const App = () => {
               filteredFamily={filteredFamily}
               onEditFamily={onEditFamily}
               onDeleteFamily={onDeleteFamily}
+              showForm={showForm}
             />
             {!showForm && filteredFamily.length === 0 && (
               <div className="empty-results">No Results</div>

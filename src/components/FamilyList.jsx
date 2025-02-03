@@ -12,6 +12,7 @@ const FamilyList = ({
   activeMember,
   onEditFamily,
   onDeleteFamily,
+  showForm
 }) => {
   const [showLargeImage, setShowLargeImage] = useState(false);
   const [viewingFamily, setViewingFamily] = useState({});
@@ -65,11 +66,17 @@ const FamilyList = ({
               if (family?.hof.toLowerCase().includes("rev")) {
                 firstInLine = true;
               }
+              let clickDisabled;
+              if(showForm && activeMember){
+                clickDisabled = true;
+                console.log(clickDisabled, 'click')
+              }
+
               return (
                 <div
                   className={`family-list__table-row ${
                     activeMember?.family_id === family.family_id ? "active" : ""
-                  } ${firstInLine ? "first" : ""}`}
+                  } ${firstInLine ? "first" : ""} ${clickDisabled ? 'disabled' : ''}` }
                   key={family?.family_id}
                   onClick={() => activeMemberHandler(family)}
                 >
