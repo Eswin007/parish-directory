@@ -1,7 +1,7 @@
 import React from "react";
 import Searchbar from "./Searchbar";
 import Button from "./Button";
-import { FAMILY_INITIAL } from "../App";
+import { FAMILY_INITIAL } from "./Utilities";
 const Header = ({
   setShowForm,
   formRevealHandler,
@@ -14,7 +14,7 @@ const Header = ({
   setActiveMember,
 }) => {
   const addNewMember = () => {
-    setActiveMember(null)
+    setActiveMember(null);
     formRevealHandler(true);
     setFormData(FAMILY_INITIAL);
   };

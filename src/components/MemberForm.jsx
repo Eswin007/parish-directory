@@ -4,11 +4,12 @@ import Button from "./Button";
 import axios from "axios";
 import Card from "./Card";
 import Dropdown from "./Dropdown";
-import { BLOOD_GROUP, RELATION, photoURL, apiKey } from "../App";
+import { photoURL } from "../App";
+import { BLOOD_GROUP, RELATION, apiKey } from "./Utilities";
 import Family from "./Family";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCamera } from "@fortawesome/free-solid-svg-icons";
-import { AnimatePresence, delay, motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 
 const addMemberCardAnim = {
   initial: {
@@ -31,16 +32,8 @@ const addMemberCardAnim = {
 
   exit: {
     opacity: 0,
-    // scaleY: 0,
-    // background: "#ffc3c1",
+
     duration: 0.3,
-    // transition: {
-    //   duration: 0.2,
-    //   delay: 0.5,
-    //   background: {
-    //     duration: 0.5,
-    //   },
-    // },
   },
 };
 

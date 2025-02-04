@@ -58,91 +58,81 @@ const FamilyList = ({
             <div className="family-list__table-cell">Name & Address</div>
             <div className="family-list__table-cell">Mother Parish</div>
             <div className="family-list__table-cell">Phone & Email</div>
-            <div className="family-list__table-cell">&nbsp;</div>
           </div>
-          {filteredFamily?.length > 0 &&
-            filteredFamily?.map((family) => {
-              let firstInLine;
-              if (family?.hof.toLowerCase().includes("rev")) {
-                firstInLine = true;
-              }
-              let clickDisabled;
-              if (showForm && activeMember) {
-                clickDisabled = true;
-                console.log(clickDisabled, "click");
-              }
+          <div className="family-list__table-body">
+            {filteredFamily?.length > 0 &&
+              filteredFamily?.map((family) => {
+                let firstInLine;
+                if (family?.hof.toLowerCase().includes("rev")) {
+                  firstInLine = true;
+                }
+                let clickDisabled;
+                if (showForm && activeMember) {
+                  clickDisabled = true;
+                  console.log(clickDisabled, "click");
+                }
 
-              return (
-                <div
-                  className={`family-list__table-row ${
-                    activeMember?.family_id === family.family_id ? "active" : ""
-                  } ${firstInLine ? "first" : ""} ${
-                    clickDisabled ? "disabled" : ""
-                  }`}
-                  key={family?.family_id}
-                  onClick={() => activeMemberHandler(family)}
-                >
-                  <div className="family-list__table-cell">
-                    <div className="family-list__photo">
-                      {family?.photo !== "" && (
-                        <div className="family-list__photo">
-                          <img
-                            src={`${photoURL}/${family?.photo}`}
-                            alt=""
-                            onClick={(e) => openImageHandler(family?.family_id)}
-                          />
-
-                          {/* <button
-                            className="family-list__photo-enlarge"
-                            onClick={() => setShowLargeImage(true)}
-                          >
-                            <FontAwesomeIcon icon={faExpand} />
-                          </button> */}
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                  <div className="family-list__table-cell">
-                    <div className="family-list__detail">
-                      <div className="family-list__name">{family?.hof}</div>
-                      <div className="family-list__address">
-                        {family?.address}
+                return (
+                  <div
+                    className={`family-list__table-row ${
+                      activeMember?.family_id === family.family_id
+                        ? "active"
+                        : ""
+                    } ${firstInLine ? "first" : ""} ${
+                      clickDisabled ? "disabled" : ""
+                    }`}
+                    key={family?.family_id}
+                    onClick={() => activeMemberHandler(family)}
+                  >
+                    <div className="family-list__table-cell">
+                      <div className="family-list__photo">
+                        {family?.photo !== "" && (
+                          <div className="family-list__photo">
+                            <img
+                              src={`${photoURL}/${family?.photo}`}
+                              alt=""
+                              onClick={(e) =>
+                                openImageHandler(family?.family_id)
+                              }
+                            />
+                          </div>
+                        )}
                       </div>
                     </div>
-                  </div>
-                  <div className="family-list__table-cell">
-                    <div className="family-list__parish">
-                      {family?.mother_parish}
+                    <div className="family-list__table-cell">
+                      <div className="family-list__detail">
+                        <div className="family-list__name">{family?.hof}</div>
+                        <div className="family-list__address">
+                          {family?.address}
+                        </div>
+                      </div>
+                    </div>
+                    <div className="family-list__table-cell">
+                      <div className="family-list__parish">
+                        {family?.mother_parish}
+                      </div>
+                    </div>
+                    <div className="family-list__table-cell">
+                      <div className="family-list__phone">
+                        <a href={`tel:${family?.phone1}`}> {family?.phone1}</a>
+
+                        {family?.phone2 && (
+                          <>
+                            {" "}
+                            /
+                            <a href={`tel:${family?.phone2}`}>
+                              {" "}
+                              {family?.phone2}
+                            </a>
+                          </>
+                        )}
+                      </div>
+                      <div className="family-list__email">{family?.email}</div>
                     </div>
                   </div>
-                  <div className="family-list__table-cell">
-                    <div className="family-list__phone">
-                      {family?.phone1} {family?.phone2 && "/ " + family?.phone2}
-                    </div>
-                    <div className="family-list__email">{family?.email}</div>
-                  </div>
-                  <div className="family-list__table-cell">
-                    {/* <div className="family-list__action">
-                      <button
-                        className="family-list__action--edit"
-                        onClick={() => onEditFamily(family?.family_id)}
-                      >
-                        <FontAwesomeIcon icon={faEdit} />
-                      </button>
-                      <button
-                        className="family-list__action--delete"
-                        onClick={() => setShowModal(true)}
-                      >
-                        <FontAwesomeIcon icon={faTrash} />
-                      </button>
-                    </div> */}
-                  </div>
-                  {/* <div className="family-list__table-cell">
-                    <div className="family-list__email">{family?.email}</div>
-                  </div> */}
-                </div>
-              );
-            })}
+                );
+              })}
+          </div>
         </div>
       </div>
     </>

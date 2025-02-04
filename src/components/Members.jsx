@@ -1,5 +1,5 @@
 import React from "react";
-import { RELATION } from "../App";
+import { RELATION } from "./Utilities";
 
 const Members = ({ familyMembers, family }) => {
   const formattedDate = (date) => {

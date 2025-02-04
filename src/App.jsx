@@ -5,17 +5,14 @@ import Card from "./components/Card";
 import { useEffect, useState } from "react";
 import "./scss/main.scss";
 import MemberForm from "./components/MemberForm";
-import Dropdown from "./components/Dropdown";
 import Loader from "./components/Loader";
 import Toast from "./components/Toast";
 import { AnimatePresence } from "framer-motion";
 import FamilyList from "./components/FamilyList";
-import { motion } from "framer-motion";
 import { VALIDATION_SCHEMA } from "./components/Utilities";
 import MemberPlaceholder from "./components/MemberPlaceholder";
+import { RELATION, FAMILY_INITIAL, apiKey } from "./components/Utilities";
 
-export const apiKey =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZmZndicnZpeGJtbGFibW96a3RwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MjU3MjkxMzgsImV4cCI6MjA0MTMwNTEzOH0.yU8fXAZa_x84GwdVhPVDdLhOWbAa6r2PoHxhnV5ebn0";
 const headerConfig = {
   headers: {
     apikey: apiKey,
@@ -28,31 +25,6 @@ const headerConfig = {
 
 const supabaseURL = `https://vffwbrvixbmlabmozktp.supabase.co`;
 export const photoURL = `${supabaseURL}/storage/v1/object/family-photos`;
-
-export const FAMILY_INITIAL = {
-  hof: "",
-  phone1: "",
-  phone2: "",
-  email: "",
-  mother_parish: "",
-  address: "",
-  dob: "",
-  blood: "",
-  occupation: "",
-  members: [],
-  photo: "",
-};
-
-export const BLOOD_GROUP = ["A+", "A-", "B-", "O+", "O-", "AB+", "AB-", "B+"];
-export const RELATION = [
-  "Mother",
-  "Wife",
-  "Son",
-  "Daughter",
-  "Grandson",
-  "Granddaughter",
-  "Daughter-In-Law",
-];
 
 const App = () => {
   const [showForm, setShowForm] = useState(false);
@@ -126,7 +98,6 @@ const App = () => {
 
   const saveFamilyHandler = async (formData) => {
     setIsLoading(true);
-    console.log(formData, "eswinformdataonsave");
     const { members, ...familyHead } = formData;
     const finalFamilyHead = { ...familyHead, photo: familyPhoto };
 
@@ -229,7 +200,7 @@ const App = () => {
         .catch((err) => {
           console.log("error", err);
         });
-        setActiveMember(null)
+      setActiveMember(null);
     } catch (err) {
     } finally {
       setIsLoading(false);
@@ -247,7 +218,6 @@ const App = () => {
     );
 
     setFormData({
-      // photo: editFamily?.photo,
       ...editFamily,
       members: editMember,
     });
@@ -259,6 +229,7 @@ const App = () => {
       <AnimatePresence mode="wait" initial={false}>
         {showToast && <Toast setShowToast={setShowToast}>{toastMessage}</Toast>}
       </AnimatePresence>
+      {isLoading && <Loader />}
 
       <div className="body-wrap">
         <div className="family-listing-wrap">
@@ -274,7 +245,6 @@ const App = () => {
           />
           <div className="family-primary-data">
             <FamilyList
-              // setShowLargeImage={setShowLargeImage}
               activeMemberHandler={activeMemberHandler}
               activeMember={activeMember}
               filteredFamily={filteredFamily}
@@ -324,8 +294,9 @@ const App = () => {
               )}
             </AnimatePresence>
 
-            {!activeMember && !showForm && filteredFamily?.length > 0 && <MemberPlaceholder />}
-
+            {!activeMember && !showForm && filteredFamily?.length > 0 && (
+              <MemberPlaceholder />
+            )}
           </div>
         </div>
       </div>
