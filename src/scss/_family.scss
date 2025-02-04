@@ -39,6 +39,7 @@
       grid-template-columns: subgrid;
       border: 1px solid #dfdfdf;
       border-top: 1px solid #dfdfdf;
+      border-bottom: none;
       transition: background-color 0.15s ease;
 
       &.disabled {
@@ -51,6 +52,12 @@
 
       &.first {
         order: -1;
+      }
+
+      &:last-of-type {
+        border-bottom-left-radius: .5rem;
+        border-bottom-right-radius: .5rem;
+        border-bottom: 1px solid #dfdfdf;
       }
 
       &.active {
@@ -156,6 +163,9 @@
   .family-details {
     grid-row: 2/3;
     grid-column: 2/3;
+    position: sticky;
+    top: 1rem;
+
   }
 
   // .family.list {

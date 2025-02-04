@@ -5,6 +5,7 @@ $duration: (
   4: 0.3s,
   5: 0.4s,
 );
+
 .loader {
   background-color: white;
   padding: 2rem 4rem;
@@ -66,9 +67,11 @@ $duration: (
     transform: translate(-50%, -50%) rotate(0);
     opacity: 0.1;
   }
+
   90% {
     opacity: 1;
   }
+
   100% {
     transform: translate(-50%, -50%) rotate(360deg);
     opacity: 0.1;
@@ -85,11 +88,34 @@ $duration: (
   0% {
     background-color: transparent;
   }
+
   50% {
     background-color: #dfdfdf;
   }
 
   100% {
     background-color: transparent;
+  }
+}
+
+
+
+.member-placeholder {
+  background-color: #fcfcfc;
+  border: 1px solid #dfdfdf;
+  height: 100%;
+  max-height: 50vh;
+  border-radius: .5rem;
+  display: grid;
+  place-content: center;
+  justify-items: center;
+  gap: 1rem;
+  color: #838383;
+
+  font-family: var(--fs-primary);
+
+  &__icon {
+    font-size: 2rem;
+    opacity: .75;
   }
 }

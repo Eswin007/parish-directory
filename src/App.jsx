@@ -6,16 +6,13 @@ import { useEffect, useState } from "react";
 import "./scss/main.scss";
 import MemberForm from "./components/MemberForm";
 import Dropdown from "./components/Dropdown";
-import { object, string, date, array } from "yup";
-import Masonry, { ResponsiveMasonry } from "react-responsive-masonry";
-
-import config from "./config";
-
 import Loader from "./components/Loader";
 import Toast from "./components/Toast";
 import { AnimatePresence } from "framer-motion";
 import FamilyList from "./components/FamilyList";
 import { motion } from "framer-motion";
+import { VALIDATION_SCHEMA } from "./components/Utilities";
+import MemberPlaceholder from "./components/MemberPlaceholder";
 
 export const apiKey =
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZmZndicnZpeGJtbGFibW96a3RwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MjU3MjkxMzgsImV4cCI6MjA0MTMwNTEzOH0.yU8fXAZa_x84GwdVhPVDdLhOWbAa6r2PoHxhnV5ebn0";
@@ -125,52 +122,7 @@ const App = () => {
     setShowToast(true);
   };
 
-  const validationSchema = object().shape({
-    hof: string().required("Name is required"),
-    phone1: string()
-      .required("Phone 1 is required")
-      .matches(/^[0-9]+$/, "Must be only digits")
-      .min(10, "Must be exactly 10 digits")
-      .max(10, "Must be exactly 10 digits"),
-    phone2: string()
-      .nullable()
-      .matches(/^[0-9]*$/, "Must be only digits"),
-    email: string()
-      .email("Invalid email format")
-      .required("Please Enter email"),
-    mother_parish: string(),
-    address: string().required("Address is required"),
-    occupation: string().nullable(),
-    dob: date()
-      .transform((value, originalValue) =>
-        originalValue === "" ? null : value
-      )
-      .required("Date of Birth is required"),
-    dom: date()
-      .nullable()
-      .transform((value, originalValue) =>
-        originalValue === "" ? null : value
-      ),
-    blood: string().nullable(),
-    members: array().of(
-      object().shape({
-        name: string().required("Member Name is required"),
-        relation: string().required("Relation is required"),
-        occupation: string().nullable(),
-        dob: date()
-          .required("Date of birth is required")
-          .transform((value, originalValue) =>
-            originalValue === "" ? null : value
-          ),
-        dom: date()
-          .nullable()
-          .transform((value, originalValue) =>
-            originalValue === "" ? null : value
-          ),
-        blood: string().nullable(),
-      })
-    ),
-  });
+  const validationSchema = VALIDATION_SCHEMA;
 
   const saveFamilyHandler = async (formData) => {
     setIsLoading(true);
@@ -277,6 +229,7 @@ const App = () => {
         .catch((err) => {
           console.log("error", err);
         });
+        setActiveMember(null)
     } catch (err) {
     } finally {
       setIsLoading(false);
@@ -308,36 +261,6 @@ const App = () => {
       </AnimatePresence>
 
       <div className="body-wrap">
-        {/* <Header
-          formRevealHandler={formRevealHandler}
-          showForm={showForm}
-          setFormData={setFormData}
-          fetchMembers={fetchMembers}
-          setFilteredFamily={setFilteredFamily}
-          familyList={familyList}
-          familyMembersList={familyMembersList}
-          setActiveMember={setActiveMember}
-        /> */}
-        {/* <div className="wrapper">
-          {isLoading && <Loader />}
-          <AnimatePresence mode="wait" initial={false}>
-            {showForm && (
-              <MemberForm
-                formData={formData}
-                setFormData={setFormData}
-                saveFamilyHandler={saveFamilyHandler}
-                formRevealHandler={formRevealHandler}
-                errors={errors}
-                setErrors={setErrors}
-                familyList={familyList}
-                setFamilyMembersList={setFamilyMembersList}
-                setMembersToBeRemoved={setMembersToBeRemoved}
-                familyPhoto={familyPhoto}
-                setFamilyPhoto={setFamilyPhoto}
-              />
-            )}
-          </AnimatePresence>
-        </div> */}
         <div className="family-listing-wrap">
           <Header
             formRevealHandler={formRevealHandler}
@@ -351,7 +274,6 @@ const App = () => {
           />
           <div className="family-primary-data">
             <FamilyList
-              // key={family?.family_id}
               // setShowLargeImage={setShowLargeImage}
               activeMemberHandler={activeMemberHandler}
               activeMember={activeMember}
@@ -402,22 +324,8 @@ const App = () => {
               )}
             </AnimatePresence>
 
-            {!activeMember && <div>No Data</div>}
+            {!activeMember && !showForm && filteredFamily?.length > 0 && <MemberPlaceholder />}
 
-            {}
-            {/* {!showForm &&
-              filteredFamily?.length > 0 &&
-              filteredFamily?.map((family) => (
-                <Family
-                  key={family?.family_id}
-                  family={family}
-                  familyMembers={familyMembersList.filter(
-                    (member) => member?.family_id === family?.family_id
-                  )}
-                  onDeleteFamily={onDeleteFamily}
-                  onEditFamily={onEditFamily}
-                />
-              ))} */}
           </div>
         </div>
       </div>
