@@ -270,18 +270,14 @@ const MemberForm = ({
         errors={errors?.blood}
       />
 
-      <AnimatePresence mode="wait" initial={false}>
+ 
         {formData?.members?.map((item, index) => {
           return (
-            <motion.div
+            <div
               key={item?.membersID || item?.tempID || index}
-              layoutId={`-member${item?.membersID || item?.tempID || index}`}
+             
               className="full-width-col member-card-wrap"
-              variants={addMemberCardAnim}
-              initial="initial"
-              animate="animate"
-              exit="exit"
-              layout
+       
             >
               <Card className="member-card">
                 <InputField
@@ -366,10 +362,10 @@ const MemberForm = ({
                   Remove
                 </Button>
               </Card>
-            </motion.div>
+            </div>
           );
         })}
-      </AnimatePresence>
+     
 
       <div className="button-wrap">
         <Button

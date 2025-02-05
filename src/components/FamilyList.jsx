@@ -114,18 +114,7 @@ const FamilyList = ({
                     </div>
                     <div className="family-list__table-cell">
                       <div className="family-list__phone">
-                        <a href={`tel:${family?.phone1}`}> {family?.phone1}</a>
-
-                        {family?.phone2 && (
-                          <>
-                            {" "}
-                            /
-                            <a href={`tel:${family?.phone2}`}>
-                              {" "}
-                              {family?.phone2}
-                            </a>
-                          </>
-                        )}
+                        {`${family?.phone1} ${family?.phone2 && '/ ' + family?.phone2}` }
                       </div>
                       <div className="family-list__email">{family?.email}</div>
                     </div>

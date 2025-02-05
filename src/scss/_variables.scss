@@ -2,6 +2,53 @@
   --input-border: 1px solid #838383;
   --input-border-focus: 1px solid #68bbff;
 
-  --fs-primary: "Poppins", sans-serif;
-  --fs-secondary: "Open Sans", sans-serif;
+  // --clr-primary: #b13814;
+  // --clr-bg-white: white;
+  // --clr-text-white: white;
+  // --clr-text-dark: #4a4a4a;
+  // --fs-primary: "Poppins", sans-serif;
+  // --fs-secondary: "Open Sans", sans-serif;
+}
+
+
+
+
+
+
+
+
+
+$light: (
+  primary: (800: #b13814),
+  dark:(800: #333333,
+    700: #4a4a4a,
+    500: #838383,
+    300: #dfdfdf,
+  ),
+);
+
+$dark: (
+  primary: (800: blue),
+  dark:(800: #333333,
+    700: #4a4a4a,
+    500: #838383,
+    300: #dfdfdf,
+  ),
+);
+
+
+[data-theme="light"] {
+  @each $type, $color in $light {
+    @each $variant, $clr in $color {
+      --clr-#{$type}-#{$variant}: #{$clr};
+    }
+  }
+}
+
+[data-theme="dark"] {
+  @each $type, $color in $dark {
+    @each $variant, $clr in $color {
+      --clr-#{$type}-#{$variant}: #{$clr};
+    }
+  }
 }

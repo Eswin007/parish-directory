@@ -39,7 +39,7 @@
 
     &__table-row {
       padding: 0.5rem;
-      background-color: white;
+      background-color: var(--clr-bg-white);
       align-items: center;
       gap: 1rem;
       grid-column: 1/-1;
@@ -125,10 +125,12 @@
     }
 
     &__phone {
-      color: #4a4a4a;
+      color: var(--clr-text-dark);
+
       a {
         color: inherit;
         text-decoration: none;
+
         &:hover {
           background-color: #a7b4ff;
           border-radius: 3px;
@@ -170,31 +172,20 @@
     top: 1rem;
   }
 
-  // .family.list {
-  //   display: grid;
 
-  //   &__photo {
-  //     width: 4rem;
-  //     border-radius: 4px;
-  //   }
-  // }
 }
 
 .family {
-  // position: relative;
   color: #333;
   position: sticky;
   top: 1rem;
 
-  background-color: white;
+  background-color: var(--clr-bg-white);
   border: 1px solid #ddd;
   border-radius: 0.5rem;
   padding: 1rem;
   font-family: var(--fs-primary);
 
-  // & + & {
-  //   margin-top: 2rem;
-  // }
 
   &__header {
     display: flex;
@@ -244,13 +235,13 @@
     top: 0;
     right: 0;
     z-index: 10;
-    color: white;
+    color: var(--clr-text-white);
   }
 
   &__name {
     font-size: 1.75rem;
     margin-bottom: 0.5rem;
-    color: #b13814;
+    color: var(--clr-primary);
     font-family: var(--fs-secondary);
     font-weight: 900;
     text-transform: uppercase;
@@ -286,14 +277,15 @@
     font-family: var(--fs-primary);
 
     tr {
+
       td,
       th {
         padding: 0.5rem;
       }
 
       th {
-        color: white;
-        background-color: #b13814;
+        color: var(--clr-text-white);
+        background-color: var(--clr-primary);
         font-weight: 400;
       }
 
@@ -307,13 +299,11 @@
 .member-card-wrap {
   transform-origin: top;
   background-color: #f0f2f7;
-  // background-color: #ffc3c1;
-  // background-color: #d5ffd8;
 }
 
 .member-card {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
   gap: 2rem;
   border-radius: 0.5rem;
   grid-column-gap: 1.5rem;

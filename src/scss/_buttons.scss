@@ -8,13 +8,13 @@
   text-transform: uppercase;
   font-family: var(--fs-primary);
   font-weight: 600;
-  --clr-base: #b13814;
+  --clr-base: var(--clr-primary);
   transition: all 0.15s ease;
 }
 
 .btn-primary {
   background-color: var(--clr-base);
-  color: white;
+  color: var(--clr-text-white);
 
   &:focus-visible,
   &:hover {
@@ -25,6 +25,7 @@
 .btn-secondary {
   color: var(--clr-base);
   border: 1px solid var(--clr-base);
+
   &:focus-visible,
   &:hover {
     background-color: hsl(14, 80%, 95%);
@@ -41,13 +42,12 @@
   padding: 0.25rem 0.75rem;
   border-radius: 100vmax;
   font-size: 0.875rem;
-  color: #4a4a4a;
+  color: var(--clr-text-dark);
   font-family: var(--fs-primary);
   transition: all 0.15s ease;
 
   &:focus-visible,
   &:hover {
     background-color: #dfdfdf;
-    // color: white;
   }
 }

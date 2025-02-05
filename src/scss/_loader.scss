@@ -7,7 +7,7 @@ $duration: (
 );
 
 .loader {
-  background-color: white;
+  background-color: var(--clr-bg-white);
   padding: 2rem 4rem;
   display: block;
   position: fixed;
@@ -39,6 +39,7 @@ $duration: (
       border-radius: 100%;
       transform: translate(-50%, -50%);
       animation: loaderAnim 2s ease infinite;
+      opacity: 0;
 
       @each $item, $value in $duration {
         &.circle-#{$item} {

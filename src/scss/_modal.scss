@@ -2,6 +2,7 @@
   position: relative;
   z-index: 100;
 }
+
 .overlay-backdrop {
   position: fixed;
   inset: 0;
@@ -14,10 +15,10 @@
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
-  background-color: white;
+  background-color: var(--clr-bg-white);
   padding: 1rem;
   font-family: var(--fs-primary);
-  color: #4a4a4a;
+  color: var(--clr-text-dark);
   border-radius: 0.5rem;
   box-shadow: 5px 5px 1rem rgba(black, 0.2);
 
@@ -30,6 +31,7 @@
     font-weight: 700;
     font-size: 1.125rem;
   }
+
   &__body {
     padding-block: 1rem;
     line-height: 1.5;
