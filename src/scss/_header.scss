@@ -6,7 +6,7 @@
   // margin-top: 2.5rem;
   font-size: 1rem;
   line-height: 1;
-  color: #333;
+  color: var(--clr-dark-800);
 }
 
 .header {
@@ -16,7 +16,7 @@
   gap: 2rem;
   justify-content: flex-start;
   // grid-template-columns: 1fr 1fr;
-  background-color: var(--clr-bg-white);
+  background-color: var(--clr-light-100);
   align-items: center;
   padding-block: 0.5rem;
   // position: sticky;
@@ -39,8 +39,8 @@
     min-width: 20rem;
     display: flex;
     align-items: stretch;
-    border: 2px solid #dfdfdf;
-    background-color: #fcfcfc;
+    border: 2px solid var(--clr-dark-300);
+    background-color: var(--clr-dark-100);
     border-radius: 100vmax;
     overflow: hidden;
     align-items: center;
@@ -54,7 +54,7 @@
     }
 
     &__search-icon {
-      color: #838383;
+      color: var(--clr-dark-500);
     }
 
     input {
@@ -64,26 +64,22 @@
       width: 100%;
       font-size: 1rem;
       font-family: var(--fs-primary);
-      color: var(--clr-text-dark);
+      color: var(--clr-dark-800);
     }
 
     button {
       all: unset;
       padding: 0.5rem;
       height: 100%;
-      // background-color: #ddd;
       cursor: pointer;
       font-family: var(--fs-primary);
-      color: var(--clr-text-dark);
+      color: var(--clr-dark-800);
 
       &:hover,
-      &:focus-visible {
-        // background-color: #ccc;
-      }
+      &:focus-visible {}
 
       &:disabled {
-        color: #838383 !important;
-        // background-color: #eee;
+        color: var(--clr-dark-500) !important;
         cursor: default;
       }
     }
@@ -104,10 +100,10 @@
       padding-block: 3px;
       cursor: pointer;
       font-family: var(--fs-primary);
-      color: #838383;
+      color: var(--clr-dark-500);
 
       &:hover {
-        color: var(--clr-text-dark);
+        color: var(--clr-dark-800);
       }
     }
   }

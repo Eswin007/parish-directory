@@ -6,36 +6,10 @@ import Card from "./Card";
 import Dropdown from "./Dropdown";
 import { photoURL } from "../App";
 import { BLOOD_GROUP, RELATION, apiKey } from "./Utilities";
-import Family from "./Family";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCamera } from "@fortawesome/free-solid-svg-icons";
-import { AnimatePresence, motion } from "framer-motion";
+import {  motion } from "framer-motion";
 
-const addMemberCardAnim = {
-  initial: {
-    // background: "#d5ffd8",
-    opacity: 0,
-    // scaleY: 0,
-  },
-  animate: {
-    opacity: 1,
-    background: "#f0f2f7",
-    // scaleY: 1,
-    transition: {
-      duration: 0.2,
-      background: {
-        delay: 0.5,
-        duration: 1,
-      },
-    },
-  },
-
-  exit: {
-    opacity: 0,
-
-    duration: 0.3,
-  },
-};
 
 const MemberForm = ({
   saveFamilyHandler,

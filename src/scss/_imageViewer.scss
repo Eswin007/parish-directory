@@ -40,7 +40,7 @@
         display: grid;
         border-radius: 100%;
         place-content: center;
-        color: var(--clr-text-white);
+        color: var(--clr-light-100);
         transition: background-color .2s ease;
 
         &:hover {
@@ -58,7 +58,7 @@
         font-size: 2rem;
         font-family: var(--fs-secondary);
         font-weight: bold;
-        color: var(--clr-text-white);
+        color: var(--clr-light-100);
     }
 
 }

@@ -4,7 +4,7 @@
 
   grid-column-gap: 1.5rem;
   grid-row-gap: 2rem;
-  border: 1px solid #ccc;
+  border: 1px solid var(--clr-dark-400);
   padding: 1rem;
   border-radius: 0.5rem;
   transition: height 0.3s ease;
@@ -12,7 +12,7 @@
   .photo {
     aspect-ratio: 16 / 9;
     max-height: 500px;
-    background-color: #ddd;
+    background-color: var(--clr-dark-300);
     grid-column: 1/-1;
     display: grid;
     place-content: center;
@@ -51,7 +51,7 @@
     &__remove {
       all: unset;
       line-height: 1;
-      background-color: var(--clr-bg-white);
+      background-color: var(--clr-light-100);
       padding: 0.5rem 1rem;
       border-radius: 100vmax;
       font-family: var(--fs-primary);
@@ -62,14 +62,14 @@
 
       &:hover {
         background-color: rgb(245, 51, 51);
-        color: var(--clr-text-white);
+        color: var(--clr-light-100);
       }
     }
 
     &__upload {
       width: 10rem;
       height: 10rem;
-      background-color: #ccc;
+      background-color: var(--clr-dark-400);
       border-radius: 100%;
       position: relative;
       display: grid;
@@ -85,7 +85,7 @@
 
       svg {
         path {
-          fill: #838383;
+          fill: var(--clr-dark-500);
           transition: all 0.2s ease;
         }
       }
@@ -96,7 +96,7 @@
 
       @keyframes pulse {
         0% {
-          background-color: #ccc;
+          background-color: var(--clr-dark-400);
         }
 
         50% {
@@ -104,7 +104,7 @@
         }
 
         100% {
-          background-color: #ccc;
+          background-color: var(--clr-dark-400);
         }
       }
 
@@ -124,7 +124,7 @@
 
   h3 {
     grid-column: 1/-1;
-    color: var(--clr-text-dark);
+    color: var(--clr-dark-800);
     text-transform: uppercase;
     font-size: 0.875rem;
   }
@@ -139,7 +139,7 @@
     z-index: 15;
     grid-column: 1 / -1;
     width: 100%;
-    background-color: var(--clr-bg-white);
+    background-color: var(--clr-light-100);
     position: sticky;
     bottom: 0;
   }

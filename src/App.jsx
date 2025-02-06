@@ -223,9 +223,13 @@ const App = () => {
     });
     console.log(formData, "formData on edit");
   };
-
+  const toggleMode = ()=>{
+    const element = document.querySelector('html');
+    element.dataset.theme = 'dark'
+  }
   return (
     <>
+    <div className="toggle" onClick={() => toggleMode()}>Toggle</div>
       <AnimatePresence mode="wait" initial={false}>
         {showToast && <Toast setShowToast={setShowToast}>{toastMessage}</Toast>}
       </AnimatePresence>

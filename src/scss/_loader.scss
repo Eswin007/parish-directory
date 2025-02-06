@@ -7,7 +7,7 @@ $duration: (
 );
 
 .loader {
-  background-color: var(--clr-bg-white);
+  background-color: var(--clr-light-100);
   padding: 2rem 4rem;
   display: block;
   position: fixed;
@@ -91,7 +91,7 @@ $duration: (
   }
 
   50% {
-    background-color: #dfdfdf;
+    background-color: var(--clr-dark-300);
   }
 
   100% {
@@ -102,8 +102,8 @@ $duration: (
 
 
 .member-placeholder {
-  background-color: #fcfcfc;
-  border: 1px solid #dfdfdf;
+  background-color: var(--clr-dark-100);
+  border: 1px solid var(--clr-dark-300);
   height: 100%;
   max-height: 50vh;
   border-radius: .5rem;
@@ -111,7 +111,7 @@ $duration: (
   place-content: center;
   justify-items: center;
   gap: 1rem;
-  color: #838383;
+  color: var(--clr-dark-500);
 
   font-family: var(--fs-primary);
 
