@@ -99,24 +99,38 @@ $duration: (
   }
 }
 
-
-
 .member-placeholder {
   background-color: var(--clr-dark-100);
   border: 1px solid var(--clr-dark-300);
   height: 100%;
   max-height: 50vh;
-  border-radius: .5rem;
+  border-radius: 0.5rem;
   display: grid;
   place-content: center;
+  position: relative;
   justify-items: center;
   gap: 1rem;
   color: var(--clr-dark-500);
 
   font-family: var(--fs-primary);
 
+  &__content {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    position: absolute;
+    left: 1rem;
+    bottom: 1rem;
+  }
+
+  &__facts {
+    width: 75%;
+    text-align: left;
+    font-size: 1.5rem;
+  }
+
   &__icon {
-    font-size: 2rem;
-    opacity: .75;
+    font-size: 1.25rem;
+    opacity: 0.75;
   }
 }

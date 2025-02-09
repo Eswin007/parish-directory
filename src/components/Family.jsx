@@ -107,30 +107,27 @@ const Family = ({
           </div>
         )}
 
-        <table className="family__detail">
-          <tbody>
-            <tr>
-              <td>Address</td>
-              <td>{family?.address}</td>
-            </tr>
-            <tr>
-              <td>Mother Parish</td>
-              <td>{family?.mother_parish || "-"}</td>
-            </tr>
-            <tr>
-              <td>Phone</td>
-              <td>
-                <span>{`${family?.phone1 || ""}  ${
-                  family?.phone2 && " / " + family?.phone2
-                }`}</span>
-              </td>
-            </tr>
-            <tr>
-              <td>Email</td>
-              <td>{family?.email}</td>
-            </tr>
-          </tbody>
-        </table>
+        <div className="family-grid">
+          <div className="family-grid__row">
+            <div className="family-grid__cell">Address</div>
+            <div className="family-grid__cell">{family?.address}</div>
+          </div>
+          <div className="family-grid__row">
+            <div className="family-grid__cell">Mother Parish</div>
+            <div className="family-grid__cell">{family?.mother_parish}</div>
+          </div>
+          <div className="family-grid__row">
+            <div className="family-grid__cell">Phone</div>
+            <div className="family-grid__cell">{`${family?.phone1 || ""}  ${
+              family?.phone2 && " / " + family?.phone2
+            }`}</div>
+          </div>
+          <div className="family-grid__row">
+            <div className="family-grid__cell">Email</div>
+            <div className="family-grid__cell">{family?.email}</div>
+          </div>
+        </div>
+
         <Members family={family} familyMembers={familyMembers} />
       </motion.div>
     </>

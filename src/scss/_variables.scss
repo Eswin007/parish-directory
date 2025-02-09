@@ -2,16 +2,18 @@
   --input-border: 1px solid var(--clr-dark-500);
   --input-border-focus: 1px solid #68bbff;
 
-  --fs-primary: "Poppins", sans-serif;
+  --fs-primary: "Mona Sans", serif;
   --fs-secondary: "Open Sans", sans-serif;
 }
 
 $light: (
-  primary: (900: hsl(14, 80%, 29%),
+  primary: (
+    900: hsl(14, 80%, 29%),
     800: hsl(14, 80%, 39%),
     200: hsl(14, 80%, 95%),
   ),
-  dark: (800: #333333,
+  dark: (
+    800: #333333,
     700: #4a4a4a,
     500: #838383,
     400: #cccccc,
@@ -19,19 +21,25 @@ $light: (
     200: #ededed,
     100: #fcfcfc,
   ),
-  light: (100: #fff)
+  light: (
+    100: #fff,
+  ),
 );
 
 $dark: (
-  primary: (800: blue,
+  primary: (
+    800: blue,
     300: hsl(14, 80%, 90%),
   ),
-  dark: (800: #333333,
+  dark: (
+    800: #333333,
     700: #4a4a4a,
     500: #838383,
     300: #dfdfdf,
   ),
-  light: (100: #fff)
+  light: (
+    100: #fff,
+  ),
 );
 
 [data-theme="light"] {

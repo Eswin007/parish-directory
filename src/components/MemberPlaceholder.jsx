@@ -1,11 +1,20 @@
 import { faInfoCircle, faUsers } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { motion } from "framer-motion";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FACTS } from "./Utilities";
 
 const MemberPlaceholder = () => {
   const [facts, setFacts] = useState();
+
+  const randomFact = (arr) => {
+    const random = arr[Math.floor(Math.random() * arr.length)];
+    setFacts(random);
+  };
+
+  useEffect(() => {
+    randomFact(FACTS);
+  });
 
   return (
     <motion.div
@@ -14,12 +23,14 @@ const MemberPlaceholder = () => {
       animate={{ opacity: 1, duration: 0.2 }}
       exit={{ opacity: 0, duration: 0.2 }}
     >
-      <FontAwesomeIcon
-        icon={faInfoCircle}
-        className="member-placeholder__icon"
-      />
-      <div>{facts}</div>
-      <span>Select a member to view the details</span>
+      <div className="member-placeholder__facts">{facts || ""}</div>
+      <div className="member-placeholder__content">
+        <FontAwesomeIcon
+          icon={faInfoCircle}
+          className="member-placeholder__icon"
+        />
+        <span>Select a member to view the details</span>
+      </div>
     </motion.div>
   );
 };
