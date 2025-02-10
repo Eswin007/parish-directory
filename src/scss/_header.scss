@@ -6,10 +6,11 @@
   // margin-top: 2.5rem;
   font-size: 1rem;
   line-height: 1;
-  color: var(--clr-dark-800);
+  color: var(--clr-text-800);
+  transition: color 0.15s ease;
 }
 
-.family-listing-wrap>.header {
+.family-listing-wrap > .header {
   display: flex;
   align-items: center;
   gap: 2rem;
@@ -17,6 +18,9 @@
   background-color: var(--clr-bg-100);
   align-items: center;
   padding-block: 0.5rem;
+  height: 56px;
+
+  transition: background-color 0.15s ease;
 
   &__searchbar {
     margin-right: auto;
@@ -41,16 +45,21 @@
     align-items: center;
     padding-left: 0.5rem;
     padding-right: 0.75rem;
-    transition: border-color 0.3s ease;
+    transition: border-color 0.3s ease, background-color 0.15s ease;
+    margin-right: auto;
 
     &:focus-within {
       transition: border-color 0.3s ease;
-      border-color: rgb(111, 145, 255);
+      border-color: var(--clr-active-800);
       background-color: var(--clr-bg-100);
     }
 
     &__search-icon {
-      color: var(--clr-dark-500);
+      color: var(--clr-text-600);
+
+      &:hover {
+        color: var(--clr-text-800);
+      }
     }
 
     input {
@@ -62,6 +71,11 @@
       font-family: var(--fs-primary);
       color: var(--clr-text-800);
       background-color: transparent;
+
+      &::placeholder {
+        color: var(--clr-text-800);
+        opacity: 0.6;
+      }
     }
 
     button {
@@ -70,14 +84,17 @@
       height: 100%;
       cursor: pointer;
       font-family: var(--fs-primary);
-      color: var(--clr-text-800);
+      color: var(--clr-text-900);
 
       &:hover,
-      &:focus-visible {}
+      &:focus-visible {
+        color: var(--clr-text-800);
+      }
 
       &:disabled {
         color: var(--clr-text-500) !important;
         cursor: default;
+        pointer-events: none;
       }
     }
 
@@ -89,6 +106,7 @@
       font-style: italic;
       opacity: 0.5;
       font-family: var(--fs-primary);
+      color: var(--clr-text-700);
     }
 
     &__clear {

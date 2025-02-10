@@ -7,7 +7,7 @@
   border: 1px solid var(--clr-border-500);
   padding: 1rem;
   border-radius: 0.5rem;
-  transition: height 0.3s ease;
+  transition: height 0.3s ease, border-color 0.15s ease;
 
   .photo {
     aspect-ratio: 16 / 9;
@@ -19,6 +19,8 @@
     border-radius: 0.5rem;
     position: relative;
     overflow: hidden;
+
+    transition: background-color 0.15s ease;
 
     &__family {
       display: block;
@@ -59,7 +61,7 @@
       top: 1rem;
       right: 1rem;
       outline: 0;
-      font-size: .875rem;
+      font-size: 0.875rem;
 
       &:hover {
         background-color: var(--clr-accent-800);
@@ -102,7 +104,6 @@
 
         60% {
           background-color: var(--clr-bg-400);
-          ;
         }
 
         100% {
@@ -145,5 +146,7 @@
     background-color: var(--clr-bg-100);
     position: sticky;
     bottom: 0;
+
+    transition: background-color 0.15s ease;
   }
 }

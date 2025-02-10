@@ -12,22 +12,22 @@
 }
 
 .btn-primary {
-  background-color: var(--clr-primary-800);
+  background-color: var(--clr-accent-800);
   color: var(--clr-text-100);
 
   &:focus-visible,
   &:hover {
-    background-color: var(--clr-primary-900);
+    background-color: var(--clr-accent-900);
   }
 }
 
 .btn-secondary {
-  color: var(--clr-primary-800);
-  border: 1px solid var(--clr-primary-800);
+  color: var(--clr-accent-800);
+  border: 1px solid var(--clr-accent-800);
 
   &:focus-visible,
   &:hover {
-    background-color: var(--clr-primary-200);
+    background-color: var(--clr-accent-200);
   }
 }
 

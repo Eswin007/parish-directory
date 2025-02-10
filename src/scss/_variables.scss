@@ -1,68 +1,88 @@
 :root {
   --input-border: 1px solid var(--clr-border-600);
-  --input-border-focus: 1px solid #68bbff;
-
   --fs-primary: "Mona Sans", serif;
   --fs-secondary: "Open Sans", sans-serif;
 }
 
-// var(--clr-primary-900)
-// var(--clr-primary-800)
-// var(--clr-primary-200)
-// var(--clr-dark-800)
-// var(--clr-dark-700)
-// var(--clr-dark-500)
-// var(--clr-dark-400)
-// var(--clr-dark-300)
-// var(--clr-dark-200)
-// var(--clr-dark-100)
-// var(--clr-light-100)
-
 $light: (
-  primary: (900: hsl(14, 80%, 29%),
+  primary: (
+    900: hsl(14, 80%, 29%),
     800: hsl(14, 80%, 39%),
     200: hsl(14, 80%, 95%),
   ),
-  accent: (900: hsl(14, 80%, 29%),
+  accent: (
+    900: hsl(14, 80%, 29%),
     800: hsl(14, 80%, 39%),
     200: hsl(14, 80%, 95%),
   ),
 
-  bg:(600: #b4b4b4,
+  bg: (
+    600: #b4b4b4,
     500: #cccccc,
     400: #dedede,
+    350: hsl(0, 0%, 95%),
     300: #ededed,
     200: #fcfcfc,
-    100: #ffffff),
-  text: (800: #333333,
+    100: #ffffff,
+  ),
+  text: (
+    800: #333333,
     700: #4a4a4a,
     600: #838383,
-    500: hsl(0, 0%, 70%),
-    100: #ffffff),
-  border: (600: #838383,
+    500: #b3b3b3,
+    100: #ffffff,
+  ),
+  border: (
+    600: #838383,
     500: #dedede,
     400: #ededed,
-    300: #fcfcfc),
-);
-$dark: (
-  primary: (900: #852a0f,
-    800: #b33914,
-    200: #fcede8,
+    300: #fcfcfc,
   ),
-  bg:(500: #cccccc,
-    400: #dedede,
-    300: #ededed,
-    200: #fcfcfc,
-    100: #ffffff),
-  text: (800: #333333,
-    700: #4a4a4a,
-    600: #838383),
-  border: (500: #dedede,
-    400: #ededed,
-    300: #fcfcfc)
+  active: (
+    800: hsl(225, 66%, 75%),
+    700: #ecf5ff,
+  ),
 );
 
+$dark: (
+  primary: (
+    900: hsl(14, 80%, 29%),
+    800: #be3144,
+    200: hsl(14, 80%, 95%),
+  ),
+  accent: (
+    900: hsl(352, 59%, 37%),
+    800: #be3144,
+    200: hsl(352, 59%, 90%),
+  ),
 
+  bg: (
+    600: #b4b4b4,
+    500: #cccccc,
+    400: hsl(225, 66%, 40%),
+    350: hsl(225, 66%, 20%),
+    300: hsl(225, 66%, 15%),
+    200: #fcfcfc,
+    100: #09122c,
+  ),
+  text: (
+    800: #ffffff,
+    700: #b3b3b3,
+    600: hsl(225, 66%, 80%),
+    500: #838383,
+    100: #ffffff,
+  ),
+  border: (
+    600: hsl(225, 66%, 50%),
+    500: hsl(225, 66%, 30%),
+    400: #ededed,
+    300: #fcfcfc,
+  ),
+  active: (
+    800: hsl(225, 66%, 75%),
+    700: hsl(225, 66%, 20%),
+  ),
+);
 
 [data-theme="light"] {
   @each $type, $color in $light {

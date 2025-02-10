@@ -7,7 +7,7 @@ $duration: (
 );
 
 .loader {
-  background-color: var(--clr-light-100);
+  background-color: var(--clr-bg-100);
   padding: 2rem 4rem;
   display: block;
   position: fixed;
@@ -21,6 +21,7 @@ $duration: (
   flex-direction: column;
   align-items: center;
   gap: 2rem;
+  color: var(--clr-text-800);
 
   &__circles {
     position: relative;
@@ -51,7 +52,7 @@ $duration: (
         content: "";
         width: var(--circleSize);
         height: var(--circleSize);
-        background-color: grey;
+        background-color: var(--clr-accent-800);
         display: block;
         position: absolute;
         left: calc(var(--size) / 2);
@@ -91,7 +92,7 @@ $duration: (
   }
 
   50% {
-    background-color: var(--clr-dark-300);
+    background-color: var(--clr-bg-300);
   }
 
   100% {
@@ -100,24 +101,28 @@ $duration: (
 }
 
 .member-placeholder {
-  background-color: var(--clr-dark-100);
-  border: 1px solid var(--clr-dark-300);
+  background-color: var(--clr-bg-300);
+  border: 1px solid var(--clr-border-500);
   height: 100%;
   max-height: 50vh;
+  min-height: 30vh;
   border-radius: 0.5rem;
   display: grid;
   place-content: center;
   position: relative;
   justify-items: center;
   gap: 1rem;
-  color: var(--clr-dark-500);
+  color: var(--clr-text-600);
 
   font-family: var(--fs-primary);
+
+  transition: background-color 0.15s ease, border-color 0.15s ease;
 
   &__content {
     display: flex;
     align-items: center;
     gap: 0.5rem;
+    width: 100%;
     position: absolute;
     left: 1rem;
     bottom: 1rem;

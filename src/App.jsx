@@ -225,17 +225,15 @@ const App = () => {
   };
   const toggleMode = () => {
     const element = document.querySelector("html");
-    element.dataset.theme = "dark";
+    if (element.dataset.theme === "dark") {
+      element.dataset.theme = "light";
+    } else {
+      element.dataset.theme = "dark";
+    }
   };
+
   return (
     <>
-      <div
-        className="toggle"
-        style={{ position: "relative", zIndex: 10 }}
-        onClick={() => toggleMode()}
-      >
-        Toggle
-      </div>
       <AnimatePresence mode="wait" initial={false}>
         {showToast && <Toast setShowToast={setShowToast}>{toastMessage}</Toast>}
       </AnimatePresence>
@@ -252,6 +250,7 @@ const App = () => {
             familyList={familyList}
             familyMembersList={familyMembersList}
             setActiveMember={setActiveMember}
+            toggleMode={toggleMode}
           />
           <div className="family-primary-data">
             <FamilyList

@@ -1,7 +1,6 @@
 .family-listing-wrap {
   display: grid;
   grid-template-columns: 0.6fr 0.4fr;
-  margin-top: 1rem;
   gap: 1rem;
   position: relative;
   z-index: 2;
@@ -32,9 +31,12 @@
       grid-template-columns: subgrid;
       display: grid;
       grid-column: 1/-1;
-      border-radius: 0 0 0.75rem 0.75rem;
+      border-radius: 0.75rem;
       border: 1px solid var(--clr-border-500);
       overflow: hidden;
+      margin-top: -0.5rem;
+
+      transition: background-color 0.15s ease, border-color 0.15s ease;
     }
 
     &__table-row {
@@ -46,7 +48,7 @@
       display: grid;
       grid-template-columns: subgrid;
       border-top: 1px solid var(--clr-border-500);
-      transition: background-color 0.15s ease;
+      transition: background-color 0.15s ease, border-color 0.15s ease;
 
       &.disabled {
         pointer-events: none;
@@ -61,8 +63,9 @@
       }
 
       &.active {
-        background-color: #ecf5ff;
-        transition: background-color 0.15s ease;
+        // background-color: #ecf5ff;
+        background-color: var(--clr-active-700);
+        transition: background-color 0.15s ease, border-color 0.15s ease;
       }
 
       &.header {
@@ -72,6 +75,7 @@
         font-size: 0.875rem;
         color: var(--clr-text-600);
         background-color: var(--clr-bg-300);
+        padding-bottom: 1rem;
       }
 
       &:hover {
@@ -121,12 +125,12 @@
 
     &__address {
       line-height: 1.4;
-      color: var(--clr-text-600);
+      color: var(--clr-text-700);
       font-size: 0.875rem;
     }
 
     &__phone {
-      color: var(--clr-text-700);
+      color: var(--clr-text-800);
     }
 
     &__action {
@@ -175,6 +179,8 @@
   padding: 1rem;
   font-family: var(--fs-primary);
 
+  transition: background-color 0.15s ease, border-color 0.15s ease;
+
   &__header {
     display: flex;
     align-items: center;
@@ -197,7 +203,7 @@
     aspect-ratio: 16 / 9;
     overflow: hidden;
     margin-bottom: 1rem;
-    border-radius: 1rem;
+    border-radius: 0.5rem;
     position: relative;
 
     img {
@@ -292,6 +298,7 @@
       display: grid;
       grid-template-columns: subgrid;
       grid-column: 1/-1;
+      transition: background-color 0.15s ease;
 
       &:nth-child(even) {
         background-color: var(--clr-bg-300);
@@ -300,6 +307,8 @@
       &.header {
         background-color: var(--clr-primary-800);
         color: var(--clr-text-100);
+
+        transition: background-color 0.15s ease;
       }
     }
 
@@ -311,7 +320,9 @@
 
 .member-card-wrap {
   transform-origin: top;
-  background-color: #f0f2f7; //revisit
+  background-color: var(--clr-bg-350);
+
+  transition: background-color 0.15s ease, border 0.15s ease;
 }
 
 .member-card {

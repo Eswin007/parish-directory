@@ -12,6 +12,7 @@ const Header = ({
   familyList,
   familyMembersList,
   setActiveMember,
+  toggleMode,
 }) => {
   const addNewMember = () => {
     setActiveMember(null);
@@ -34,6 +35,7 @@ const Header = ({
           setActiveMember={setActiveMember}
         />
       )}
+      <button onClick={() => toggleMode()}>Dark Mode</button>
       {!showForm && <Button onClick={addNewMember}>Add Family</Button>}
     </div>
   );

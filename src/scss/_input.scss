@@ -15,21 +15,28 @@
 
   label {
     font-size: 0.875rem;
-    color: var(--clr-dark-800);
+    color: var(--clr-text-800);
   }
 
   input {
+    all: unset;
     padding: 0.5rem;
     border: var(--input-border);
     border-radius: 0.25rem;
     font-family: var(--fs-secondary);
     font-size: 0.875rem;
-    color: var(--clr-dark-800);
+    color: var(--clr-text-800);
+    accent-color: var(--clr-text-800);
+
+    &::placeholder {
+      color: var(--clr-text-800);
+      opacity: 0.6;
+    }
 
     &:focus {
       outline: 0;
-      box-shadow: 0 0 2px 0 #68bbff;
-      border-color: #68bbff;
+      box-shadow: 0 0 2px 0 var(--clr-active-800);
+      border-color: var(--clr-active-800);
     }
   }
 }
@@ -40,6 +47,11 @@
   gap: 3px;
   font-size: 0.875rem;
   position: relative;
+
+  label {
+    font-size: 0.875rem;
+    color: var(--clr-text-800);
+  }
 
   &.invalid {
     label {
@@ -61,7 +73,7 @@
   border: var(--input-border);
   position: relative;
   min-width: 5rem;
-  background-color: var(--clr-light-100);
+  background-color: transparent;
   height: 40px;
   padding-right: 0.5rem;
 
@@ -73,12 +85,13 @@
   &__arrow {
     position: relative;
     z-index: 5;
+    color: var(--clr-text-800);
   }
 
   &:focus-within {
     outline: 0;
-    box-shadow: 0 0 2px 0 #68bbff;
-    border-color: #68bbff;
+    box-shadow: 0 0 2px 0 var(--clr-active-800);
+    border-color: var(--clr-active-800);
   }
 
   &__selected-value {
@@ -89,6 +102,13 @@
     box-sizing: border-box;
     border: 0;
     outline: 0;
+    accent-color: var(--clr-text-800);
+
+    color: var(--clr-text-800);
+    &::placeholder {
+      color: var(--clr-text-800);
+      opacity: 0.6;
+    }
   }
 
   &__options {
@@ -99,7 +119,7 @@
     border: var(--input-border);
     border-top: 0;
     border-radius: 0 0 0.25rem 0.25rem;
-    background-color: var(--clr-light-100);
+    background-color: var(--clr-bg-100);
     z-index: 100;
   }
 
@@ -111,21 +131,21 @@
     padding: 0.185rem 0.5rem;
 
     &:first-child {
-      border-top: 1px solid #eee;
+      border-top: var(--input-border);
     }
 
     &:hover {
-      background-color: #ddd;
+      background-color: var(--clr-bg-300);
     }
   }
 
   &__placeholder {
-    color: #838383;
+    color: var(--clr-text-700);
   }
 
   &__no-data {
     padding: 0.5rem;
-    color: #838383;
+    color: var(--clr-text-700);
   }
 }
 
@@ -136,4 +156,10 @@
   left: 0.5rem;
   bottom: 0;
   transform: translateY(105%);
+}
+
+html[data-theme="dark"] {
+  input[type="date"]::-webkit-calendar-picker-indicator {
+    color-scheme: dark;
+  }
 }
