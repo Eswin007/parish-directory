@@ -1,46 +1,68 @@
 :root {
-  --input-border: 1px solid var(--clr-dark-500);
+  --input-border: 1px solid var(--clr-border-600);
   --input-border-focus: 1px solid #68bbff;
 
   --fs-primary: "Mona Sans", serif;
   --fs-secondary: "Open Sans", sans-serif;
 }
 
+// var(--clr-primary-900)
+// var(--clr-primary-800)
+// var(--clr-primary-200)
+// var(--clr-dark-800)
+// var(--clr-dark-700)
+// var(--clr-dark-500)
+// var(--clr-dark-400)
+// var(--clr-dark-300)
+// var(--clr-dark-200)
+// var(--clr-dark-100)
+// var(--clr-light-100)
+
 $light: (
-  primary: (
-    900: hsl(14, 80%, 29%),
+  primary: (900: hsl(14, 80%, 29%),
     800: hsl(14, 80%, 39%),
     200: hsl(14, 80%, 95%),
   ),
-  dark: (
-    800: #333333,
+  accent: (900: hsl(14, 80%, 29%),
+    800: hsl(14, 80%, 39%),
+    200: hsl(14, 80%, 95%),
+  ),
+
+  bg:(600: #b4b4b4,
+    500: #cccccc,
+    400: #dedede,
+    300: #ededed,
+    200: #fcfcfc,
+    100: #ffffff),
+  text: (800: #333333,
     700: #4a4a4a,
-    500: #838383,
-    400: #cccccc,
-    300: #dedede,
-    200: #ededed,
-    100: #fcfcfc,
+    600: #838383,
+    500: hsl(0, 0%, 70%),
+    100: #ffffff),
+  border: (600: #838383,
+    500: #dedede,
+    400: #ededed,
+    300: #fcfcfc),
+);
+$dark: (
+  primary: (900: #852a0f,
+    800: #b33914,
+    200: #fcede8,
   ),
-  light: (
-    100: #fff,
-  ),
+  bg:(500: #cccccc,
+    400: #dedede,
+    300: #ededed,
+    200: #fcfcfc,
+    100: #ffffff),
+  text: (800: #333333,
+    700: #4a4a4a,
+    600: #838383),
+  border: (500: #dedede,
+    400: #ededed,
+    300: #fcfcfc)
 );
 
-$dark: (
-  primary: (
-    800: blue,
-    300: hsl(14, 80%, 90%),
-  ),
-  dark: (
-    800: #333333,
-    700: #4a4a4a,
-    500: #838383,
-    300: #dfdfdf,
-  ),
-  light: (
-    100: #fff,
-  ),
-);
+
 
 [data-theme="light"] {
   @each $type, $color in $light {

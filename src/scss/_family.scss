@@ -18,7 +18,7 @@
 
   .family-list {
     font-family: var(--fs-primary);
-    color: var(--clr-dark-800);
+    color: var(--clr-text-800);
 
     &__table {
       display: grid;
@@ -33,19 +33,19 @@
       display: grid;
       grid-column: 1/-1;
       border-radius: 0 0 0.75rem 0.75rem;
-      border: 1px solid var(--clr-dark-300);
+      border: 1px solid var(--clr-border-500);
       overflow: hidden;
     }
 
     &__table-row {
       padding: 0.5rem;
-      background-color: var(--clr-light-100);
+      background-color: var(--clr-bg-100);
       align-items: center;
       gap: 1rem;
       grid-column: 1/-1;
       display: grid;
       grid-template-columns: subgrid;
-      border-top: 1px solid var(--clr-dark-300);
+      border-top: 1px solid var(--clr-border-500);
       transition: background-color 0.15s ease;
 
       &.disabled {
@@ -53,7 +53,7 @@
       }
 
       &:hover {
-        background-color: var(--clr-dark-200);
+        background-color: var(--clr-bg-300);
       }
 
       &.first {
@@ -70,8 +70,8 @@
         text-transform: uppercase;
         font-weight: 500;
         font-size: 0.875rem;
-        color: var(--clr-dark-500);
-        background-color: #f6f8fa;
+        color: var(--clr-text-600);
+        background-color: var(--clr-bg-300);
       }
 
       &:hover {
@@ -88,7 +88,7 @@
       overflow: hidden;
       border-radius: 0.5rem;
       position: relative;
-      background-origin: var(--clr-light-100);
+      background-color: var(--clr-light-100);
 
       &::after {
         content: "";
@@ -121,12 +121,12 @@
 
     &__address {
       line-height: 1.4;
-      color: var(--clr-dark-500);
+      color: var(--clr-text-600);
       font-size: 0.875rem;
     }
 
     &__phone {
-      color: var(--clr-dark-800);
+      color: var(--clr-text-700);
     }
 
     &__action {
@@ -142,17 +142,17 @@
 
         cursor: pointer;
         padding: 0.75rem;
-        color: var(--clr-dark-500);
+        color: var(--clr-text-600);
         transition: all 0.15s ease;
       }
 
-      &--edit:hover {
-        color: rgb(80, 106, 255);
-      }
+      // &--edit:hover {
+      //   color: rgb(80, 106, 255);
+      // }
 
-      &--delete:hover {
-        color: rgb(255, 80, 80);
-      }
+      // &--delete:hover {
+      //   color: rgb(255, 80, 80);
+      // }
     }
   }
 
@@ -165,12 +165,12 @@
 }
 
 .family {
-  color: var(--clr-dark-800);
+  color: var(--clr-text-800);
   position: sticky;
   top: 1rem;
 
-  background-color: var(--clr-light-100);
-  border: 1px solid var(--clr-dark-300);
+  background-color: var(--clr-bg-100);
+  border: 1px solid var(--clr-border-500);
   border-radius: 0.5rem;
   padding: 1rem;
   font-family: var(--fs-primary);
@@ -223,7 +223,7 @@
     top: 0;
     right: 0;
     z-index: 10;
-    color: var(--clr-light-100);
+    color: var(--clr-text-100);
   }
 
   &__name {
@@ -294,12 +294,12 @@
       grid-column: 1/-1;
 
       &:nth-child(even) {
-        background-color: var(--clr-dark-200);
+        background-color: var(--clr-bg-300);
       }
 
       &.header {
         background-color: var(--clr-primary-800);
-        color: var(--clr-light-100);
+        color: var(--clr-text-100);
       }
     }
 
@@ -311,7 +311,7 @@
 
 .member-card-wrap {
   transform-origin: top;
-  background-color: #f0f2f7;
+  background-color: #f0f2f7; //revisit
 }
 
 .member-card {

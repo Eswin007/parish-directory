@@ -13,7 +13,7 @@
 
 .btn-primary {
   background-color: var(--clr-primary-800);
-  color: var(--clr-light-100);
+  color: var(--clr-text-100);
 
   &:focus-visible,
   &:hover {
@@ -41,12 +41,12 @@
   padding: 0.25rem 0.75rem;
   border-radius: 100vmax;
   font-size: 0.875rem;
-  color: var(--clr-dark-700);
+  color: var(--clr-text-700);
   font-family: var(--fs-primary);
   transition: all 0.15s ease;
 
   &:focus-visible,
   &:hover {
-    background-color: var(--clr-dark-300);
+    background-color: var(--clr-bg-300);
   }
 }

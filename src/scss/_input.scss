@@ -111,21 +111,21 @@
     padding: 0.185rem 0.5rem;
 
     &:first-child {
-      border-top: 1px solid var(--clr-dark-300);
+      border-top: 1px solid #eee;
     }
 
     &:hover {
-      background-color: var(--clr-dark-300);
+      background-color: #ddd;
     }
   }
 
   &__placeholder {
-    color: var(--clr-dark-500);
+    color: #838383;
   }
 
   &__no-data {
     padding: 0.5rem;
-    color: var(--clr-dark-500);
+    color: #838383;
   }
 }
 
