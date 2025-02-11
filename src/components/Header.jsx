@@ -38,11 +38,12 @@ const Header = ({
         />
       )}
       {/* <button onClick={() => toggleMode()}>Dark Mode</button> */}
-      <ToggleSwitch 
-        label="Dark Mode" 
-        name="darkMode" 
-        onChange={toggleMode} 
-        checked={storage === 'dark'} 
+      <ToggleSwitch
+        label="Dark Mode"
+        name="darkMode"
+        onChange={toggleMode}
+        style={{ marginLeft: "auto" }}
+        checked={storage === "dark"}
       />
       {!showForm && <Button onClick={addNewMember}>Add Family</Button>}
     </div>

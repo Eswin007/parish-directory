@@ -40,32 +40,24 @@ const App = () => {
   const [toastMessage, setToastMessage] = useState(null);
   const [activeMember, setActiveMember] = useState(null);
 
-
-
-
-  const [storage, setStorage] = useState(()=> {
-    return localStorage.getItem('theme') || 'light';
+  const [storage, setStorage] = useState(() => {
+    return localStorage.getItem("theme") || "light";
   });
 
-  
-  useEffect(()=>{
-    const HTMLElement = document.querySelector("html");
+  const HTMLElement = document.querySelector("html");
+  useEffect(() => {
+    localStorage.setItem("theme", storage);
     HTMLElement.dataset.theme = storage;
-    localStorage.setItem('theme', storage)
-
-   }, [storage]);
-
-   console.log(storage, 'storage')
+  }, [storage]);
 
   const toggleMode = () => {
-  setStorage(prev=> {
-    const updatedTheme = prev === 'light' ? 'dark' : 'light';
-    return updatedTheme;
-  });
+    setStorage((prev) => {
+      const updatedTheme = prev === "light" ? "dark" : "light";
+      // HTMLElement.dataset.theme = updatedTheme;
+      return updatedTheme;
+    });
+    HTMLElement.dataset.theme = storage === "light" ? "dark" : "light";
   };
-
-  console.log(localStorage, 'localstorage')
-
 
   //fetch members function
   const fetchMembers = async () => {
@@ -108,7 +100,6 @@ const App = () => {
       setActiveMember(family);
     }, 200);
   };
-
 
   //showing edit/create form
   const formRevealHandler = (value) => {
@@ -270,7 +261,7 @@ const App = () => {
             showForm={showForm}
             setFormData={setFormData}
             fetchMembers={fetchMembers}
-            setFilteredFamily={setFilteredFamily} 
+            setFilteredFamily={setFilteredFamily}
             familyList={familyList}
             familyMembersList={familyMembersList}
             setActiveMember={setActiveMember}
