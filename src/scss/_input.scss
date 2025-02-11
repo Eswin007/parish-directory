@@ -105,6 +105,7 @@
     accent-color: var(--clr-text-800);
 
     color: var(--clr-text-800);
+
     &::placeholder {
       color: var(--clr-text-800);
       opacity: 0.6;
@@ -161,5 +162,63 @@
 html[data-theme="dark"] {
   input[type="date"]::-webkit-calendar-picker-indicator {
     color-scheme: dark;
+  }
+}
+
+
+.switch {
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+  --timing: .3s ease;
+
+  --size: 1.5rem;
+
+  &__label {
+    color: var(--clr-text-600);
+    line-height: 1;
+    font-size: .875rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    // pointer-events: none;
+  }
+
+  &__input:checked {
+    ~.switch__control {
+      background-color: var(--clr-accent-800);
+      transition: all var(--timing);
+      transition-delay: .1s;
+
+      &::after {
+        background-color: var(--clr-accent-200);
+        transform: translateX(var(--size));
+        transition: all var(--timing);
+        transition-delay: .1s;
+      }
+    }
+  }
+
+  &__control {
+    min-width: calc(var(--size) * 2);
+    min-height: var(--size);
+    border-radius: 100vmax;
+    background-color: var(--clr-bg-500);
+    position: relative;
+    transition: all var(--timing);
+    transition-delay: .1s;
+
+    &::after {
+      position: absolute;
+      transform: translateX(0);
+      left: 0;
+      top: 0;
+      content: '';
+      width: var(--size);
+      aspect-ratio: 1;
+      background-color: var(--clr-bg-100);
+      border-radius: 100%;
+      transition: all var(--timing);
+      transition-delay: .1s;
+    }
   }
 }

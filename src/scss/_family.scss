@@ -245,24 +245,24 @@
     }
   }
 
-  &__detail {
-    table {
-      border-collapse: collapse;
-    }
+  // &__detail {
+  //   table {
+  //     border-collapse: collapse;
+  //   }
 
-    tr td {
-      padding-block: 3px;
-      vertical-align: top;
-    }
+  //   tr td {
+  //     padding-block: 3px;
+  //     vertical-align: top;
+  //   }
 
-    tr td:first-child {
-      width: 7rem;
-    }
+  //   tr td:first-child {
+  //     width: 7rem;
+  //   }
 
-    tr td:last-child {
-      font-weight: bold;
-    }
-  }
+  //   tr td:last-child {
+  //     font-weight: bold;
+  //   }
+  // }
 
   .family-grid {
     display: grid;

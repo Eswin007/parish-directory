@@ -40,6 +40,34 @@ const App = () => {
   const [toastMessage, setToastMessage] = useState(null);
   const [activeMember, setActiveMember] = useState(null);
 
+
+
+
+  const [storage, setStorage] = useState(()=> {
+    return localStorage.getItem('theme') || 'light';
+  });
+
+  
+  useEffect(()=>{
+    const HTMLElement = document.querySelector("html");
+    HTMLElement.dataset.theme = storage;
+    localStorage.setItem('theme', storage)
+
+   }, [storage]);
+
+   console.log(storage, 'storage')
+
+  const toggleMode = () => {
+  setStorage(prev=> {
+    const updatedTheme = prev === 'light' ? 'dark' : 'light';
+    return updatedTheme;
+  });
+  };
+
+  console.log(localStorage, 'localstorage')
+
+
+  //fetch members function
   const fetchMembers = async () => {
     setIsLoading(true);
     const familyURL = `${supabaseURL}/rest/v1/family`;
@@ -71,6 +99,7 @@ const App = () => {
     setIsLoading(false);
   };
 
+  //Setting Active member to be shown in right panel and also to add an active state on the list item
   const activeMemberHandler = (family) => {
     if (family === activeMember) return;
     setActiveMember(null);
@@ -80,11 +109,14 @@ const App = () => {
     }, 200);
   };
 
+
+  //showing edit/create form
   const formRevealHandler = (value) => {
     setShowForm(value);
     setErrors({});
   };
 
+  //calling the main members at first
   useEffect(() => {
     fetchMembers();
   }, []);
@@ -223,14 +255,6 @@ const App = () => {
     });
     console.log(formData, "formData on edit");
   };
-  const toggleMode = () => {
-    const element = document.querySelector("html");
-    if (element.dataset.theme === "dark") {
-      element.dataset.theme = "light";
-    } else {
-      element.dataset.theme = "dark";
-    }
-  };
 
   return (
     <>
@@ -246,11 +270,12 @@ const App = () => {
             showForm={showForm}
             setFormData={setFormData}
             fetchMembers={fetchMembers}
-            setFilteredFamily={setFilteredFamily}
+            setFilteredFamily={setFilteredFamily} 
             familyList={familyList}
             familyMembersList={familyMembersList}
             setActiveMember={setActiveMember}
             toggleMode={toggleMode}
+            storage={storage}
           />
           <div className="family-primary-data">
             <FamilyList

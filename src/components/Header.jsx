@@ -2,6 +2,7 @@ import React from "react";
 import Searchbar from "./Searchbar";
 import Button from "./Button";
 import { FAMILY_INITIAL } from "./Utilities";
+import ToggleSwitch from "./ToggleSwitch";
 const Header = ({
   setShowForm,
   formRevealHandler,
@@ -12,6 +13,7 @@ const Header = ({
   familyList,
   familyMembersList,
   setActiveMember,
+  storage,
   toggleMode,
 }) => {
   const addNewMember = () => {
@@ -35,7 +37,13 @@ const Header = ({
           setActiveMember={setActiveMember}
         />
       )}
-      <button onClick={() => toggleMode()}>Dark Mode</button>
+      {/* <button onClick={() => toggleMode()}>Dark Mode</button> */}
+      <ToggleSwitch 
+        label="Dark Mode" 
+        name="darkMode" 
+        onChange={toggleMode} 
+        checked={storage === 'dark'} 
+      />
       {!showForm && <Button onClick={addNewMember}>Add Family</Button>}
     </div>
   );
