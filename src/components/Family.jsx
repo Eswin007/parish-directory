@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from "react";
 import Members from "./Members";
 import { photoURL } from "../App";
-import Modal from "./Modal";
+import Modal from "./Overlays/Modal";
 import { createPortal } from "react-dom";
 import { motion, AnimatePresence } from "framer-motion";
-import ImageViewer from "./ImageViewer";
+import ImageViewer from "./Overlays/ImageViewer";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faExpand, faSquare } from "@fortawesome/free-solid-svg-icons";
 import { RELATION } from "../App";
-import PulseLoader from "./PulseLoader";
+import PulseLoader from "./Overlays/PulseLoader";
 
 const familyAnim = {
   initial: {

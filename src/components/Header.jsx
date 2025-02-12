@@ -1,8 +1,8 @@
 import React from "react";
 import Searchbar from "./Searchbar";
-import Button from "./Button";
+import Button from "./Inputs/Button";
 import { FAMILY_INITIAL } from "./Utilities";
-import ToggleSwitch from "./ToggleSwitch";
+import ToggleSwitch from "./Inputs/ToggleSwitch";
 const Header = ({
   setShowForm,
   formRevealHandler,

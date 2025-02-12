@@ -10,13 +10,19 @@ const Dropdown = ({ options, placeholder, label, value, onChange, errors }) => {
     setMenuOpen((prev) => !prev);
   };
 
+  
+
   const handleValue = (item) => {
     setSelectedValue(item);
     onChange(item);
   };
 
   return (
-    <div className={`dropdown ${errors ? "invalid" : ""}`} tabIndex={-1}>
+    <div className={`dropdown ${errors ? "invalid" : ""}`} tabIndex={-1}   onKeyDown={(e) => {
+              if (e.key === "Escape") {
+                setMenuOpen(false);
+              }
+            }}>
       <label htmlFor="">{label}</label>
       <div className=" dd" onClick={openMenuHandler}>
         {selectedValue ? (
@@ -25,11 +31,7 @@ const Dropdown = ({ options, placeholder, label, value, onChange, errors }) => {
             className="dd__selected-value"
             readOnly
             value={selectedValue || ""}
-            onKeyDown={(e) => {
-              if (e.key === "Escape") {
-                setMenuOpen(false);
-              }
-            }}
+          
           />
         ) : (
           <input

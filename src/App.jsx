@@ -1,12 +1,11 @@
 import axios from "axios";
 import Header from "./components/Header";
 import Family from "./components/Family";
-import Card from "./components/Card";
 import { useEffect, useState } from "react";
 import "./scss/main.scss";
 import MemberForm from "./components/MemberForm";
-import Loader from "./components/Loader";
-import Toast from "./components/Toast";
+import Loader from "./components/Overlays/Loader";
+import Toast from "./components/Overlays/Toast";
 import { AnimatePresence } from "framer-motion";
 import FamilyList from "./components/FamilyList";
 import { VALIDATION_SCHEMA } from "./components/Utilities";

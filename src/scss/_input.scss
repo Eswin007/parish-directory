@@ -6,10 +6,10 @@
   font-family: var(--fs-secondary);
 
   &.invalid {
-    color: rgb(226, 0, 0);
+    color: var(--clr-error-800);
 
     input {
-      border-color: rgb(226, 0, 0);
+      border-color: var(--clr-error-800);
     }
   }
 
@@ -55,11 +55,12 @@
 
   &.invalid {
     label {
-      color: rgb(226, 0, 0);
+      color: var(--clr-error-800);
+
     }
 
     .dd {
-      border-color: rgb(226, 0, 0);
+      border-color: var(--clr-error-800);
     }
   }
 }
@@ -122,6 +123,7 @@
     border-radius: 0 0 0.25rem 0.25rem;
     background-color: var(--clr-bg-100);
     z-index: 100;
+    color: var(--clr-text-800);
   }
 
   &__menu {
@@ -151,7 +153,7 @@
 }
 
 .input-error {
-  color: rgb(226, 0, 0);
+  color: var(--clr-error-800);
   font-size: 13px;
   position: absolute;
   left: 0.5rem;
@@ -172,6 +174,7 @@ html[data-theme="dark"] {
   --transition: all 0.3s ease;
 
   --size: 1.5rem;
+
   .switch {
     &__label {
       color: var(--clr-text-600);
@@ -183,7 +186,7 @@ html[data-theme="dark"] {
     }
 
     &__input:checked {
-      ~ .switch__control {
+      ~.switch__control {
         background-color: var(--clr-accent-800);
         transition: var(--transition);
 
@@ -204,6 +207,7 @@ html[data-theme="dark"] {
       display: block;
       transition: var(--transition);
 
+
       &::after {
         position: absolute;
         transform: translateX(0);
@@ -216,6 +220,8 @@ html[data-theme="dark"] {
         border-radius: 100%;
         transition: var(--transition);
         box-shadow: 0 0 0.2rem rgba(black, 0.25);
+
+
       }
     }
   }

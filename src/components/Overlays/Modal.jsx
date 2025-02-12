@@ -1,7 +1,7 @@
 import React from "react";
 import OverlayBackdrop from "./OverlayBackdrop";
 import { createPortal } from "react-dom";
-import Button from "./Button";
+import Button from "../Inputs/Button";
 import { motion } from "framer-motion";
 
 const modalScale = {

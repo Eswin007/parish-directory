@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import { photoURL } from "../App";
-import ImageViewer from "./ImageViewer";
+import ImageViewer from "./Overlays/ImageViewer";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faExpand, faSquare, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { AnimatePresence } from "framer-motion";
 import { faEdit } from "@fortawesome/free-solid-svg-icons";
-import Modal from "./Modal";
+import Modal from "./Overlays/Modal";
 const FamilyList = ({
   filteredFamily,
   activeMemberHandler,

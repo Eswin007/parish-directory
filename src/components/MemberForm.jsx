@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import InputField from "./InputField";
-import Button from "./Button";
+import InputField from "./Inputs/InputField";
+import Button from "./Inputs/Button";
 import axios from "axios";
 import Card from "./Card";
-import Dropdown from "./Dropdown";
+import Dropdown from "./Inputs/Dropdown";
 import { photoURL } from "../App";
 import { BLOOD_GROUP, RELATION, apiKey } from "./Utilities";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
