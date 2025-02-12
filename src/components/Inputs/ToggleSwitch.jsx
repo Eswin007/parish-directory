@@ -16,8 +16,8 @@ const ToggleSwitch = ({
 
   return (
     <label className="switch-wrap" style={{ ...style }}>
+      <span className="switch__label">{label}</span>
       <div className="switch">
-        <span className="switch__label">{label}</span>
         <input
           className="switch__input"
           type="checkbox"
