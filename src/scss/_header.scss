@@ -19,6 +19,7 @@
   align-items: center;
   padding-block: 0.5rem;
   height: 56px;
+  width: 100%;
 
   transition: background-color 0.15s ease;
 
@@ -35,9 +36,12 @@
   }
 
   .searchbar {
-    min-width: 20rem;
+    // width: clamp(20rem, 30vw, 25rem) !important;
+    min-width: 10rem;
+    max-width: 25rem;
+    width: 30vw;
+    width: clamp(10rem, 30vw, 30rem);
     display: flex;
-    // align-items: stretch;
     border: 1px solid var(--clr-border-500);
     background-color: var(--clr-bg-300);
     border-radius: 100vmax;

@@ -56,7 +56,6 @@
   &.invalid {
     label {
       color: var(--clr-error-800);
-
     }
 
     .dd {
@@ -182,11 +181,12 @@ html[data-theme="dark"] {
       font-size: 0.875rem;
       font-weight: 500;
       text-transform: uppercase;
+      min-width: fit-content;
       // pointer-events: none;
     }
 
     &__input:checked {
-      ~.switch__control {
+      ~ .switch__control {
         background-color: var(--clr-accent-800);
         transition: var(--transition);
 
@@ -207,7 +207,6 @@ html[data-theme="dark"] {
       display: block;
       transition: var(--transition);
 
-
       &::after {
         position: absolute;
         transform: translateX(0);
@@ -220,8 +219,6 @@ html[data-theme="dark"] {
         border-radius: 100%;
         transition: var(--transition);
         box-shadow: 0 0 0.2rem rgba(black, 0.25);
-
-
       }
     }
   }
