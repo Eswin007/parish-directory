@@ -9,8 +9,9 @@ const toastAnim = {
   initial: {
     y: "10rem",
     x: "-50%",
-
     duration: 0.2,
+
+  
   },
 
   animate: {

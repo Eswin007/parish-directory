@@ -5,8 +5,9 @@ $duration: (
   4: 0.3s,
   5: 0.4s,
 );
+
 .loader {
-  background-color: white;
+  background-color: var(--clr-bg-100);
   padding: 2rem 4rem;
   display: block;
   position: fixed;
@@ -20,6 +21,7 @@ $duration: (
   flex-direction: column;
   align-items: center;
   gap: 2rem;
+  color: var(--clr-text-800);
 
   &__circles {
     position: relative;
@@ -38,6 +40,7 @@ $duration: (
       border-radius: 100%;
       transform: translate(-50%, -50%);
       animation: loaderAnim 2s ease infinite;
+      opacity: 0;
 
       @each $item, $value in $duration {
         &.circle-#{$item} {
@@ -49,7 +52,7 @@ $duration: (
         content: "";
         width: var(--circleSize);
         height: var(--circleSize);
-        background-color: grey;
+        background-color: var(--clr-accent-800);
         display: block;
         position: absolute;
         left: calc(var(--size) / 2);
@@ -66,11 +69,73 @@ $duration: (
     transform: translate(-50%, -50%) rotate(0);
     opacity: 0.1;
   }
+
   90% {
     opacity: 1;
   }
+
   100% {
     transform: translate(-50%, -50%) rotate(360deg);
     opacity: 0.1;
+  }
+}
+
+.image-pulse-loader {
+  position: absolute;
+  inset: 0;
+  animation: imagePulse 2s linear infinite;
+}
+
+@keyframes imagePulse {
+  0% {
+    background-color: transparent;
+  }
+
+  50% {
+    background-color: var(--clr-bg-300);
+  }
+
+  100% {
+    background-color: transparent;
+  }
+}
+
+.member-placeholder {
+  background-color: var(--clr-bg-300);
+  border: 1px solid var(--clr-border-500);
+  height: 100%;
+  max-height: 50vh;
+  min-height: 30vh;
+  border-radius: 0.5rem;
+  display: grid;
+  place-content: center;
+  position: relative;
+  justify-items: center;
+  gap: 1rem;
+  color: var(--clr-text-600);
+
+  font-family: var(--fs-primary);
+
+  transition: background-color 0.15s ease, border-color 0.15s ease;
+
+  &__content {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    width: 100%;
+    position: absolute;
+    left: 1rem;
+    bottom: 1rem;
+  }
+
+  &__facts {
+    width: 75%;
+    text-align: left;
+    font-size: 1.5rem;
+  }
+
+  &__icon {
+    font-size: 1.25rem;
+    opacity: 0.75;
   }
 }

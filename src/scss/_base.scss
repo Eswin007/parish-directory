@@ -8,4 +8,7 @@
 
 body {
   box-sizing: border-box;
+  background-color: var(--clr-bg-100);
+
+  transition: background-color 0.15s ease;
 }

@@ -1,48 +1,15 @@
 import React, { useState } from "react";
-import InputField from "./InputField";
-import Button from "./Button";
+import InputField from "./Inputs/InputField";
+import Button from "./Inputs/Button";
 import axios from "axios";
 import Card from "./Card";
-import Dropdown from "./Dropdown";
-import { BLOOD_GROUP, RELATION, photoURL, apiKey } from "../App";
-import Family from "./Family";
+import Dropdown from "./Inputs/Dropdown";
+import { photoURL } from "../App";
+import { BLOOD_GROUP, RELATION, apiKey } from "./Utilities";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCamera } from "@fortawesome/free-solid-svg-icons";
-import { AnimatePresence, delay, motion } from "framer-motion";
+import {  motion } from "framer-motion";
 
-const addMemberCardAnim = {
-  initial: {
-    // background: "#d5ffd8",
-    opacity: 0,
-    // scaleY: 0,
-  },
-  animate: {
-    opacity: 1,
-    background: "#f0f2f7",
-    // scaleY: 1,
-    transition: {
-      duration: 0.2,
-      background: {
-        delay: 0.5,
-        duration: 1,
-      },
-    },
-  },
-
-  exit: {
-    opacity: 0,
-    // scaleY: 0,
-    // background: "#ffc3c1",
-    duration: 0.3,
-    // transition: {
-    //   duration: 0.2,
-    //   delay: 0.5,
-    //   background: {
-    //     duration: 0.5,
-    //   },
-    // },
-  },
-};
 
 const MemberForm = ({
   saveFamilyHandler,
@@ -172,12 +139,13 @@ const MemberForm = ({
   };
 
   return (
-    <motion.form onSubmit={onSubmitHandler} className="add-members" 
-    initial={{opacity: 0, duration: .2, delay: .2 }}
-    animate={{opacity: 1, duration: .2 }}
-    exit={{opacity: 0, duration: .2 }}
+    <motion.form
+      onSubmit={onSubmitHandler}
+      className="add-members"
+      initial={{ opacity: 0, duration: 0.2, delay: 0.2 }}
+      animate={{ opacity: 1, duration: 0.2 }}
+      exit={{ opacity: 0, duration: 0.2 }}
     >
-    
       <h3>Basic Details</h3>
       <div className="photo">
         {formData?.photo !== "" ? (
@@ -276,18 +244,14 @@ const MemberForm = ({
         errors={errors?.blood}
       />
 
-      <AnimatePresence mode="wait" initial={false}>
+ 
         {formData?.members?.map((item, index) => {
           return (
-            <motion.div
+            <div
               key={item?.membersID || item?.tempID || index}
-              layoutId={`-member${item?.membersID || item?.tempID || index}`}
+             
               className="full-width-col member-card-wrap"
-              variants={addMemberCardAnim}
-              initial="initial"
-              animate="animate"
-              exit="exit"
-              layout
+       
             >
               <Card className="member-card">
                 <InputField
@@ -372,10 +336,10 @@ const MemberForm = ({
                   Remove
                 </Button>
               </Card>
-            </motion.div>
+            </div>
           );
         })}
-      </AnimatePresence>
+     
 
       <div className="button-wrap">
         <Button
@@ -385,10 +349,14 @@ const MemberForm = ({
         >
           {formData?.members?.length > 0 ? `Add More Members` : `Add Members`}
         </Button>
-        <Button variant="secondary" onClick={() => formRevealHandler(false)}>
+        <Button
+          type="button"
+          variant="secondary"
+          onClick={() => formRevealHandler(false)}
+        >
           Cancel
         </Button>
-        <Button>Save</Button>
+        <Button type="submit">Save</Button>
       </div>
     </motion.form>
   );

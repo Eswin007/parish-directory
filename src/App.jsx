@@ -1,22 +1,17 @@
 import axios from "axios";
 import Header from "./components/Header";
 import Family from "./components/Family";
-import Card from "./components/Card";
 import { useEffect, useState } from "react";
 import "./scss/main.scss";
 import MemberForm from "./components/MemberForm";
-import Dropdown from "./components/Dropdown";
-import { object, string, date, array } from "yup";
-import Masonry, { ResponsiveMasonry } from "react-responsive-masonry";
-
-import config from "./config";
-
-import Loader from "./components/Loader";
-import Toast from "./components/Toast";
+import Loader from "./components/Overlays/Loader";
+import Toast from "./components/Overlays/Toast";
 import { AnimatePresence } from "framer-motion";
+import FamilyList from "./components/FamilyList";
+import { VALIDATION_SCHEMA } from "./components/Utilities";
+import MemberPlaceholder from "./components/MemberPlaceholder";
+import { RELATION, FAMILY_INITIAL, apiKey } from "./components/Utilities";
 
-export const apiKey =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZmZndicnZpeGJtbGFibW96a3RwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MjU3MjkxMzgsImV4cCI6MjA0MTMwNTEzOH0.yU8fXAZa_x84GwdVhPVDdLhOWbAa6r2PoHxhnV5ebn0";
 const headerConfig = {
   headers: {
     apikey: apiKey,
@@ -30,31 +25,6 @@ const headerConfig = {
 const supabaseURL = `https://vffwbrvixbmlabmozktp.supabase.co`;
 export const photoURL = `${supabaseURL}/storage/v1/object/family-photos`;
 
-export const FAMILY_INITIAL = {
-  hof: "",
-  phone1: "",
-  phone2: "",
-  email: "",
-  mother_parish: "",
-  address: "",
-  dob: "",
-  blood: "",
-  occupation: "",
-  members: [],
-  photo: "",
-};
-
-export const BLOOD_GROUP = ["A+", "A-", "B-", "O+", "O-", "AB+", "AB-", "B+"];
-export const RELATION = [
-  "Mother",
-  "Wife",
-  "Son",
-  "Daughter",
-  "Grandson",
-  "Granddaughter",
-  "Daughter-In-Law",
-];
-
 const App = () => {
   const [showForm, setShowForm] = useState(false);
   const [formData, setFormData] = useState(FAMILY_INITIAL);
@@ -67,7 +37,28 @@ const App = () => {
   const [familyPhoto, setFamilyPhoto] = useState(null);
   const [showToast, setShowToast] = useState(false);
   const [toastMessage, setToastMessage] = useState(null);
+  const [activeMember, setActiveMember] = useState(null);
 
+  const [storage, setStorage] = useState(() => {
+    return localStorage.getItem("theme") || "light";
+  });
+
+  const HTMLElement = document.querySelector("html");
+  useEffect(() => {
+    localStorage.setItem("theme", storage);
+    HTMLElement.dataset.theme = storage;
+  }, [storage]);
+
+  const toggleMode = () => {
+    setStorage((prev) => {
+      const updatedTheme = prev === "light" ? "dark" : "light";
+      // HTMLElement.dataset.theme = updatedTheme;
+      return updatedTheme;
+    });
+    HTMLElement.dataset.theme = storage === "light" ? "dark" : "light";
+  };
+
+  //fetch members function
   const fetchMembers = async () => {
     setIsLoading(true);
     const familyURL = `${supabaseURL}/rest/v1/family`;
@@ -91,16 +82,31 @@ const App = () => {
       },
     });
 
-    setFilteredFamily(familyList.data);
-    setFamilyList(familyList.data);
+    setFilteredFamily(
+      familyList.data.sort((a, b) => a.hof.localeCompare(b.hof))
+    );
+    setFamilyList(familyList.data.sort((a, b) => a.hof.localeCompare(b.hof)));
     setFamilyMembersList(membersList.data);
     setIsLoading(false);
   };
+
+  //Setting Active member to be shown in right panel and also to add an active state on the list item
+  const activeMemberHandler = (family) => {
+    if (family === activeMember) return;
+    setActiveMember(null);
+
+    setTimeout(() => {
+      setActiveMember(family);
+    }, 200);
+  };
+
+  //showing edit/create form
   const formRevealHandler = (value) => {
     setShowForm(value);
     setErrors({});
   };
 
+  //calling the main members at first
   useEffect(() => {
     fetchMembers();
   }, []);
@@ -110,56 +116,10 @@ const App = () => {
     setShowToast(true);
   };
 
-  const validationSchema = object().shape({
-    hof: string().required("Name is required"),
-    phone1: string()
-      .required("Phone 1 is required")
-      .matches(/^[0-9]+$/, "Must be only digits")
-      .min(10, "Must be exactly 10 digits")
-      .max(10, "Must be exactly 10 digits"),
-    phone2: string()
-      .nullable()
-      .matches(/^[0-9]*$/, "Must be only digits"),
-    email: string()
-      .email("Invalid email format")
-      .required("Please Enter email"),
-    mother_parish: string(),
-    address: string().required("Address is required"),
-    occupation: string().nullable(),
-    dob: date()
-      .transform((value, originalValue) =>
-        originalValue === "" ? null : value
-      )
-      .required("Date of Birth is required"),
-    dom: date()
-      .nullable()
-      .transform((value, originalValue) =>
-        originalValue === "" ? null : value
-      ),
-    blood: string().nullable(),
-    members: array().of(
-      object().shape({
-        name: string().required("Member Name is required"),
-        relation: string().required("Relation is required"),
-        occupation: string().nullable(),
-        dob: date()
-          .required("Date of birth is required")
-          .transform((value, originalValue) =>
-            originalValue === "" ? null : value
-          ),
-        dom: date()
-          .nullable()
-          .transform((value, originalValue) =>
-            originalValue === "" ? null : value
-          ),
-        blood: string().nullable(),
-      })
-    ),
-  });
+  const validationSchema = VALIDATION_SCHEMA;
 
   const saveFamilyHandler = async (formData) => {
     setIsLoading(true);
-    console.log(formData, "eswinformdataonsave");
     const { members, ...familyHead } = formData;
     const finalFamilyHead = { ...familyHead, photo: familyPhoto };
 
@@ -262,6 +222,7 @@ const App = () => {
         .catch((err) => {
           console.log("error", err);
         });
+      setActiveMember(null);
     } catch (err) {
     } finally {
       setIsLoading(false);
@@ -279,74 +240,88 @@ const App = () => {
     );
 
     setFormData({
-      // photo: editFamily?.photo,
       ...editFamily,
       members: editMember,
     });
     console.log(formData, "formData on edit");
   };
+
   return (
     <>
-      <div className="logo">Parish Directory 2025</div>
       <AnimatePresence mode="wait" initial={false}>
         {showToast && <Toast setShowToast={setShowToast}>{toastMessage}</Toast>}
       </AnimatePresence>
+      {isLoading && <Loader />}
 
       <div className="body-wrap">
-        <Header
-          formRevealHandler={formRevealHandler}
-          showForm={showForm}
-          setFormData={setFormData}
-          fetchMembers={fetchMembers}
-          setFilteredFamily={setFilteredFamily}
-          familyList={familyList}
-          familyMembersList={familyMembersList}
-        />
-        <div className="wrapper">
-          {isLoading && <Loader />}
-          <AnimatePresence mode="wait" initial={false}>
-          {showForm && (
-            <MemberForm
-              formData={formData}
-              setFormData={setFormData}
-              saveFamilyHandler={saveFamilyHandler}
-              formRevealHandler={formRevealHandler}
-              errors={errors}
-              setErrors={setErrors}
-              familyList={familyList}
-              setFamilyMembersList={setFamilyMembersList}
-              setMembersToBeRemoved={setMembersToBeRemoved}
-              familyPhoto={familyPhoto}
-              setFamilyPhoto={setFamilyPhoto}
-            />
-          )}
-          </AnimatePresence>
-        </div>
         <div className="family-listing-wrap">
-          <AnimatePresence mode="wait" initial={false}>
-            <ResponsiveMasonry
-              columnsCountBreakPoints={{ 650: 1, 700: 2, 1800: 3, 2200: 4 }}
-            >
-              <Masonry itemTag="section" gutter="2">
-                {!showForm &&
-                  filteredFamily?.length > 0 &&
-                  filteredFamily?.map((family) => (
-                    <Family
-                      key={family?.family_id}
-                      family={family}
-                      familyMembers={familyMembersList.filter(
-                        (member) => member?.family_id === family?.family_id
-                      )}
-                      onDeleteFamily={onDeleteFamily}
-                      onEditFamily={onEditFamily}
-                    />
-                  ))}
-              </Masonry>
-            </ResponsiveMasonry>
-          </AnimatePresence>
-          {!showForm && filteredFamily.length === 0 && (
-            <div className="empty-results">No Results</div>
-          )}
+          <Header
+            formRevealHandler={formRevealHandler}
+            showForm={showForm}
+            setFormData={setFormData}
+            fetchMembers={fetchMembers}
+            setFilteredFamily={setFilteredFamily}
+            familyList={familyList}
+            familyMembersList={familyMembersList}
+            setActiveMember={setActiveMember}
+            toggleMode={toggleMode}
+            storage={storage}
+          />
+          <div className="family-primary-data">
+            <FamilyList
+              activeMemberHandler={activeMemberHandler}
+              activeMember={activeMember}
+              filteredFamily={filteredFamily}
+              onEditFamily={onEditFamily}
+              onDeleteFamily={onDeleteFamily}
+              showForm={showForm}
+            />
+            {!showForm && filteredFamily.length === 0 && (
+              <div className="empty-results">No Results</div>
+            )}
+          </div>
+          <div className="family-details">
+            <AnimatePresence mode="wait" initial={false}>
+              {showForm && (
+                <MemberForm
+                  formData={formData}
+                  setFormData={setFormData}
+                  saveFamilyHandler={saveFamilyHandler}
+                  formRevealHandler={formRevealHandler}
+                  errors={errors}
+                  setErrors={setErrors}
+                  familyList={familyList}
+                  setFamilyMembersList={setFamilyMembersList}
+                  setMembersToBeRemoved={setMembersToBeRemoved}
+                  familyPhoto={familyPhoto}
+                  setFamilyPhoto={setFamilyPhoto}
+                />
+              )}
+            </AnimatePresence>
+
+            <AnimatePresence mode="wait" initial={false}>
+              {!showForm && activeMember !== null && (
+                <Family
+                  family={activeMember}
+                  familyMembers={familyMembersList
+                    .filter(
+                      (member) => member?.family_id === activeMember?.family_id
+                    )
+                    .sort(
+                      (a, b) =>
+                        RELATION.indexOf(a.relation) -
+                        RELATION.indexOf(b.relation)
+                    )}
+                  onDeleteFamily={onDeleteFamily}
+                  onEditFamily={onEditFamily}
+                />
+              )}
+            </AnimatePresence>
+
+            {!activeMember && !showForm && filteredFamily?.length > 0 && (
+              <MemberPlaceholder />
+            )}
+          </div>
         </div>
       </div>
     </>

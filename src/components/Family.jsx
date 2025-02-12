@@ -1,13 +1,14 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Members from "./Members";
 import { photoURL } from "../App";
-import Modal from "./Modal";
+import Modal from "./Overlays/Modal";
 import { createPortal } from "react-dom";
 import { motion, AnimatePresence } from "framer-motion";
-import ImageViewer from "./ImageViewer";
+import ImageViewer from "./Overlays/ImageViewer";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faExpand, faSquare } from "@fortawesome/free-solid-svg-icons";
-
+import { RELATION } from "../App";
+import PulseLoader from "./Overlays/PulseLoader";
 
 const familyAnim = {
   initial: {
@@ -29,16 +30,28 @@ const Family = ({
   familyMembers, //newly added
   onDeleteFamily,
   onEditFamily,
+  type,
 }) => {
   const [showModal, setShowModal] = useState(false);
-  const [showLargeImage, setShowLargeImage] = useState(false)
+  const [showLargeImage, setShowLargeImage] = useState(false);
+  const [imageLoading, setImageLoading] = useState(true);
+
+  useEffect(() => {
+    setImageLoading(true);
+  }, [family?.family_id]);
+
   return (
     <>
-    <AnimatePresence mode="wait" initial={false}>
-       {showLargeImage && 
-        <ImageViewer title={`${family?.hof} and Family`} image={`${photoURL}/${family?.photo}`} showLargeImage={showLargeImage} setShowLargeImage={setShowLargeImage} />
-        }
-    </AnimatePresence>
+      <AnimatePresence mode="wait" initial={false}>
+        {showLargeImage && (
+          <ImageViewer
+            title={`${family?.hof} and Family`}
+            image={`${photoURL}/${family?.photo}`}
+            showLargeImage={showLargeImage}
+            setShowLargeImage={setShowLargeImage}
+          />
+        )}
+      </AnimatePresence>
       <AnimatePresence mode="wait" initial={false}>
         {showModal && (
           <Modal
@@ -57,7 +70,7 @@ const Family = ({
         initial="initial"
         animate="animate"
         exit="exit"
-        className="family"
+        className={`family ${type === "list" ? "list" : ""}`}
       >
         <div className="family__header">
           <h2 className="family__name">{family?.hof}</h2>
@@ -77,39 +90,44 @@ const Family = ({
           </div>
         </div>
         {family?.photo !== "" && (
-          <div className="family__photo" >
-            <img src={`${photoURL}/${family?.photo}`} alt=""/>
-            <button className="family__photo-enlarge" onClick={()=>setShowLargeImage(true)}>
+          <div className="family__photo">
+            <img
+              src={`${photoURL}/${family?.photo}`}
+              alt=""
+              key={family?.photo}
+              onLoad={() => setImageLoading(false)}
+            />
+            {/* {!imageLoading ? null : <PulseLoader />} */}
+            <button
+              className="family__photo-enlarge"
+              onClick={() => setShowLargeImage(true)}
+            >
               <FontAwesomeIcon icon={faExpand} />
             </button>
           </div>
         )}
-        
 
-        <table className="family__detail">
-          <tbody>
-            <tr>
-              <td>Address</td>
-              <td>{family?.address}</td>
-            </tr>
-            <tr>
-              <td>Mother Parish</td>
-              <td>{family?.mother_parish || "-"}</td>
-            </tr>
-            <tr>
-              <td>Phone</td>
-              <td>
-                <span>{`${family?.phone1 || ""}  ${
-                  family?.phone2 && " / " + family?.phone2
-                }`}</span>
-              </td>
-            </tr>
-            <tr>
-              <td>Email</td>
-              <td>{family?.email}</td>
-            </tr>
-          </tbody>
-        </table>
+        <div className="family-grid">
+          <div className="family-grid__row">
+            <div className="family-grid__cell">Address</div>
+            <div className="family-grid__cell">{family?.address}</div>
+          </div>
+          <div className="family-grid__row">
+            <div className="family-grid__cell">Mother Parish</div>
+            <div className="family-grid__cell">{family?.mother_parish}</div>
+          </div>
+          <div className="family-grid__row">
+            <div className="family-grid__cell">Phone</div>
+            <div className="family-grid__cell">{`${family?.phone1 || ""}  ${
+              family?.phone2 && " / " + family?.phone2
+            }`}</div>
+          </div>
+          <div className="family-grid__row">
+            <div className="family-grid__cell">Email</div>
+            <div className="family-grid__cell">{family?.email}</div>
+          </div>
+        </div>
+
         <Members family={family} familyMembers={familyMembers} />
       </motion.div>
     </>

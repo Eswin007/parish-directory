@@ -1,64 +1,64 @@
 .image-viewer {
+  z-index: 1000;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  overflow: hidden;
+  border-radius: 1rem;
+  box-shadow: 0 0 2rem rgba(black, 0.25);
+
+  &__image {
+    width: max-content;
+    position: relative;
+    background-color: var(--clr-bg-100);
+
+    img {
+      max-width: 100%;
+      max-height: 90vh;
+      object-fit: contain;
+      display: block;
+    }
+  }
+
+  &__gradient {
+    position: absolute;
+    inset: 0;
+    z-index: 10;
+    background: linear-gradient(to top, rgba(black, 0.75) 0%, transparent 15%);
+  }
+
+  &__close {
+    all: unset;
+    cursor: pointer;
+    z-index: 10;
+    position: absolute;
+    right: 1rem;
+    top: 1rem;
+    width: 2rem;
+    height: 2rem;
+    background-color: rgba(black, 0.2);
+    display: grid;
+    border-radius: 100%;
+    place-content: center;
+    color: var(--clr-text-100);
+    transition: background-color 0.2s ease;
+
+    &:hover {
+      background-color: rgba(black, 0.5);
+    }
+  }
+
+  &__title {
+    position: absolute;
+    width: 100%;
+    left: 0;
+    bottom: 0;
+    padding: 2rem;
     z-index: 1000;
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    overflow: hidden;
-    border-radius: 1rem;
-    box-shadow: 0 0 2rem rgba(black, .25);
-
-    &__image {
-        width: max-content;
-        position: relative;
-
-        img {
-            max-width: 100%;
-            max-height: 90vh;
-            object-fit: contain;
-            display: block;
-        }
-    }
-
-    &__gradient {
-        position: absolute;
-        inset: 0;
-        z-index: 10;
-        background: linear-gradient(to top, rgba(black, .75) 0%, transparent 15%);
-    }
-
-    &__close {
-        all: unset;
-        cursor: pointer;
-        z-index: 10;
-        position: absolute;
-        right: 1rem;
-        top: 1rem;
-        width: 2rem;
-        height: 2rem;
-        background-color: rgba(black, .2);
-        display: grid;
-        border-radius: 100%;
-        place-content: center;
-        color: white;
-        transition: background-color .2s ease;
-
-        &:hover {
-            background-color: rgba(black, .5);
-        }
-    }
-
-    &__title {
-        position: absolute;
-        width: 100%;
-        left: 0;
-        bottom: 0;
-        padding: 2rem;
-        z-index: 1000;
-        font-size: 2rem;
-        font-family: var(--fs-secondary);
-        font-weight: bold;
-        color: white;
-    }
-
+    font-size: 2rem;
+    font-family: var(--fs-secondary);
+    font-weight: bold;
+    color: var(--clr-text-100);
+  }
 }
