@@ -11,6 +11,7 @@ import FamilyList from "./components/FamilyList";
 import { VALIDATION_SCHEMA } from "./components/Utilities";
 import MemberPlaceholder from "./components/MemberPlaceholder";
 import { RELATION, FAMILY_INITIAL, apiKey } from "./components/Utilities";
+import { useMediaQuery } from "react-responsive";
 
 const headerConfig = {
   headers: {
@@ -38,6 +39,10 @@ const App = () => {
   const [showToast, setShowToast] = useState(false);
   const [toastMessage, setToastMessage] = useState(null);
   const [activeMember, setActiveMember] = useState(null);
+
+  //Media Queries
+
+  const isTabletOrMobile = useMediaQuery({ query: "(max-width: 1224px)" });
 
   const [storage, setStorage] = useState(() => {
     return localStorage.getItem("theme") || "light";
@@ -318,9 +323,10 @@ const App = () => {
               )}
             </AnimatePresence>
 
-            {!activeMember && !showForm && filteredFamily?.length > 0 && (
-              <MemberPlaceholder />
-            )}
+            {!activeMember &&
+              !showForm &&
+              !isTabletOrMobile &&
+              filteredFamily?.length > 0 && <MemberPlaceholder />}
           </div>
         </div>
       </div>

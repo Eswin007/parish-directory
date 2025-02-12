@@ -5,6 +5,10 @@
   position: relative;
   z-index: 2;
 
+  @include respond(tablet) {
+    grid-template-columns: 1fr;
+  }
+
   .header {
     grid-column: 1/2;
     grid-row: 1/2;

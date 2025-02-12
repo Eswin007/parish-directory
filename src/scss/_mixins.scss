@@ -1,0 +1,11 @@
+@mixin respond($size) {
+  @if $size == tablet {
+    @media (max-width: 1024px) {
+      @content;
+    }
+  } @else if $size == smallTabs {
+    @media only screen and (max-width: 600px) {
+      @content;
+    }
+  }
+}
