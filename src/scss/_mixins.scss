@@ -1,11 +1,23 @@
 @mixin respond($size) {
-  @if $size == tablet {
-    @media (max-width: 1024px) {
+  @if $size == mediumScreen {
+    @media only screen and (max-width: 76.5em) {
+      //1024px
+      @content;
+    }
+  } @else if $size == smallScreen {
+    @media only screen and (max-width: 64em) {
+      //1024px
       @content;
     }
   } @else if $size == smallTabs {
-    @media only screen and (max-width: 600px) {
+    @media only screen and (max-width: 37.5em) {
       @content;
     }
   }
 }
+
+// @mixin respond($size) {
+//   @media only screen and (max-width: $size) {
+//     @content;
+//   }
+// }

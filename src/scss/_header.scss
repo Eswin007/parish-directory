@@ -8,9 +8,6 @@
   line-height: 1;
   color: var(--clr-text-800);
   transition: color 0.15s ease;
-
-  @include respond(tablet) {
-  }
 }
 
 .family-listing-wrap > .header {

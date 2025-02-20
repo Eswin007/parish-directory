@@ -258,76 +258,74 @@ const App = () => {
       </AnimatePresence>
       {isLoading && <Loader />}
 
-      <div className="body-wrap">
-        <div className="family-listing-wrap">
-          <Header
-            formRevealHandler={formRevealHandler}
+      <div className="family-listing-wrap">
+        <Header
+          formRevealHandler={formRevealHandler}
+          showForm={showForm}
+          setFormData={setFormData}
+          fetchMembers={fetchMembers}
+          setFilteredFamily={setFilteredFamily}
+          familyList={familyList}
+          familyMembersList={familyMembersList}
+          setActiveMember={setActiveMember}
+          toggleMode={toggleMode}
+          storage={storage}
+        />
+        <div className="family-table-wrap">
+          <FamilyList
+            activeMemberHandler={activeMemberHandler}
+            activeMember={activeMember}
+            filteredFamily={filteredFamily}
+            onEditFamily={onEditFamily}
+            onDeleteFamily={onDeleteFamily}
             showForm={showForm}
-            setFormData={setFormData}
-            fetchMembers={fetchMembers}
-            setFilteredFamily={setFilteredFamily}
-            familyList={familyList}
-            familyMembersList={familyMembersList}
-            setActiveMember={setActiveMember}
-            toggleMode={toggleMode}
-            storage={storage}
           />
-          <div className="family-primary-data">
-            <FamilyList
-              activeMemberHandler={activeMemberHandler}
-              activeMember={activeMember}
-              filteredFamily={filteredFamily}
-              onEditFamily={onEditFamily}
-              onDeleteFamily={onDeleteFamily}
-              showForm={showForm}
-            />
-            {!showForm && filteredFamily.length === 0 && (
-              <div className="empty-results">No Results</div>
+          {!showForm && filteredFamily.length === 0 && (
+            <div className="empty-results">No Results</div>
+          )}
+        </div>
+        <div className="family-details">
+          <AnimatePresence mode="wait" initial={false}>
+            {showForm && (
+              <MemberForm
+                formData={formData}
+                setFormData={setFormData}
+                saveFamilyHandler={saveFamilyHandler}
+                formRevealHandler={formRevealHandler}
+                errors={errors}
+                setErrors={setErrors}
+                familyList={familyList}
+                setFamilyMembersList={setFamilyMembersList}
+                setMembersToBeRemoved={setMembersToBeRemoved}
+                familyPhoto={familyPhoto}
+                setFamilyPhoto={setFamilyPhoto}
+              />
             )}
-          </div>
-          <div className="family-details">
-            <AnimatePresence mode="wait" initial={false}>
-              {showForm && (
-                <MemberForm
-                  formData={formData}
-                  setFormData={setFormData}
-                  saveFamilyHandler={saveFamilyHandler}
-                  formRevealHandler={formRevealHandler}
-                  errors={errors}
-                  setErrors={setErrors}
-                  familyList={familyList}
-                  setFamilyMembersList={setFamilyMembersList}
-                  setMembersToBeRemoved={setMembersToBeRemoved}
-                  familyPhoto={familyPhoto}
-                  setFamilyPhoto={setFamilyPhoto}
-                />
-              )}
-            </AnimatePresence>
+          </AnimatePresence>
 
-            <AnimatePresence mode="wait" initial={false}>
-              {!showForm && activeMember !== null && (
-                <Family
-                  family={activeMember}
-                  familyMembers={familyMembersList
-                    .filter(
-                      (member) => member?.family_id === activeMember?.family_id
-                    )
-                    .sort(
-                      (a, b) =>
-                        RELATION.indexOf(a.relation) -
-                        RELATION.indexOf(b.relation)
-                    )}
-                  onDeleteFamily={onDeleteFamily}
-                  onEditFamily={onEditFamily}
-                />
-              )}
-            </AnimatePresence>
+          <AnimatePresence mode="wait" initial={false}>
+            {!showForm && activeMember !== null && (
+              <Family
+                family={activeMember}
+                familyMembers={familyMembersList
+                  .filter(
+                    (member) => member?.family_id === activeMember?.family_id
+                  )
+                  .sort(
+                    (a, b) =>
+                      RELATION.indexOf(a.relation) -
+                      RELATION.indexOf(b.relation)
+                  )}
+                onDeleteFamily={onDeleteFamily}
+                onEditFamily={onEditFamily}
+              />
+            )}
+          </AnimatePresence>
 
-            {!activeMember &&
-              !showForm &&
-              !isTabletOrMobile &&
-              filteredFamily?.length > 0 && <MemberPlaceholder />}
-          </div>
+          {!activeMember &&
+            !showForm &&
+            !isTabletOrMobile &&
+            filteredFamily?.length > 0 && <MemberPlaceholder />}
         </div>
       </div>
     </>
