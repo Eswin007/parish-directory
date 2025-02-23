@@ -54,6 +54,7 @@
       margin-top: -0.5rem;
       overflow-y: auto;
       height: 100%;
+      background-color: var(--clr-bg-100);
 
       transition: background-color 0.15s ease, border-color 0.15s ease;
     }

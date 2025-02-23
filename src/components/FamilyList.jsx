@@ -58,7 +58,7 @@ const FamilyList = ({
           <div className="family-list__table-cell">Mother Parish</div>
           <div className="family-list__table-cell">Phone & Email</div>
         </div>
-        <div className="family-list__table-body">
+        <div className="family-list__table-body custom-scroll">
           {filteredFamily?.length > 0 &&
             filteredFamily?.map((family) => {
               let firstInLine;

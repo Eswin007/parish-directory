@@ -12,3 +12,34 @@ body {
   height: 100%;
   // overflow: hidden;
 }
+
+.custom-scroll {
+  &:hover {
+    &::-webkit-scrollbar-thumb {
+      background-color: #ddd;
+    }
+  }
+  &::-webkit-scrollbar {
+    width: 5px;
+  }
+
+  &::-webkit-scrollbar-track {
+    margin-top: 0.5rem;
+    background-color: transparent;
+  }
+  &::-webkit-scrollbar-button {
+    display: none;
+  }
+  &::-webkit-scrollbar-corner {
+    opacity: 0;
+    visibility: hidden;
+    display: none;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: transparent;
+    border-radius: 100vmax;
+    &:hover {
+      background-color: #ccc;
+    }
+  }
+}
