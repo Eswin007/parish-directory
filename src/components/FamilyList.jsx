@@ -6,6 +6,7 @@ import { faExpand, faSquare, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { AnimatePresence } from "framer-motion";
 import { faEdit } from "@fortawesome/free-solid-svg-icons";
 import Modal from "./Overlays/Modal";
+import { useMediaQuery } from "react-responsive";
 const FamilyList = ({
   filteredFamily,
   activeMemberHandler,
@@ -25,6 +26,8 @@ const FamilyList = ({
     console.log(familyForImage, "familyforimage");
     setShowLargeImage(true);
   };
+
+  const isTabletOrMobile = useMediaQuery({ query: "(max-width: 1224px)" });
 
   return (
     <>
@@ -88,7 +91,11 @@ const FamilyList = ({
                           <img
                             src={`${photoURL}/${family?.photo}`}
                             alt=""
-                            onClick={(e) => openImageHandler(family?.family_id)}
+                            onClick={(e) => {
+                              if (!isTabletOrMobile) {
+                                openImageHandler(family?.family_id);
+                              } else return;
+                            }}
                           />
                         </div>
                       )}

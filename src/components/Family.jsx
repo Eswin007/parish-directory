@@ -6,9 +6,10 @@ import { createPortal } from "react-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import ImageViewer from "./Overlays/ImageViewer";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faExpand, faSquare } from "@fortawesome/free-solid-svg-icons";
+import { faExpand, faSquare, faTimes } from "@fortawesome/free-solid-svg-icons";
 import { RELATION } from "../App";
 import PulseLoader from "./Overlays/PulseLoader";
+import { useMediaQuery } from "react-responsive";
 
 const familyAnim = {
   initial: {
@@ -30,7 +31,9 @@ const Family = ({
   familyMembers, //newly added
   onDeleteFamily,
   onEditFamily,
+  activeMember,
   type,
+  setActiveMember,
 }) => {
   const [showModal, setShowModal] = useState(false);
   const [showLargeImage, setShowLargeImage] = useState(false);
@@ -40,6 +43,7 @@ const Family = ({
     setImageLoading(true);
   }, [family?.family_id]);
 
+  const isTabletOrMobile = useMediaQuery({ query: "(max-width: 1224px)" });
   return (
     <>
       <AnimatePresence mode="wait" initial={false}>
@@ -87,6 +91,14 @@ const Family = ({
             >
               Edit
             </button>
+            {isTabletOrMobile && activeMember !== null && (
+              <button
+                className="family__btn btn-float-m"
+                onClick={() => setActiveMember(null)}
+              >
+                <FontAwesomeIcon icon={faTimes} />
+              </button>
+            )}
           </div>
         </div>
         {family?.photo !== "" && (
@@ -98,12 +110,14 @@ const Family = ({
               onLoad={() => setImageLoading(false)}
             />
             {/* {!imageLoading ? null : <PulseLoader />} */}
-            <button
-              className="family__photo-enlarge"
-              onClick={() => setShowLargeImage(true)}
-            >
-              <FontAwesomeIcon icon={faExpand} />
-            </button>
+            {!isTabletOrMobile && (
+              <button
+                className="family__photo-enlarge"
+                onClick={() => setShowLargeImage(true)}
+              >
+                <FontAwesomeIcon icon={faExpand} />
+              </button>
+            )}
           </div>
         )}
 

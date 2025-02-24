@@ -10,6 +10,8 @@
   height: 100vh;
   position: relative;
   z-index: 2;
+  font-family: var(--fs-primary);
+  color: var(--clr-text-800);
 
   @include respond(mediumScreen) {
     grid-template-columns: 1fr;
@@ -28,9 +30,6 @@
   }
 
   .family-list {
-    font-family: var(--fs-primary);
-    color: var(--clr-text-800);
-
     &__table {
       display: grid;
       grid-template-columns: 8rem repeat(3, 1fr);
@@ -57,6 +56,10 @@
       background-color: var(--clr-bg-100);
 
       transition: background-color 0.15s ease, border-color 0.15s ease;
+
+      @include respond(mediumScreen) {
+        margin-top: 0;
+      }
     }
 
     &__table-row {
@@ -70,8 +73,10 @@
       border-top: 1px solid var(--clr-border-500);
       transition: background-color 0.15s ease, border-color 0.15s ease;
 
-      @include respond(smallScreen) {
+      @include respond(mediumScreen) {
         gap: 0.5rem;
+        border-top: 0;
+        border-bottom: 1px solid var(--clr-border-500);
       }
 
       &.disabled {
@@ -196,7 +201,8 @@
 
     @include respond(mediumScreen) {
       grid-column: 1/2;
-      display: none; //temp;
+      top: unset;
+      position: static;
     }
   }
 }
@@ -214,6 +220,20 @@
 
   transition: background-color 0.15s ease, border-color 0.15s ease;
 
+  @include respond(mediumScreen) {
+    position: fixed;
+    z-index: 20;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 100dvh;
+    top: unset;
+    width: 100%;
+    border: 0;
+    box-shadow: 0 -1px 3rem var(--clr-bg-600);
+    overflow: auto;
+  }
+
   &__header {
     display: flex;
     align-items: center;
@@ -224,6 +244,10 @@
     display: flex;
     align-items: center;
     margin-left: auto;
+
+    @include respond(mediumScreen) {
+      opacity: 1;
+    }
   }
 
   &:hover {
@@ -302,6 +326,10 @@
     grid-template-columns: max-content 1fr;
     gap: 1rem;
 
+    @include respond(mediumScreen) {
+      grid-template-columns: 1fr;
+    }
+
     &__row {
       display: grid;
       grid-template-columns: subgrid;
@@ -310,6 +338,10 @@
 
     &__cell:last-child {
       font-weight: 600;
+
+      @include respond(mediumScreen) {
+        font-size: 1.125rem;
+      }
     }
   }
 
@@ -319,10 +351,19 @@
     width: 100%;
     margin-top: 1rem;
 
+    @include respond(mediumScreen) {
+      grid-template-columns: 1fr;
+    }
+
     &__body {
       display: grid;
       grid-template-columns: subgrid;
       grid-column: 1/-1;
+
+      @include respond(mediumScreen) {
+        padding: 0;
+        gap: 0.5rem;
+      }
     }
 
     &__row {
@@ -337,16 +378,46 @@
         background-color: var(--clr-bg-300);
       }
 
+      @include respond(mediumScreen) {
+        border: 1px solid #ccc;
+        border-radius: 0.5rem;
+        padding: 1rem;
+        grid-template-columns: repeat(2, 1fr);
+      }
+
       &.header {
         background-color: var(--clr-primary-800);
         color: var(--clr-text-100);
 
         transition: background-color 0.15s ease;
+
+        @include respond(mediumScreen) {
+          display: none;
+        }
       }
     }
 
     &__cell {
       padding: 0.5rem;
+
+      @include respond(mediumScreen) {
+        padding: 0.25rem;
+        font-weight: bold;
+        font-size: 1rem;
+        &::before {
+          font-weight: 400;
+          content: attr(data-label);
+          color: var(--clr-text-800);
+          display: block;
+          text-transform: capitalize;
+        }
+      }
+
+      &:first-child {
+        @include respond(mediumScreen) {
+          grid-column: 1/-1;
+        }
+      }
     }
   }
 }

@@ -8,6 +8,10 @@
   line-height: 1;
   color: var(--clr-text-800);
   transition: color 0.15s ease;
+
+  @include respond(mediumScreen) {
+    grid-column: 1/-1;
+  }
 }
 
 .family-listing-wrap > .header {
@@ -23,16 +27,31 @@
 
   transition: background-color 0.15s ease;
 
+  @include respond(smallScreen) {
+    display: grid;
+    height: auto;
+    grid-template-columns: 1fr max-content;
+    justify-items: space-between;
+    width: 100%;
+    gap: 1rem;
+  }
+
   &__searchbar {
     margin-right: auto;
+  }
+
+  .switch-wrap {
+    @include respond(mediumScreen) {
+      display: none;
+    }
   }
 
   button {
     justify-self: flex-end;
 
-    @media screen and (max-width: 500px) {
-      display: none;
-    }
+    // @media screen and (max-width: 500px) {
+    //   display: none;
+    // }
   }
 
   .searchbar {
@@ -51,6 +70,10 @@
     padding-right: 0.75rem;
     transition: border-color 0.3s ease, background-color 0.15s ease;
     margin-right: auto;
+
+    @include respond(mediumScreen) {
+      width: 100%;
+    }
 
     &:focus-within {
       transition: border-color 0.3s ease;

@@ -307,6 +307,7 @@ const App = () => {
             {!showForm && activeMember !== null && (
               <Family
                 family={activeMember}
+                setActiveMember={setActiveMember}
                 familyMembers={familyMembersList
                   .filter(
                     (member) => member?.family_id === activeMember?.family_id
