@@ -1,15 +1,19 @@
 @mixin respond($size) {
-  @if $size == mediumScreen {
+  @if $size ==mediumScreen {
     @media only screen and (max-width: 76.5em) {
       //1024px
       @content;
     }
-  } @else if $size == smallScreen {
+  }
+
+  @else if $size ==smallScreen {
     @media only screen and (max-width: 64em) {
       //1024px
       @content;
     }
-  } @else if $size == smallTabs {
+  }
+
+  @else if $size ==smallTabs {
     @media only screen and (max-width: 37.5em) {
       @content;
     }

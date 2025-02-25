@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Members from "./Members";
 import { photoURL } from "../App";
 import Modal from "./Overlays/Modal";
@@ -10,6 +10,8 @@ import { faExpand, faSquare, faTimes } from "@fortawesome/free-solid-svg-icons";
 import { RELATION } from "../App";
 import PulseLoader from "./Overlays/PulseLoader";
 import { useMediaQuery } from "react-responsive";
+import coupleImage from '../assets/couple-01.svg';
+
 
 const familyAnim = {
   initial: {
@@ -38,6 +40,8 @@ const Family = ({
   const [showModal, setShowModal] = useState(false);
   const [showLargeImage, setShowLargeImage] = useState(false);
   const [imageLoading, setImageLoading] = useState(true);
+
+  const containerRef = useRef(null);
 
   useEffect(() => {
     setImageLoading(true);
@@ -74,6 +78,7 @@ const Family = ({
         initial="initial"
         animate="animate"
         exit="exit"
+        ref={containerRef}
         className={`family ${type === "list" ? "list" : ""}`}
       >
         <div className="family__header">
@@ -92,16 +97,18 @@ const Family = ({
               Edit
             </button>
             {isTabletOrMobile && activeMember !== null && (
-              <button
+              <motion.button
+              drag
+              dragConstraints={containerRef}
                 className="family__btn btn-float-m"
                 onClick={() => setActiveMember(null)}
               >
                 <FontAwesomeIcon icon={faTimes} />
-              </button>
+              </motion.button>
             )}
           </div>
         </div>
-        {family?.photo !== "" && (
+        {family?.photo !== "" ? (
           <div className="family__photo">
             <img
               src={`${photoURL}/${family?.photo}`}
@@ -119,7 +126,9 @@ const Family = ({
               </button>
             )}
           </div>
-        )}
+        ): <div className="family__photo no-photo">
+            <img src={coupleImage} />
+          </div> }
 
         <div className="family-grid">
           <div className="family-grid__row">

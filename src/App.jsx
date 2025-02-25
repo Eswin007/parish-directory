@@ -42,11 +42,39 @@ const App = () => {
 
   //Media Queries
 
+ 
+
   const isTabletOrMobile = useMediaQuery({ query: "(max-width: 1224px)" });
 
   const [storage, setStorage] = useState(() => {
     return localStorage.getItem("theme") || "light";
   });
+
+  
+  // useEffect(()=>{
+  //   if (window.matchMedia && storage !== 'dark' && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+  //    setStorage(()=> 'dark');
+  //   }
+
+  //   if (window.matchMedia && storage !== 'light' && window.matchMedia('(prefers-color-scheme: light)').matches) {
+  //    setStorage(()=> 'light');
+  //   }
+    
+  // })
+
+  const themePreference = () =>{
+    if (window.matchMedia && storage !== 'dark' && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+    setStorage(()=> 'dark');
+    } 
+        if (window.matchMedia && storage !== 'light' && window.matchMedia('(prefers-color-scheme: light)').matches) {
+     setStorage(()=> 'light');
+    }
+  }
+  
+  useEffect(()=>{
+    themePreference();
+  }, [])
+
 
   const HTMLElement = document.querySelector("html");
   useEffect(() => {
@@ -57,7 +85,6 @@ const App = () => {
   const toggleMode = () => {
     setStorage((prev) => {
       const updatedTheme = prev === "light" ? "dark" : "light";
-      // HTMLElement.dataset.theme = updatedTheme;
       return updatedTheme;
     });
     HTMLElement.dataset.theme = storage === "light" ? "dark" : "light";

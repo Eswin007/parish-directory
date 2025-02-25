@@ -7,6 +7,7 @@ import { AnimatePresence } from "framer-motion";
 import { faEdit } from "@fortawesome/free-solid-svg-icons";
 import Modal from "./Overlays/Modal";
 import { useMediaQuery } from "react-responsive";
+import coupleImage from '../assets/couple-01.svg'
 const FamilyList = ({
   filteredFamily,
   activeMemberHandler,
@@ -86,19 +87,23 @@ const FamilyList = ({
                 >
                   <div className="family-list__table-cell">
                     <div className="family-list__photo">
-                      {family?.photo !== "" && (
+                          {family?.photo !== "" ? (
                         <div className="family-list__photo">
-                          <img
-                            src={`${photoURL}/${family?.photo}`}
-                            alt=""
-                            onClick={(e) => {
-                              if (!isTabletOrMobile) {
-                                openImageHandler(family?.family_id);
-                              } else return;
-                            }}
-                          />
+                              <img
+                                src={`${photoURL}/${family?.photo}`}
+                                alt=""
+                                onClick={(e) => {
+                                  if (!isTabletOrMobile) {
+                                    openImageHandler(family?.family_id);
+                                  } else return;
+                                }}
+                              />
                         </div>
-                      )}
+                            ) : <div className="family-list__photo no-photo">
+
+                              <img src={coupleImage} />
+                            </div> 
+                            }
                     </div>
                   </div>
                   <div className="family-list__table-cell">

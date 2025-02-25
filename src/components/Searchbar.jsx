@@ -63,6 +63,7 @@ const Searchbar = ({
         type="text"
         value={searchValue || ""}
         placeholder={placeholder}
+        enterKeyHint="Search"
         onChange={searchValueHandler}
         onKeyDown={(e) => {
           if (e.key === "Enter") {
