@@ -10,8 +10,7 @@ import { faExpand, faSquare, faTimes } from "@fortawesome/free-solid-svg-icons";
 import { RELATION } from "../App";
 import PulseLoader from "./Overlays/PulseLoader";
 import { useMediaQuery } from "react-responsive";
-import coupleImage from '../assets/couple-01.svg';
-
+import coupleImage from "../assets/couple-01.svg";
 
 const familyAnim = {
   initial: {
@@ -96,16 +95,21 @@ const Family = ({
             >
               Edit
             </button>
-            {isTabletOrMobile && activeMember !== null && (
-              <motion.button
-              drag
-              dragConstraints={containerRef}
-                className="family__btn btn-float-m"
-                onClick={() => setActiveMember(null)}
-              >
-                <FontAwesomeIcon icon={faTimes} />
-              </motion.button>
-            )}
+            <AnimatePresence mode="wait">
+              {isTabletOrMobile && activeMember !== null && (
+                <motion.button
+                  drag
+                  initial={{ x: 100 }}
+                  animate={{ x: -10 }}
+                  exit={{ x: 100 }}
+                  dragConstraints={containerRef}
+                  className="family__btn btn-float-m"
+                  onClick={() => setActiveMember(null)}
+                >
+                  <FontAwesomeIcon icon={faTimes} />
+                </motion.button>
+              )}
+            </AnimatePresence>
           </div>
         </div>
         {family?.photo !== "" ? (
@@ -126,9 +130,11 @@ const Family = ({
               </button>
             )}
           </div>
-        ): <div className="family__photo no-photo">
+        ) : (
+          <div className="family__photo no-photo">
             <img src={coupleImage} />
-          </div> }
+          </div>
+        )}
 
         <div className="family-grid">
           <div className="family-grid__row">

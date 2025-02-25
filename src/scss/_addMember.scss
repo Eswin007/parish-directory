@@ -50,6 +50,10 @@
       border-bottom-color: var(--clr-primary-800);
       border-radius: 100%;
       animation: imageLoaderAnim 2s linear infinite;
+
+      @include respond(mediumScreen) {
+        border-width: 0.5rem;
+      }
     }
 
     @keyframes imageLoaderAnim {
@@ -85,6 +89,11 @@
       position: relative;
       display: grid;
       place-content: center;
+
+      @include respond(mediumScreen) {
+        width: 8rem;
+        height: 8rem;
+      }
 
       &:hover {
         svg {
