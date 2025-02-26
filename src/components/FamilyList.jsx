@@ -3,11 +3,15 @@ import { photoURL } from "../App";
 import ImageViewer from "./Overlays/ImageViewer";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faExpand, faSquare, faTrash } from "@fortawesome/free-solid-svg-icons";
-import { AnimatePresence } from "framer-motion";
 import { faEdit } from "@fortawesome/free-solid-svg-icons";
 import Modal from "./Overlays/Modal";
 import { useMediaQuery } from "react-responsive";
-import coupleImage from '../assets/couple-01.svg'
+import { motion, AnimatePresence } from "framer-motion";
+import coupleImage from "../assets/couple-01.svg";
+import catImage1 from "../assets/cat1.png";
+import catImage2 from "../assets/cat2.png";
+import catImage3 from "../assets/cat3.png";
+
 const FamilyList = ({
   filteredFamily,
   activeMemberHandler,
@@ -27,6 +31,11 @@ const FamilyList = ({
     console.log(familyForImage, "familyforimage");
     setShowLargeImage(true);
   };
+
+  const catImages = [catImage1, catImage2, catImage3];
+
+  const selectedCatImage =
+    catImages[Math.floor(Math.random() * catImages.length)];
 
   const isTabletOrMobile = useMediaQuery({ query: "(max-width: 1224px)" });
 
@@ -62,75 +71,88 @@ const FamilyList = ({
           <div className="family-list__table-cell">Mother Parish</div>
           <div className="family-list__table-cell">Phone & Email</div>
         </div>
-        <div className="family-list__table-body custom-scroll">
-          {filteredFamily?.length > 0 &&
-            filteredFamily?.map((family) => {
-              let firstInLine;
-              if (family?.hof.toLowerCase().includes("rev")) {
-                firstInLine = true;
-              }
-              let clickDisabled;
-              if (showForm && activeMember) {
-                clickDisabled = true;
-                console.log(clickDisabled, "click");
-              }
+        {filteredFamily?.length !== 0 ? (
+          <div className="family-list__table-body custom-scroll">
+            {filteredFamily?.length > 0 &&
+              filteredFamily?.map((family) => {
+                let firstInLine;
+                if (family?.hof.toLowerCase().includes("rev")) {
+                  firstInLine = true;
+                }
+                let clickDisabled;
+                if (showForm && activeMember) {
+                  clickDisabled = true;
+                  console.log(clickDisabled, "click");
+                }
 
-              return (
-                <div
-                  className={`family-list__table-row ${
-                    activeMember?.family_id === family.family_id ? "active" : ""
-                  } ${firstInLine ? "first" : ""} ${
-                    clickDisabled ? "disabled" : ""
-                  }`}
-                  key={family?.family_id}
-                  onClick={() => activeMemberHandler(family)}
-                >
-                  <div className="family-list__table-cell">
-                    <div className="family-list__photo">
-                          {family?.photo !== "" ? (
-                        <div className="family-list__photo">
-                              <img
-                                src={`${photoURL}/${family?.photo}`}
-                                alt=""
-                                onClick={(e) => {
-                                  if (!isTabletOrMobile) {
-                                    openImageHandler(family?.family_id);
-                                  } else return;
-                                }}
-                              />
-                        </div>
-                            ) : <div className="family-list__photo no-photo">
-
-                              <img src={coupleImage} />
-                            </div> 
-                            }
-                    </div>
-                  </div>
-                  <div className="family-list__table-cell">
-                    <div className="family-list__detail">
-                      <div className="family-list__name">{family?.hof}</div>
-                      <div className="family-list__address">
-                        {family?.address}
+                return (
+                  <div
+                    className={`family-list__table-row ${
+                      activeMember?.family_id === family.family_id
+                        ? "active"
+                        : ""
+                    } ${firstInLine ? "first" : ""} ${
+                      clickDisabled ? "disabled" : ""
+                    }`}
+                    key={family?.family_id}
+                    onClick={() => activeMemberHandler(family)}
+                  >
+                    <div className="family-list__table-cell">
+                      <div className="family-list__photo">
+                        {family?.photo !== "" ? (
+                          <div className="family-list__photo">
+                            <img
+                              src={`${photoURL}/${family?.photo}`}
+                              alt=""
+                              onClick={(e) => {
+                                if (!isTabletOrMobile) {
+                                  openImageHandler(family?.family_id);
+                                } else return;
+                              }}
+                            />
+                          </div>
+                        ) : (
+                          <div className="family-list__photo no-photo">
+                            <img src={coupleImage} />
+                          </div>
+                        )}
                       </div>
                     </div>
-                  </div>
-                  <div className="family-list__table-cell">
-                    <div className="family-list__parish">
-                      {family?.mother_parish}
+                    <div className="family-list__table-cell">
+                      <div className="family-list__detail">
+                        <div className="family-list__name">{family?.hof}</div>
+                        <div className="family-list__address">
+                          {family?.address}
+                        </div>
+                      </div>
+                    </div>
+                    <div className="family-list__table-cell">
+                      <div className="family-list__parish">
+                        {family?.mother_parish}
+                      </div>
+                    </div>
+                    <div className="family-list__table-cell">
+                      <div className="family-list__phone">
+                        {`${family?.phone1} ${
+                          family?.phone2 && "/ " + family?.phone2
+                        }`}
+                      </div>
+                      <div className="family-list__email">{family?.email}</div>
                     </div>
                   </div>
-                  <div className="family-list__table-cell">
-                    <div className="family-list__phone">
-                      {`${family?.phone1} ${
-                        family?.phone2 && "/ " + family?.phone2
-                      }`}
-                    </div>
-                    <div className="family-list__email">{family?.email}</div>
-                  </div>
-                </div>
-              );
-            })}
-        </div>
+                );
+              })}
+          </div>
+        ) : (
+          <motion.div
+            initial={{ opacity: 0, duration: 1 }}
+            animate={{ opacity: 1, duration: 1 }}
+            className="empty-results"
+          >
+            <img src={selectedCatImage} alt="" />
+            <span>Oops...No results 😔</span>
+          </motion.div>
+        )}
       </div>
     </>
   );

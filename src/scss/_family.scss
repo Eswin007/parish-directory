@@ -4,11 +4,11 @@
 
 .family-listing-wrap {
   width: 100%;
-  padding: 1rem;
+  padding: 0.75rem;
   display: grid;
   grid-template-columns: 1fr 0.5fr;
   gap: 1rem;
-  height: 100vh;
+  height: 100dvh;
   position: relative;
   z-index: 2;
   font-family: var(--fs-primary);
@@ -500,12 +500,32 @@
 }
 
 .empty-results {
-  width: 100%;
-  margin-inline: auto;
-  text-align: center;
+  // width: 100%;
+  display: grid;
+  grid-template-columns: subgrid;
+  // place-content: center;
+  grid-column: 1/-1;
+  justify-content: center;
+  justify-items: center;
+  gap: 1rem;
+  // margin-inline: auto;
+  // text-align: center;
   font-family: var(--fs-secondary);
   font-size: 1.25rem;
   font-weight: bold;
   padding: 3rem;
   color: var(--clr-text-800);
+
+  img {
+    grid-column: 1/-1;
+    max-width: 12rem;
+
+    @include respond(mediumScreen) {
+      max-width: 10rem;
+    }
+  }
+
+  span {
+    grid-column: 1/-1;
+  }
 }

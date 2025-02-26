@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Searchbar from "./Searchbar";
 import Button from "./Inputs/Button";
 import { FAMILY_INITIAL } from "./Utilities";
@@ -16,7 +16,12 @@ const Header = ({
   storage,
   toggleMode,
 }) => {
+  const [searchValue, setSearchValue] = useState("");
+  const [searchCount, setSearchCount] = useState(0);
   const addNewMember = () => {
+    setSearchValue("");
+    setFilteredFamily(familyList);
+    setSearchCount(null);
     setActiveMember(null);
     formRevealHandler(true);
     setFormData(FAMILY_INITIAL);
@@ -35,6 +40,10 @@ const Header = ({
           familyList={familyList}
           familyMembersList={familyMembersList}
           setActiveMember={setActiveMember}
+          setSearchValue={setSearchValue}
+          setSearchCount={setSearchCount}
+          searchValue={searchValue}
+          searchCount={searchCount}
         />
       )}
       {/* <button onClick={() => toggleMode()}>Dark Mode</button> */}

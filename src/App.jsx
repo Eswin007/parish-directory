@@ -42,15 +42,12 @@ const App = () => {
 
   //Media Queries
 
- 
-
   const isTabletOrMobile = useMediaQuery({ query: "(max-width: 1224px)" });
 
   const [storage, setStorage] = useState(() => {
     return localStorage.getItem("theme") || "light";
   });
 
-  
   // useEffect(()=>{
   //   if (window.matchMedia && storage !== 'dark' && window.matchMedia('(prefers-color-scheme: dark)').matches) {
   //    setStorage(()=> 'dark');
@@ -59,22 +56,29 @@ const App = () => {
   //   if (window.matchMedia && storage !== 'light' && window.matchMedia('(prefers-color-scheme: light)').matches) {
   //    setStorage(()=> 'light');
   //   }
-    
+
   // })
 
-  const themePreference = () =>{
-    if (window.matchMedia && storage !== 'dark' && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-    setStorage(()=> 'dark');
-    } 
-        if (window.matchMedia && storage !== 'light' && window.matchMedia('(prefers-color-scheme: light)').matches) {
-     setStorage(()=> 'light');
+  const themePreference = () => {
+    if (
+      window.matchMedia &&
+      storage !== "dark" &&
+      window.matchMedia("(prefers-color-scheme: dark)").matches
+    ) {
+      setStorage(() => "dark");
     }
-  }
-  
-  useEffect(()=>{
-    themePreference();
-  }, [])
+    if (
+      window.matchMedia &&
+      storage !== "light" &&
+      window.matchMedia("(prefers-color-scheme: light)").matches
+    ) {
+      setStorage(() => "light");
+    }
+  };
 
+  useEffect(() => {
+    themePreference();
+  }, []);
 
   const HTMLElement = document.querySelector("html");
   useEffect(() => {
@@ -307,9 +311,6 @@ const App = () => {
             onDeleteFamily={onDeleteFamily}
             showForm={showForm}
           />
-          {!showForm && filteredFamily.length === 0 && (
-            <div className="empty-results">No Results</div>
-          )}
         </div>
         <div className="family-details">
           <AnimatePresence mode="wait" initial={false}>

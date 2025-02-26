@@ -16,7 +16,7 @@ body {
 .custom-scroll {
   &:hover {
     &::-webkit-scrollbar-thumb {
-      background-color: #ddd;
+      background-color: var(--clr-bg-400);
     }
   }
   &::-webkit-scrollbar {
@@ -39,7 +39,7 @@ body {
     background-color: transparent;
     border-radius: 100vmax;
     &:hover {
-      background-color: #ccc;
+      background-color: var(--clr-bg-600);
     }
   }
 }

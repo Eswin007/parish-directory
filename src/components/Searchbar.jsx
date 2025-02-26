@@ -10,9 +10,13 @@ const Searchbar = ({
   familyList,
   familyMembersList,
   setActiveMember,
+  searchValue,
+  setSearchValue,
+  searchCount,
+  setSearchCount,
 }) => {
-  const [searchValue, setSearchValue] = useState("");
-  const [searchCount, setSearchCount] = useState(0);
+  // const [searchValue, setSearchValue] = useState("");
+  // const [searchCount, setSearchCount] = useState(0);
 
   const searchClearHandler = () => {
     setSearchValue("");
