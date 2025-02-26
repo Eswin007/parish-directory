@@ -14,7 +14,7 @@
   }
 }
 
-.family-listing-wrap > .header {
+.family-listing-wrap>.header {
   display: flex;
   align-items: center;
   gap: 2rem;
@@ -27,7 +27,7 @@
 
   transition: background-color 0.15s ease;
 
-  @include respond(smallScreen) {
+  @include respond(mediumScreen) {
     display: grid;
     height: auto;
     grid-template-columns: 1fr max-content;

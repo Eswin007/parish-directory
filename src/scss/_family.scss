@@ -43,7 +43,7 @@
       align-items: flex-start;
       align-content: flex-start;
 
-      @include respond(smallScreen) {
+      @include respond(mediumScreen) {
         grid-template-columns: 1fr;
         gap: 0.5rem;
       }
@@ -126,7 +126,7 @@
         padding-bottom: 1rem;
         height: max-content;
 
-        @include respond(smallScreen) {
+        @include respond(mediumScreen) {
           display: none;
         }
       }
