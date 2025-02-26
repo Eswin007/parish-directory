@@ -303,14 +303,16 @@ const App = () => {
           storage={storage}
         />
         <div className="family-table-wrap">
-          <FamilyList
-            activeMemberHandler={activeMemberHandler}
-            activeMember={activeMember}
-            filteredFamily={filteredFamily}
-            onEditFamily={onEditFamily}
-            onDeleteFamily={onDeleteFamily}
-            showForm={showForm}
-          />
+          {!isLoading && (
+            <FamilyList
+              activeMemberHandler={activeMemberHandler}
+              activeMember={activeMember}
+              filteredFamily={filteredFamily}
+              onEditFamily={onEditFamily}
+              onDeleteFamily={onDeleteFamily}
+              showForm={showForm}
+            />
+          )}
         </div>
         <div className="family-details">
           <AnimatePresence mode="wait" initial={false}>
