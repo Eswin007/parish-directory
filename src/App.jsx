@@ -39,6 +39,7 @@ const App = () => {
   const [showToast, setShowToast] = useState(false);
   const [toastMessage, setToastMessage] = useState(null);
   const [activeMember, setActiveMember] = useState(null);
+  const [bdayMembers, setBdayMembers] = useState([null]);
 
   //Media Queries
 
@@ -47,17 +48,6 @@ const App = () => {
   const [storage, setStorage] = useState(() => {
     return localStorage.getItem("theme") || "light";
   });
-
-  // useEffect(()=>{
-  //   if (window.matchMedia && storage !== 'dark' && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-  //    setStorage(()=> 'dark');
-  //   }
-
-  //   if (window.matchMedia && storage !== 'light' && window.matchMedia('(prefers-color-scheme: light)').matches) {
-  //    setStorage(()=> 'light');
-  //   }
-
-  // })
 
   const themePreference = () => {
     if (
@@ -145,12 +135,42 @@ const App = () => {
   //calling the main members at first
   useEffect(() => {
     fetchMembers();
+    upcomingBirthdays(familyList, familyMembersList);
   }, []);
 
   const toastRevealer = (message) => {
     setToastMessage(message);
     setShowToast(true);
   };
+
+  const upcomingBirthdays = (familyHeads, familyMembers) => {
+    const fullFamily = [...familyHeads, ...familyMembers];
+    const today = new Date();
+    const tenDaysLater = new Date();
+    tenDaysLater.setDate(today.getDate() + 50);
+
+    const bdays = fullFamily.filter((member) => {
+      if (!member?.dob) return false;
+
+      const birthdate = new Date(member?.dob);
+      const memberBirthdayThisYear = new Date(
+        today.getFullYear(),
+        birthdate.getMonth(),
+        birthdate.getDate()
+      );
+      return (
+        memberBirthdayThisYear >= today &&
+        memberBirthdayThisYear <= tenDaysLater
+      );
+    });
+
+    setBdayMembers(bdays);
+    console.log(bdayMembers);
+  };
+
+  useEffect(() => {
+    upcomingBirthdays(familyList, familyMembersList);
+  }, [familyList, familyMembersList]);
 
   const validationSchema = VALIDATION_SCHEMA;
 
@@ -282,6 +302,8 @@ const App = () => {
     console.log(formData, "formData on edit");
   };
 
+  // console.log(upcomingBirthdays(familyList, familyMembersList));
+
   return (
     <>
       <AnimatePresence mode="wait" initial={false}>
@@ -356,7 +378,9 @@ const App = () => {
           {!activeMember &&
             !showForm &&
             !isTabletOrMobile &&
-            filteredFamily?.length > 0 && <MemberPlaceholder />}
+            filteredFamily?.length > 0 && (
+              <MemberPlaceholder bdayMembers={bdayMembers} />
+            )}
         </div>
       </div>
     </>

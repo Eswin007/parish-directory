@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import React, { useEffect, useState } from "react";
 import { FACTS } from "./Utilities";
 
-const MemberPlaceholder = () => {
+const MemberPlaceholder = ({ bdayMembers }) => {
   const [facts, setFacts] = useState();
 
   const randomFact = (arr) => {
@@ -17,8 +17,6 @@ const MemberPlaceholder = () => {
     randomFact(FACTS);
   }, []);
 
-  
-
   return (
     <motion.div
       className="member-placeholder"
@@ -26,7 +24,9 @@ const MemberPlaceholder = () => {
       animate={{ opacity: 1, duration: 0.2 }}
       exit={{ opacity: 0, duration: 0.2 }}
     >
-      <div className="member-placeholder__facts">{facts || ""}</div>
+      {/* <div className="member-placeholder__facts">{facts || ""}</div> */}
+      <div>Birthdays</div>
+      <div>{bdayMembers.map((item) => item.name || item.hof)}</div>
       <div className="member-placeholder__content">
         <FontAwesomeIcon
           icon={faInfoCircle}
