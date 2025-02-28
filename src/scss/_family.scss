@@ -248,8 +248,8 @@
   .family-details {
     grid-row: 2/3;
     grid-column: 2/3;
-    position: sticky;
-    top: 1rem;
+    overflow: hidden;
+    height: 100%;
 
     @include respond(mediumScreen) {
       grid-column: 1/2;
@@ -261,8 +261,6 @@
 
 .family {
   color: var(--clr-text-800);
-  position: sticky;
-  top: 1rem;
 
   background-color: var(--clr-bg-100);
   border: 1px solid var(--clr-border-500);

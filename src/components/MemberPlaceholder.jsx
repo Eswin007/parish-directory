@@ -8,7 +8,6 @@ const MemberPlaceholder = ({ bdayMembers }) => {
   const [facts, setFacts] = useState();
 
   const randomFact = (arr) => {
-    // setFacts(null)
     const random = arr[Math.floor(Math.random() * arr.length)];
     setFacts(random);
   };

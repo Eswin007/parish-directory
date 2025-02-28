@@ -15,15 +15,16 @@ import coupleImage from "../assets/couple-01.svg";
 const familyAnim = {
   initial: {
     opacity: 0,
-    duration: 0.2,
+    duration: 0.1,
+    
   },
   animate: {
     opacity: 1,
-    duration: 0.2,
+    duration: 0.1,
   },
   exit: {
     opacity: 0,
-    duration: 0.2,
+    duration: 0.1,
   },
 };
 

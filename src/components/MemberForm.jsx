@@ -140,7 +140,7 @@ const MemberForm = ({
   return (
     <motion.form
       onSubmit={onSubmitHandler}
-      className="add-members"
+      className="add-members custom-scroll"
       initial={{ opacity: 0, duration: 0.2, delay: 0.2 }}
       animate={{ opacity: 1, duration: 0.2 }}
       exit={{ opacity: 0, duration: 0.2 }}
