@@ -1,0 +1,35 @@
+.bdays {
+  padding: 1rem;
+  &__title {
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  &__person {
+    display: grid;
+    grid-template-columns: 3.5rem 1fr;
+    justify-content: flex-start;
+    grid-column-gap: 0.5rem;
+    color: var(--clr-text-800);
+    font-size: 1rem;
+
+    // & + .bday__person {
+    margin-top: 1rem;
+    // }
+  }
+
+  &__person-name {
+    font-weight: 600;
+  }
+
+  &__person-date {
+    grid-column: 1/2;
+    grid-row: 1/2;
+  }
+
+  &__person-detail {
+    grid-column: 2/3;
+    font-size: 0.875rem;
+  }
+}

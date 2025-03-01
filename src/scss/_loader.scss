@@ -23,6 +23,11 @@ $duration: (
   gap: 2rem;
   color: var(--clr-text-800);
 
+  @include respond(mediumScreen) {
+    padding-inline: 1rem;
+    min-width: 60vw;
+  }
+
   &__circles {
     position: relative;
     --size: 5rem;
@@ -103,14 +108,15 @@ $duration: (
 .member-placeholder {
   background-color: var(--clr-bg-300);
   border: 1px solid var(--clr-border-500);
-  height: 100%;
-  max-height: 50vh;
-  min-height: 30vh;
+  // height: 100%;
+  max-height: 80vh;
+  min-height: 70vh;
   border-radius: 0.5rem;
-  display: grid;
-  place-content: center;
+  // display: grid;
+  // place-content: center;
+  padding: 1rem;
   position: relative;
-  justify-items: center;
+  // justify-items: center;
   gap: 1rem;
   color: var(--clr-text-600);
 
@@ -122,7 +128,6 @@ $duration: (
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    width: 100%;
     position: absolute;
     left: 1rem;
     bottom: 1rem;

@@ -11,6 +11,7 @@ import FamilyList from "./components/FamilyList";
 import { VALIDATION_SCHEMA } from "./components/Utilities";
 import MemberPlaceholder from "./components/MemberPlaceholder";
 import { RELATION, FAMILY_INITIAL, apiKey } from "./components/Utilities";
+import { useMediaQuery } from "react-responsive";
 
 const headerConfig = {
   headers: {
@@ -38,10 +39,36 @@ const App = () => {
   const [showToast, setShowToast] = useState(false);
   const [toastMessage, setToastMessage] = useState(null);
   const [activeMember, setActiveMember] = useState(null);
+  const [bdayMembers, setBdayMembers] = useState([null]);
+
+  //Media Queries
+
+  const isTabletOrMobile = useMediaQuery({ query: "(max-width: 1224px)" });
 
   const [storage, setStorage] = useState(() => {
     return localStorage.getItem("theme") || "light";
   });
+
+  const themePreference = () => {
+    if (
+      window.matchMedia &&
+      storage !== "dark" &&
+      window.matchMedia("(prefers-color-scheme: dark)").matches
+    ) {
+      setStorage(() => "dark");
+    }
+    if (
+      window.matchMedia &&
+      storage !== "light" &&
+      window.matchMedia("(prefers-color-scheme: light)").matches
+    ) {
+      setStorage(() => "light");
+    }
+  };
+
+  useEffect(() => {
+    themePreference();
+  }, []);
 
   const HTMLElement = document.querySelector("html");
   useEffect(() => {
@@ -52,7 +79,6 @@ const App = () => {
   const toggleMode = () => {
     setStorage((prev) => {
       const updatedTheme = prev === "light" ? "dark" : "light";
-      // HTMLElement.dataset.theme = updatedTheme;
       return updatedTheme;
     });
     HTMLElement.dataset.theme = storage === "light" ? "dark" : "light";
@@ -93,11 +119,7 @@ const App = () => {
   //Setting Active member to be shown in right panel and also to add an active state on the list item
   const activeMemberHandler = (family) => {
     if (family === activeMember) return;
-    setActiveMember(null);
-
-    setTimeout(() => {
-      setActiveMember(family);
-    }, 200);
+    setActiveMember(family);
   };
 
   //showing edit/create form
@@ -109,12 +131,42 @@ const App = () => {
   //calling the main members at first
   useEffect(() => {
     fetchMembers();
+    upcomingBirthdays(familyList, familyMembersList);
   }, []);
 
   const toastRevealer = (message) => {
     setToastMessage(message);
     setShowToast(true);
   };
+
+  const upcomingBirthdays = (familyHeads, familyMembers) => {
+    const fullFamily = [...familyHeads, ...familyMembers];
+    const today = new Date();
+    const tenDaysLater = new Date();
+    tenDaysLater.setDate(today.getDate() + 30);
+
+    const bdays = fullFamily.filter((member) => {
+      if (!member?.dob) return false;
+
+      const birthdate = new Date(member?.dob);
+      const memberBirthdayThisYear = new Date(
+        today.getFullYear(),
+        birthdate.getMonth(),
+        birthdate.getDate()
+      );
+      return (
+        memberBirthdayThisYear >= today &&
+        memberBirthdayThisYear <= tenDaysLater
+      );
+    });
+
+    setBdayMembers(bdays);
+    console.log(bdayMembers);
+  };
+
+  useEffect(() => {
+    upcomingBirthdays(familyList, familyMembersList);
+  }, [familyList, familyMembersList]);
 
   const validationSchema = VALIDATION_SCHEMA;
 
@@ -246,6 +298,14 @@ const App = () => {
     console.log(formData, "formData on edit");
   };
 
+  const getSortedFamilyMembers = (family) => {
+    return familyMembersList
+      ?.filter((member) => member?.family_id === activeMember?.family_id)
+      .sort(
+        (a, b) => RELATION.indexOf(a.relation) - RELATION.indexOf(b.relation)
+      );
+  };
+
   return (
     <>
       <AnimatePresence mode="wait" initial={false}>
@@ -253,21 +313,21 @@ const App = () => {
       </AnimatePresence>
       {isLoading && <Loader />}
 
-      <div className="body-wrap">
-        <div className="family-listing-wrap">
-          <Header
-            formRevealHandler={formRevealHandler}
-            showForm={showForm}
-            setFormData={setFormData}
-            fetchMembers={fetchMembers}
-            setFilteredFamily={setFilteredFamily}
-            familyList={familyList}
-            familyMembersList={familyMembersList}
-            setActiveMember={setActiveMember}
-            toggleMode={toggleMode}
-            storage={storage}
-          />
-          <div className="family-primary-data">
+      <div className="family-listing-wrap">
+        <Header
+          formRevealHandler={formRevealHandler}
+          showForm={showForm}
+          setFormData={setFormData}
+          fetchMembers={fetchMembers}
+          setFilteredFamily={setFilteredFamily}
+          familyList={familyList}
+          familyMembersList={familyMembersList}
+          setActiveMember={setActiveMember}
+          toggleMode={toggleMode}
+          storage={storage}
+        />
+        <div className="family-table-wrap">
+          {!isLoading && (
             <FamilyList
               activeMemberHandler={activeMemberHandler}
               activeMember={activeMember}
@@ -276,52 +336,47 @@ const App = () => {
               onDeleteFamily={onDeleteFamily}
               showForm={showForm}
             />
-            {!showForm && filteredFamily.length === 0 && (
-              <div className="empty-results">No Results</div>
-            )}
-          </div>
-          <div className="family-details">
-            <AnimatePresence mode="wait" initial={false}>
-              {showForm && (
-                <MemberForm
-                  formData={formData}
-                  setFormData={setFormData}
-                  saveFamilyHandler={saveFamilyHandler}
-                  formRevealHandler={formRevealHandler}
-                  errors={errors}
-                  setErrors={setErrors}
-                  familyList={familyList}
-                  setFamilyMembersList={setFamilyMembersList}
-                  setMembersToBeRemoved={setMembersToBeRemoved}
-                  familyPhoto={familyPhoto}
-                  setFamilyPhoto={setFamilyPhoto}
-                />
-              )}
-            </AnimatePresence>
-
-            <AnimatePresence mode="wait" initial={false}>
-              {!showForm && activeMember !== null && (
+          )}
+        </div>
+        <div className="family-details custom-scroll">
+          <AnimatePresence mode="wait" initial={false}>
+            {!showForm ? (
+              activeMember ? (
                 <Family
+                  key={activeMember?.family_id}
                   family={activeMember}
-                  familyMembers={familyMembersList
-                    .filter(
-                      (member) => member?.family_id === activeMember?.family_id
-                    )
-                    .sort(
-                      (a, b) =>
-                        RELATION.indexOf(a.relation) -
-                        RELATION.indexOf(b.relation)
-                    )}
+                  setActiveMember={setActiveMember}
+                  familyMembers={getSortedFamilyMembers(
+                    activeMember?.family_id
+                  )}
                   onDeleteFamily={onDeleteFamily}
                   onEditFamily={onEditFamily}
                 />
-              )}
-            </AnimatePresence>
-
-            {!activeMember && !showForm && filteredFamily?.length > 0 && (
-              <MemberPlaceholder />
+              ) : (
+                !isTabletOrMobile &&
+                filteredFamily?.length > 0 && (
+                  <MemberPlaceholder
+                    familyList={familyList}
+                    bdayMembers={bdayMembers}
+                  />
+                )
+              )
+            ) : (
+              <MemberForm
+                formData={formData}
+                setFormData={setFormData}
+                saveFamilyHandler={saveFamilyHandler}
+                formRevealHandler={formRevealHandler}
+                errors={errors}
+                setErrors={setErrors}
+                familyList={familyList}
+                setFamilyMembersList={setFamilyMembersList}
+                setMembersToBeRemoved={setMembersToBeRemoved}
+                familyPhoto={familyPhoto}
+                setFamilyPhoto={setFamilyPhoto}
+              />
             )}
-          </div>
+          </AnimatePresence>
         </div>
       </div>
     </>

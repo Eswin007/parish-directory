@@ -10,9 +10,13 @@ const Searchbar = ({
   familyList,
   familyMembersList,
   setActiveMember,
+  searchValue,
+  setSearchValue,
+  searchCount,
+  setSearchCount,
 }) => {
-  const [searchValue, setSearchValue] = useState("");
-  const [searchCount, setSearchCount] = useState(0);
+  // const [searchValue, setSearchValue] = useState("");
+  // const [searchCount, setSearchCount] = useState(0);
 
   const searchClearHandler = () => {
     setSearchValue("");
@@ -63,6 +67,7 @@ const Searchbar = ({
         type="text"
         value={searchValue || ""}
         placeholder={placeholder}
+        enterKeyHint="Search"
         onChange={searchValueHandler}
         onKeyDown={(e) => {
           if (e.key === "Enter") {

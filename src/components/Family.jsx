@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Members from "./Members";
 import { photoURL } from "../App";
 import Modal from "./Overlays/Modal";
@@ -6,22 +6,25 @@ import { createPortal } from "react-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import ImageViewer from "./Overlays/ImageViewer";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faExpand, faSquare } from "@fortawesome/free-solid-svg-icons";
+import { faExpand, faSquare, faTimes } from "@fortawesome/free-solid-svg-icons";
 import { RELATION } from "../App";
 import PulseLoader from "./Overlays/PulseLoader";
+import { useMediaQuery } from "react-responsive";
+import coupleImage from "../assets/couple-01.svg";
 
 const familyAnim = {
   initial: {
     opacity: 0,
-    duration: 0.2,
+    duration: 0.1,
+    
   },
   animate: {
     opacity: 1,
-    duration: 0.2,
+    duration: 0.1,
   },
   exit: {
     opacity: 0,
-    duration: 0.2,
+    duration: 0.1,
   },
 };
 
@@ -30,16 +33,21 @@ const Family = ({
   familyMembers, //newly added
   onDeleteFamily,
   onEditFamily,
+  activeMember,
   type,
+  setActiveMember,
 }) => {
   const [showModal, setShowModal] = useState(false);
   const [showLargeImage, setShowLargeImage] = useState(false);
   const [imageLoading, setImageLoading] = useState(true);
 
+  const containerRef = useRef(null);
+
   useEffect(() => {
     setImageLoading(true);
   }, [family?.family_id]);
 
+  const isTabletOrMobile = useMediaQuery({ query: "(max-width: 1224px)" });
   return (
     <>
       <AnimatePresence mode="wait" initial={false}>
@@ -70,6 +78,7 @@ const Family = ({
         initial="initial"
         animate="animate"
         exit="exit"
+        ref={containerRef}
         className={`family ${type === "list" ? "list" : ""}`}
       >
         <div className="family__header">
@@ -87,9 +96,24 @@ const Family = ({
             >
               Edit
             </button>
+            <AnimatePresence mode="wait">
+              {isTabletOrMobile && activeMember !== null && (
+                <motion.button
+                  drag
+                  initial={{ x: 100 }}
+                  animate={{ x: -10 }}
+                  exit={{ x: 100 }}
+                  dragConstraints={containerRef}
+                  className="family__btn btn-float-m"
+                  onClick={() => setActiveMember(null)}
+                >
+                  <FontAwesomeIcon icon={faTimes} />
+                </motion.button>
+              )}
+            </AnimatePresence>
           </div>
         </div>
-        {family?.photo !== "" && (
+        {family?.photo !== "" ? (
           <div className="family__photo">
             <img
               src={`${photoURL}/${family?.photo}`}
@@ -98,12 +122,18 @@ const Family = ({
               onLoad={() => setImageLoading(false)}
             />
             {/* {!imageLoading ? null : <PulseLoader />} */}
-            <button
-              className="family__photo-enlarge"
-              onClick={() => setShowLargeImage(true)}
-            >
-              <FontAwesomeIcon icon={faExpand} />
-            </button>
+            {!isTabletOrMobile && (
+              <button
+                className="family__photo-enlarge"
+                onClick={() => setShowLargeImage(true)}
+              >
+                <FontAwesomeIcon icon={faExpand} />
+              </button>
+            )}
+          </div>
+        ) : (
+          <div className="family__photo no-photo">
+            <img src={coupleImage} />
           </div>
         )}
 

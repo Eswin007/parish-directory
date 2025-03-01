@@ -3,9 +3,15 @@ import { photoURL } from "../App";
 import ImageViewer from "./Overlays/ImageViewer";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faExpand, faSquare, faTrash } from "@fortawesome/free-solid-svg-icons";
-import { AnimatePresence } from "framer-motion";
 import { faEdit } from "@fortawesome/free-solid-svg-icons";
 import Modal from "./Overlays/Modal";
+import { useMediaQuery } from "react-responsive";
+import { motion, AnimatePresence } from "framer-motion";
+import coupleImage from "../assets/couple-01.svg";
+import catImage1 from "../assets/cat1.png";
+import catImage2 from "../assets/cat2.png";
+import catImage3 from "../assets/cat3.png";
+
 const FamilyList = ({
   filteredFamily,
   activeMemberHandler,
@@ -25,6 +31,13 @@ const FamilyList = ({
     console.log(familyForImage, "familyforimage");
     setShowLargeImage(true);
   };
+
+  const catImages = [catImage1, catImage2, catImage3];
+
+  const selectedCatImage =
+    catImages[Math.floor(Math.random() * catImages.length)];
+
+  const isTabletOrMobile = useMediaQuery({ query: "(max-width: 1224px)" });
 
   return (
     <>
@@ -51,15 +64,15 @@ const FamilyList = ({
           </Modal>
         )}
       </AnimatePresence>
-      <div className="family-list">
-        <div className="family-list__table">
-          <div className="family-list__table-row header">
-            <div className="family-list__table-cell">&nbsp;</div>
-            <div className="family-list__table-cell">Name & Address</div>
-            <div className="family-list__table-cell">Mother Parish</div>
-            <div className="family-list__table-cell">Phone & Email</div>
-          </div>
-          <div className="family-list__table-body">
+      <div className="family-list__table ">
+        <div className="family-list__table-row header">
+          <div className="family-list__table-cell">&nbsp;</div>
+          <div className="family-list__table-cell">Name & Address</div>
+          <div className="family-list__table-cell">Mother Parish</div>
+          <div className="family-list__table-cell">Phone & Email</div>
+        </div>
+        {filteredFamily?.length !== 0 ? (
+          <div className="family-list__table-body custom-scroll">
             {filteredFamily?.length > 0 &&
               filteredFamily?.map((family) => {
                 let firstInLine;
@@ -86,15 +99,21 @@ const FamilyList = ({
                   >
                     <div className="family-list__table-cell">
                       <div className="family-list__photo">
-                        {family?.photo !== "" && (
+                        {family?.photo !== "" ? (
                           <div className="family-list__photo">
                             <img
                               src={`${photoURL}/${family?.photo}`}
                               alt=""
-                              onClick={(e) =>
-                                openImageHandler(family?.family_id)
-                              }
+                              onClick={(e) => {
+                                if (!isTabletOrMobile) {
+                                  openImageHandler(family?.family_id);
+                                } else return;
+                              }}
                             />
+                          </div>
+                        ) : (
+                          <div className="family-list__photo no-photo">
+                            <img src={coupleImage} />
                           </div>
                         )}
                       </div>
@@ -114,7 +133,9 @@ const FamilyList = ({
                     </div>
                     <div className="family-list__table-cell">
                       <div className="family-list__phone">
-                        {`${family?.phone1} ${family?.phone2 && '/ ' + family?.phone2}` }
+                        {`${family?.phone1} ${
+                          family?.phone2 && "/ " + family?.phone2
+                        }`}
                       </div>
                       <div className="family-list__email">{family?.email}</div>
                     </div>
@@ -122,7 +143,16 @@ const FamilyList = ({
                 );
               })}
           </div>
-        </div>
+        ) : (
+          <motion.div
+            initial={{ opacity: 0, duration: 1 }}
+            animate={{ opacity: 1, duration: 1 }}
+            className="empty-results"
+          >
+            <img src={selectedCatImage} alt="" />
+            <span>Oops...No results 😔</span>
+          </motion.div>
+        )}
       </div>
     </>
   );

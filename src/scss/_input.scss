@@ -19,18 +19,25 @@
   }
 
   input {
+    -webkit-appearance: none;
     all: unset;
     padding: 0.5rem;
     border: var(--input-border);
     border-radius: 0.25rem;
     font-family: var(--fs-secondary);
     font-size: 0.875rem;
+    min-height: 1.5rem;
     color: var(--clr-text-800);
     accent-color: var(--clr-text-800);
+    text-align: left;
 
     &::placeholder {
       color: var(--clr-text-800);
       opacity: 0.6;
+    }
+
+    &::-webkit-date-and-time-value {
+      text-align: left;
     }
 
     &:focus {
@@ -103,7 +110,7 @@
     border: 0;
     outline: 0;
     accent-color: var(--clr-text-800);
-
+    font-size: 0.875rem;
     color: var(--clr-text-800);
 
     &::placeholder {
@@ -115,6 +122,8 @@
   &__options {
     position: absolute;
     top: 100%;
+    font-size: 0.875rem;
+
     left: -1px;
     width: 100%;
     border: var(--input-border);

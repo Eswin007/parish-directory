@@ -8,8 +8,7 @@ import { photoURL } from "../App";
 import { BLOOD_GROUP, RELATION, apiKey } from "./Utilities";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCamera } from "@fortawesome/free-solid-svg-icons";
-import {  motion } from "framer-motion";
-
+import { motion } from "framer-motion";
 
 const MemberForm = ({
   saveFamilyHandler,
@@ -141,7 +140,7 @@ const MemberForm = ({
   return (
     <motion.form
       onSubmit={onSubmitHandler}
-      className="add-members"
+      className="add-members custom-scroll"
       initial={{ opacity: 0, duration: 0.2, delay: 0.2 }}
       animate={{ opacity: 1, duration: 0.2 }}
       exit={{ opacity: 0, duration: 0.2 }}
@@ -225,10 +224,11 @@ const MemberForm = ({
         value={formData?.dob}
         onChange={(e) => onChangeHandler(e, "dob")}
         errors={errors?.dob}
+        icon="es"
       />
       <InputField
         type="date"
-        placeholder="DD/MM/YY"
+        // placeholder="DD/MM/YY"
         label="Date of Marriage"
         value={formData?.dom}
         onChange={(e) => onChangeHandler(e, "dom")}
@@ -244,102 +244,96 @@ const MemberForm = ({
         errors={errors?.blood}
       />
 
- 
-        {formData?.members?.map((item, index) => {
-          return (
-            <div
-              key={item?.membersID || item?.tempID || index}
-             
-              className="full-width-col member-card-wrap"
-       
-            >
-              <Card className="member-card">
-                <InputField
-                  placeholder="Name"
-                  label="Name"
-                  value={item.name || ""}
-                  onChange={(e) =>
-                    onChangeHandler(e, "name", index, "isMember")
-                  }
-                  errors={errors?.[`members[${index}].name`]}
-                />
-                <Dropdown
-                  label="Relation"
-                  placeholder="Select"
-                  options={RELATION}
-                  value={item.relation}
-                  onChange={(value) =>
-                    onChangeHandler(
-                      { target: { value } },
-                      "relation",
-                      index,
-                      "isMember"
-                    )
-                  }
-                  errors={errors?.[`members[${index}].relation`]}
-                />
+      {formData?.members?.map((item, index) => {
+        return (
+          <div
+            key={item?.membersID || item?.tempID || index}
+            className="full-width-col member-card-wrap"
+          >
+            <Card className="member-card">
+              <InputField
+                placeholder="Name"
+                label="Name"
+                value={item.name || ""}
+                onChange={(e) => onChangeHandler(e, "name", index, "isMember")}
+                errors={errors?.[`members[${index}].name`]}
+              />
+              <Dropdown
+                label="Relation"
+                placeholder="Select"
+                options={RELATION}
+                value={item.relation}
+                onChange={(value) =>
+                  onChangeHandler(
+                    { target: { value } },
+                    "relation",
+                    index,
+                    "isMember"
+                  )
+                }
+                errors={errors?.[`members[${index}].relation`]}
+              />
 
-                <InputField
-                  placeholder="Occupation"
-                  label="Occupation"
-                  value={item?.occupation}
-                  onChange={(e) =>
-                    onChangeHandler(e, "occupation", index, "isMember")
-                  }
-                  errors={errors?.[`members[${index}].occupation`]}
-                />
-                <InputField
-                  type="date"
-                  placeholder="DD/MM/YY"
-                  label="Date of Birth"
-                  value={item.dob}
-                  onChange={(e) => onChangeHandler(e, "dob", index, "isMember")}
-                  errors={errors?.[`members[${index}].dob`]}
-                />
-                <InputField
-                  type="date"
-                  placeholder="DD/MM/YY"
-                  label="Date of Marriage"
-                  value={item.dom}
-                  onChange={(e) => onChangeHandler(e, "dom", index, "isMember")}
-                  errors={errors?.[`members[${index}].dom`]}
-                />
+              <InputField
+                placeholder="Occupation"
+                label="Occupation"
+                value={item?.occupation}
+                onChange={(e) =>
+                  onChangeHandler(e, "occupation", index, "isMember")
+                }
+                errors={errors?.[`members[${index}].occupation`]}
+              />
+              <InputField
+                type="date"
+                placeholder="DD/MM/YY"
+                label="Date of Birth"
+                value={item.dob}
+                onChange={(e) => onChangeHandler(e, "dob", index, "isMember")}
+                errors={errors?.[`members[${index}].dob`]}
+              />
+              <InputField
+                type="date"
+                placeholder="DD/MM/YY"
+                label="Date of Marriage"
+                value={item.dom}
+                onChange={(e) => onChangeHandler(e, "dom", index, "isMember")}
+                errors={errors?.[`members[${index}].dom`]}
+              />
 
-                <Dropdown
-                  label="Blood Group"
-                  placeholder="Select"
-                  options={BLOOD_GROUP}
-                  value={item.blood}
-                  onChange={(value) =>
-                    onChangeHandler(
-                      { target: { value } },
-                      "blood",
-                      index,
-                      "isMember"
-                    )
-                  }
-                  errors={errors?.[`members[${index}].blood`]}
-                />
-                <Button
-                  variant="secondary"
-                  className="remove-member-btn"
-                  onClick={(e) =>
-                    removeMemberHandler(
-                      e,
-                      item?.membersID,
-                      item?.tempID,
-                      index,
-                      "isMember"
-                    )
-                  }
-                >
-                  Remove
-                </Button>
-              </Card>
-            </div>
-          );
-        })}
-     
+              <Dropdown
+                label="Blood Group"
+                placeholder="Select"
+                options={BLOOD_GROUP}
+                value={item.blood}
+                onChange={(value) =>
+                  onChangeHandler(
+                    { target: { value } },
+                    "blood",
+                    index,
+                    "isMember"
+                  )
+                }
+                errors={errors?.[`members[${index}].blood`]}
+              />
+              <Button
+                variant="secondary"
+                className="remove-member-btn"
+                onClick={(e) =>
+                  removeMemberHandler(
+                    e,
+                    item?.membersID,
+                    item?.tempID,
+                    index,
+                    "isMember"
+                  )
+                }
+              >
+                Remove
+              </Button>
+            </Card>
+          </div>
+        );
+      })}
 
       <div className="button-wrap">
         <Button
