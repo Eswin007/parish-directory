@@ -1,10 +1,14 @@
-import { faInfoCircle, faUsers } from "@fortawesome/free-solid-svg-icons";
+import {
+  faCakeCandles,
+  faInfoCircle,
+  faUsers,
+} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { motion } from "framer-motion";
 import React, { useEffect, useState } from "react";
 import { FACTS } from "./Utilities";
 
-const MemberPlaceholder = ({ bdayMembers }) => {
+const MemberPlaceholder = ({ bdayMembers, familyList }) => {
   const [facts, setFacts] = useState();
 
   const randomFact = (arr) => {
@@ -23,9 +27,35 @@ const MemberPlaceholder = ({ bdayMembers }) => {
       animate={{ opacity: 1, duration: 0.2 }}
       exit={{ opacity: 0, duration: 0.2 }}
     >
-      {/* <div className="member-placeholder__facts">{facts || ""}</div> */}
-      <div>Birthdays</div>
-      <div>{bdayMembers.map((item) => item.name || item.hof)}</div>
+      <div className="bdays">
+        <div className="bdays__title">
+          <FontAwesomeIcon icon={faCakeCandles} />
+          Upcoming Birthdays
+        </div>
+        {bdayMembers?.map((member) => {
+          const selectedFam = familyList.filter(
+            (family) => family.family_id === member.family_id
+          );
+
+          return (
+            <div className="bdays__person">
+              <div className="bdays__person-date">
+                {new Date(member.dob).toLocaleDateString("en-US", {
+                  month: "short",
+                  day: "numeric",
+                })}
+              </div>
+              <div className="bdays__person-name">
+                {member.name || member.hof}
+              </div>
+              <div className="bdays__person-detail">
+                {member.membersID &&
+                  `${member.relation} of ${selectedFam[0].hof}`}
+              </div>
+            </div>
+          );
+        })}
+      </div>
       <div className="member-placeholder__content">
         <FontAwesomeIcon
           icon={faInfoCircle}

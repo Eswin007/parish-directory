@@ -119,9 +119,8 @@ const App = () => {
   //Setting Active member to be shown in right panel and also to add an active state on the list item
   const activeMemberHandler = (family) => {
     if (family === activeMember) return;
-      setActiveMember(family);
+    setActiveMember(family);
   };
-
 
   //showing edit/create form
   const formRevealHandler = (value) => {
@@ -144,7 +143,7 @@ const App = () => {
     const fullFamily = [...familyHeads, ...familyMembers];
     const today = new Date();
     const tenDaysLater = new Date();
-    tenDaysLater.setDate(today.getDate() + 50);
+    tenDaysLater.setDate(today.getDate() + 30);
 
     const bdays = fullFamily.filter((member) => {
       if (!member?.dob) return false;
@@ -299,15 +298,13 @@ const App = () => {
     console.log(formData, "formData on edit");
   };
 
-
-  const getSortedFamilyMembers=(family)=>{
-         return familyMembersList?.filter(
-            (member) => member?.family_id === activeMember?.family_id
-          ).sort((a, b) =>
-              RELATION.indexOf(a.relation) -
-              RELATION.indexOf(b.relation)
-    )}
-  
+  const getSortedFamilyMembers = (family) => {
+    return familyMembersList
+      ?.filter((member) => member?.family_id === activeMember?.family_id)
+      .sort(
+        (a, b) => RELATION.indexOf(a.relation) - RELATION.indexOf(b.relation)
+      );
+  };
 
   return (
     <>
@@ -343,18 +340,28 @@ const App = () => {
         </div>
         <div className="family-details custom-scroll">
           <AnimatePresence mode="wait" initial={false}>
-            {!showForm ? (activeMember ? (
-              <Family
-              key={activeMember?.family_id}
-              family={activeMember}
-              setActiveMember={setActiveMember}
-              familyMembers={getSortedFamilyMembers(activeMember?.family_id)}
-              onDeleteFamily={onDeleteFamily}
-              onEditFamily={onEditFamily}
-            />) : (
-              !isTabletOrMobile &&
-              filteredFamily?.length > 0 && 
-              <MemberPlaceholder bdayMembers={bdayMembers} /> )) :
+            {!showForm ? (
+              activeMember ? (
+                <Family
+                  key={activeMember?.family_id}
+                  family={activeMember}
+                  setActiveMember={setActiveMember}
+                  familyMembers={getSortedFamilyMembers(
+                    activeMember?.family_id
+                  )}
+                  onDeleteFamily={onDeleteFamily}
+                  onEditFamily={onEditFamily}
+                />
+              ) : (
+                !isTabletOrMobile &&
+                filteredFamily?.length > 0 && (
+                  <MemberPlaceholder
+                    familyList={familyList}
+                    bdayMembers={bdayMembers}
+                  />
+                )
+              )
+            ) : (
               <MemberForm
                 formData={formData}
                 setFormData={setFormData}
@@ -368,10 +375,8 @@ const App = () => {
                 familyPhoto={familyPhoto}
                 setFamilyPhoto={setFamilyPhoto}
               />
-              }
+            )}
           </AnimatePresence>
-
-
         </div>
       </div>
     </>
