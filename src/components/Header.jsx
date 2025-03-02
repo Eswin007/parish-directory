@@ -3,6 +3,9 @@ import Searchbar from "./Searchbar";
 import Button from "./Inputs/Button";
 import { FAMILY_INITIAL } from "./Utilities";
 import ToggleSwitch from "./Inputs/ToggleSwitch";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useMediaQuery } from "react-responsive";
+import { faCake, faUserPlus, faUsers } from "@fortawesome/free-solid-svg-icons";
 const Header = ({
   setShowForm,
   formRevealHandler,
@@ -15,9 +18,13 @@ const Header = ({
   setActiveMember,
   storage,
   toggleMode,
+  setShowBday,
 }) => {
   const [searchValue, setSearchValue] = useState("");
   const [searchCount, setSearchCount] = useState(0);
+
+  const isTabletOrMobile = useMediaQuery({ query: "(max-width: 1224px)" });
+
   const addNewMember = () => {
     setSearchValue("");
     setFilteredFamily(familyList);
@@ -54,7 +61,20 @@ const Header = ({
         style={{ marginLeft: "auto" }}
         checked={storage === "dark"}
       />
-      {!showForm && <Button onClick={addNewMember}>Add Family</Button>}
+      {!showForm && (
+        <Button onClick={addNewMember}>
+          {isTabletOrMobile ? (
+            <FontAwesomeIcon icon={faUserPlus} />
+          ) : (
+            "Add Family"
+          )}
+        </Button>
+      )}
+      {!showForm && isTabletOrMobile && (
+        <Button onClick={() => setShowBday(true)}>
+          <FontAwesomeIcon icon={faCake} />
+        </Button>
+      )}
     </div>
   );
 };

@@ -14,7 +14,7 @@
   }
 }
 
-.family-listing-wrap>.header {
+.family-listing-wrap > .header {
   display: flex;
   align-items: center;
   gap: 2rem;
@@ -30,7 +30,7 @@
   @include respond(mediumScreen) {
     display: grid;
     height: auto;
-    grid-template-columns: 1fr max-content;
+    grid-template-columns: 1fr max-content max-content;
     justify-items: space-between;
     width: 100%;
     gap: 1rem;

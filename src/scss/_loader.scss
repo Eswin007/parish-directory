@@ -108,21 +108,24 @@ $duration: (
 .member-placeholder {
   background-color: var(--clr-bg-300);
   border: 1px solid var(--clr-border-500);
-  // height: 100%;
-  max-height: 80vh;
-  min-height: 70vh;
+  height: 100%;
+  overflow: hidden;
   border-radius: 0.5rem;
-  // display: grid;
-  // place-content: center;
   padding: 1rem;
   position: relative;
-  // justify-items: center;
   gap: 1rem;
   color: var(--clr-text-600);
 
   font-family: var(--fs-primary);
 
   transition: background-color 0.15s ease, border-color 0.15s ease;
+
+  @include respond(mediumScreen) {
+    position: fixed;
+    z-index: 500;
+    inset: 0;
+    height: 100dvh;
+  }
 
   &__content {
     display: flex;
