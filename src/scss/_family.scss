@@ -31,6 +31,23 @@
     height: 100%;
     overflow: hidden;
   }
+  .active-clear-btn {
+    all: unset;
+    width: 2rem;
+    height: 2rem;
+    background-color: var(--clr-bg-400);
+    border-radius: 100%;
+    display: grid;
+    place-content: center;
+    color: var(--clr-text-800);
+    align-self: center;
+    justify-self: center;
+    cursor: pointer;
+
+    &:hover {
+      background-color: var(--clr-bg-500);
+    }
+  }
 
   .family-list {
     &__table {
@@ -406,7 +423,9 @@
 
   .members-table {
     display: grid;
-    grid-template-columns: minmax(max-content, 1fr) repeat(4, 1fr) min-content;
+    grid-template-columns:
+      minmax(max-content, 1fr) repeat(4, minmax(max-content, 1fr))
+      min-content;
     width: 100%;
     margin-top: 1rem;
 

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useMemo, useEffect } from "react";
 import { photoURL } from "../App";
 import ImageViewer from "./Overlays/ImageViewer";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -23,6 +23,7 @@ const FamilyList = ({
   const [showLargeImage, setShowLargeImage] = useState(false);
   const [viewingFamily, setViewingFamily] = useState({});
   const [showModal, setShowModal] = useState(false);
+  const [selectedCatImage, setSelectedCatImage] = useState();
   const openImageHandler = (id) => {
     const familyForImage = filteredFamily?.filter(
       (item) => item?.family_id === id
@@ -34,8 +35,11 @@ const FamilyList = ({
 
   const catImages = [catImage1, catImage2, catImage3];
 
-  const selectedCatImage =
-    catImages[Math.floor(Math.random() * catImages.length)];
+  useEffect(() => {
+    setSelectedCatImage(
+      catImages[Math.floor(Math.random() * catImages.length)]
+    );
+  }, [filteredFamily]);
 
   const isTabletOrMobile = useMediaQuery({ query: "(max-width: 1224px)" });
 
@@ -71,7 +75,7 @@ const FamilyList = ({
           <div className="family-list__table-cell">Mother Parish</div>
           <div className="family-list__table-cell">Phone & Email</div>
         </div>
-        {filteredFamily?.length !== 0 ? (
+        {filteredFamily?.length > 0 ? (
           <div className="family-list__table-body custom-scroll">
             {filteredFamily?.length > 0 &&
               filteredFamily?.map((family) => {

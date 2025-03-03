@@ -6,12 +6,14 @@ import "./scss/main.scss";
 import MemberForm from "./components/MemberForm";
 import Loader from "./components/Overlays/Loader";
 import Toast from "./components/Overlays/Toast";
-import { AnimatePresence } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import FamilyList from "./components/FamilyList";
 import { VALIDATION_SCHEMA } from "./components/Utilities";
-import MemberPlaceholder from "./components/MemberPlaceholder";
+import BirthdayCalendar from "./components/BirthdayCalendar";
 import { RELATION, FAMILY_INITIAL, apiKey } from "./components/Utilities";
 import { useMediaQuery } from "react-responsive";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTimes } from "@fortawesome/free-solid-svg-icons";
 
 const headerConfig = {
   headers: {
@@ -27,6 +29,7 @@ const supabaseURL = `https://vffwbrvixbmlabmozktp.supabase.co`;
 export const photoURL = `${supabaseURL}/storage/v1/object/family-photos`;
 
 const App = () => {
+  const isTabletOrMobile = useMediaQuery({ query: "(max-width: 1224px)" });
   const [showForm, setShowForm] = useState(false);
   const [formData, setFormData] = useState(FAMILY_INITIAL);
   const [familyList, setFamilyList] = useState([]);
@@ -40,10 +43,15 @@ const App = () => {
   const [toastMessage, setToastMessage] = useState(null);
   const [activeMember, setActiveMember] = useState(null);
   const [bdayMembers, setBdayMembers] = useState([null]);
+  const [showBday, setShowBday] = useState(() => {
+    if (isTabletOrMobile) {
+      return false;
+    } else {
+      return true;
+    }
+  });
 
   //Media Queries
-
-  const isTabletOrMobile = useMediaQuery({ query: "(max-width: 1224px)" });
 
   const [storage, setStorage] = useState(() => {
     return localStorage.getItem("theme") || "light";
@@ -142,8 +150,9 @@ const App = () => {
   const upcomingBirthdays = (familyHeads, familyMembers) => {
     const fullFamily = [...familyHeads, ...familyMembers];
     const today = new Date();
+    today.setHours(0, 0, 0, 0);
     const tenDaysLater = new Date();
-    tenDaysLater.setDate(today.getDate() + 30);
+    tenDaysLater.setDate(today.getDate() + 20);
 
     const bdays = fullFamily.filter((member) => {
       if (!member?.dob) return false;
@@ -159,8 +168,8 @@ const App = () => {
         memberBirthdayThisYear <= tenDaysLater
       );
     });
-
-    setBdayMembers(bdays);
+    const sortedBdays = bdays.sort((a, b) => new Date(a.dob) - new Date(b.dob));
+    setBdayMembers(sortedBdays);
     console.log(bdayMembers);
   };
 
@@ -325,7 +334,21 @@ const App = () => {
           setActiveMember={setActiveMember}
           toggleMode={toggleMode}
           storage={storage}
+          setShowBday={setShowBday}
         />
+        <AnimatePresence mode="wait">
+          {activeMember && !showForm && !isTabletOrMobile && (
+            <motion.button
+              initial={{ y: 20, opacity: 0 }}
+              animate={{ y: 0, opacity: 2 }}
+              exit={{ y: 10, opacity: 0 }}
+              className="active-clear-btn"
+              onClick={() => setActiveMember(null)}
+            >
+              <FontAwesomeIcon icon={faTimes} />
+            </motion.button>
+          )}
+        </AnimatePresence>
         <div className="family-table-wrap">
           {!isLoading && (
             <FamilyList
@@ -353,11 +376,12 @@ const App = () => {
                   onEditFamily={onEditFamily}
                 />
               ) : (
-                !isTabletOrMobile &&
-                filteredFamily?.length > 0 && (
-                  <MemberPlaceholder
+                filteredFamily?.length > 0 &&
+                showBday && (
+                  <BirthdayCalendar
                     familyList={familyList}
                     bdayMembers={bdayMembers}
+                    setShowBday={setShowBday}
                   />
                 )
               )
