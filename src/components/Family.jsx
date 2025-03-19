@@ -16,7 +16,6 @@ const familyAnim = {
   initial: {
     opacity: 0,
     duration: 0.1,
-    
   },
   animate: {
     opacity: 1,
@@ -79,7 +78,7 @@ const Family = ({
         animate="animate"
         exit="exit"
         ref={containerRef}
-        className={`family ${type === "list" ? "list" : ""}`}
+        className={`family custom-scroll ${type === "list" ? "list" : ""}`}
       >
         <div className="family__header">
           <h2 className="family__name">{family?.hof}</h2>

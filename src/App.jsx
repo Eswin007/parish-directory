@@ -380,7 +380,9 @@ const App = () => {
                 showBday && (
                   <BirthdayCalendar
                     familyList={familyList}
-                    bdayMembers={bdayMembers}
+                    bdayMembers={bdayMembers.sort(
+                      (a, b) => new Date(a?.dob) - new Date(b?.dob)
+                    )}
                     setShowBday={setShowBday}
                   />
                 )

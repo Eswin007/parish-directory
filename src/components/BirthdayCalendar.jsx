@@ -41,20 +41,19 @@ const BirthdayCalendar = ({ bdayMembers, familyList, setShowBday }) => {
             const selectedFam = familyList.filter(
               (family) => family.family_id === member?.family_id
             );
-
             return (
               <div className="bdays__person">
                 <div className="bdays__person-date">
-                  {new Date(member.dob).toLocaleDateString("en-US", {
+                  {new Date(member?.dob).toLocaleDateString("en-US", {
                     month: "short",
                     day: "numeric",
                   })}
                 </div>
                 <div className="bdays__person-name">
                   {member?.name || member?.hof}
-                  {new Date(member.dob).getDate() === new Date().getDate() &&
-                    new Date(member.dob).getMonth() ===
-                      new Date().getDate() && (
+                  {new Date(member?.dob).getDate() === new Date().getDate() &&
+                    new Date(member?.dob).getMonth() ===
+                      new Date().getMonth() && (
                       <div className="bdays__today">
                         <FontAwesomeIcon icon={faCake} />
                       </div>
