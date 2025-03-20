@@ -18,6 +18,12 @@
       @content;
     }
   }
+
+  @else if $size ==smallMobile {
+    @media only screen and (max-width: 25em) {
+      @content;
+    }
+  }
 }
 
 // @mixin respond($size) {
