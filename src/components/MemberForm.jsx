@@ -7,8 +7,9 @@ import Dropdown from "./Inputs/Dropdown";
 import { photoURL } from "../App";
 import { BLOOD_GROUP, RELATION, apiKey } from "./Utilities";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCamera } from "@fortawesome/free-solid-svg-icons";
+import { faCamera, faCancel } from "@fortawesome/free-solid-svg-icons";
 import { motion } from "framer-motion";
+import { useMediaQuery } from "react-responsive";
 
 const MemberForm = ({
   saveFamilyHandler,
@@ -23,6 +24,8 @@ const MemberForm = ({
   setFamilyPhoto,
 }) => {
   const [imageUploading, setImageUploading] = useState(false);
+  const isTabletOrMobile = useMediaQuery({ query: "(max-width: 1224px)" });
+
   const fileUploadHandler = async (e) => {
     setImageUploading(true);
     const selectedFile = e.target.files[0];
@@ -348,7 +351,7 @@ const MemberForm = ({
           variant="secondary"
           onClick={() => formRevealHandler(false)}
         >
-          Cancel
+          {isTabletOrMobile ? <FontAwesomeIcon icon={faCancel} /> : 'Cancel'}
         </Button>
         <Button type="submit">Save</Button>
       </div>
