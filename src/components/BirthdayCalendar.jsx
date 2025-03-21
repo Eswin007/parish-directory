@@ -42,7 +42,7 @@ const BirthdayCalendar = ({ bdayMembers, familyList, setShowBday }) => {
               (family) => family.family_id === member?.family_id
             );
             return (
-              <div className="bdays__person">
+              <div className="bdays__person" key={`${member.dob}+${Math.random()}`}>
                 <div className="bdays__person-date">
                   {new Date(member?.dob).toLocaleDateString("en-US", {
                     month: "short",
