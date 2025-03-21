@@ -170,7 +170,6 @@ const App = () => {
     });
     const sortedBdays = bdays.sort((a, b) => new Date(a.dob) - new Date(b.dob));
     setBdayMembers(sortedBdays);
-    console.log(bdayMembers);
   };
 
   useEffect(() => {
@@ -221,7 +220,6 @@ const App = () => {
 
     try {
       await validationSchema.validate(formData, { abortEarly: false });
-      console.log(formData, "formdata on save family");
       setErrors({});
       if (finalFamilyHead?.family_id) {
         // this is a check to see if the family head already has a photo value in place, if it has the value, then it is just updating the form data, and if not, we're updaing it as family ehad and adding the family photo separately.
@@ -380,9 +378,7 @@ const App = () => {
                 showBday && (
                   <BirthdayCalendar
                     familyList={familyList}
-                    bdayMembers={bdayMembers.sort(
-                      (a, b) => new Date(a?.dob) - new Date(b?.dob)
-                    )}
+                    bdayMembers={bdayMembers}
                     setShowBday={setShowBday}
                   />
                 )

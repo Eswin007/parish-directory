@@ -68,7 +68,6 @@ const MemberForm = ({
   const onSubmitHandler = (e) => {
     e.preventDefault();
     saveFamilyHandler(formData);
-    console.log(formData, "formdataonsubmit");
   };
   const onChangeHandler = (e, inputName, index = null, isMember) => {
     const { value } = e.target;

@@ -14,7 +14,7 @@ import { useMediaQuery } from "react-responsive";
 const BirthdayCalendar = ({ bdayMembers, familyList, setShowBday }) => {
   const [facts, setFacts] = useState();
   const isTabletOrMobile = useMediaQuery({ query: "(max-width: 1224px)" });
-
+  const sortedBdayMembers = bdayMembers?.sort((a,b)=> new Date(`1000-${a.dob.slice(5)}`) - new Date(`1000-${b.dob.slice(5)}`));
   const randomFact = (arr) => {
     const random = arr[Math.floor(Math.random() * arr.length)];
     setFacts(random);
@@ -37,7 +37,7 @@ const BirthdayCalendar = ({ bdayMembers, familyList, setShowBday }) => {
           Upcoming Birthdays
         </div>
         <div className="bdays__person-set custom-scroll">
-          {bdayMembers?.map((member) => {
+          {sortedBdayMembers?.map((member) => {
             const selectedFam = familyList.filter(
               (family) => family.family_id === member?.family_id
             );

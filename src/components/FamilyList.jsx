@@ -29,7 +29,6 @@ const FamilyList = ({
       (item) => item?.family_id === id
     );
     setViewingFamily(...familyForImage);
-    console.log(familyForImage, "familyforimage");
     setShowLargeImage(true);
   };
 
@@ -86,7 +85,6 @@ const FamilyList = ({
                 let clickDisabled;
                 if (showForm && activeMember) {
                   clickDisabled = true;
-                  console.log(clickDisabled, "click");
                 }
 
                 return (
