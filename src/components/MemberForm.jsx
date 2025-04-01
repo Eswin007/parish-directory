@@ -152,7 +152,7 @@ const MemberForm = ({
         {formData?.photo !== "" ? (
           <div className="photo__family">
             <img src={`${photoURL}/${formData?.photo}`} />
-            <button onClick={(e) => removeImage(e)} className="photo__remove">
+            <button type="button" onClick={(e) => removeImage(e)} className="photo__remove">
               Remove Photo
             </button>
           </div>

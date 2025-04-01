@@ -77,6 +77,7 @@ const App = () => {
   useEffect(() => {
     themePreference();
   }, []);
+ 
 
   const HTMLElement = document.querySelector("html");
   useEffect(() => {
@@ -237,6 +238,7 @@ const App = () => {
             headerConfig
           );
         }
+        setActiveMember(formData);
       } else {
         await axios
           .post(
