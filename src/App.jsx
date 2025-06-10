@@ -96,8 +96,8 @@ const App = () => {
   //fetch members function
   const fetchMembers = async () => {
     setIsLoading(true);
-    const familyURL = `${supabaseURL}/rest/v1/parish`;
-    const familyMembersURL = `${supabaseURL}/rest/v1/parishMembers`;
+    const familyURL = `${supabaseURL}/rest/v1/family`;
+    const familyMembersURL = `${supabaseURL}/rest/v1/familyMembers`;
 
     const familyList = await axios.get(familyURL, {
       headers: {
@@ -184,8 +184,8 @@ const App = () => {
     const { members, ...familyHead } = formData;
     const finalFamilyHead = { ...familyHead, photo: familyPhoto };
 
-    const familyURL = `${supabaseURL}/rest/v1/parish`;
-    const familyMembersURL = `${supabaseURL}/rest/v1/parishMembers`;
+    const familyURL = `${supabaseURL}/rest/v1/family`;
+    const familyMembersURL = `${supabaseURL}/rest/v1/familyMembers`;
 
     const postMembers = (members, familyID) => {
       const updatedMembers = members?.map((member) => {
@@ -274,7 +274,7 @@ const App = () => {
     setIsLoading(false);
   };
   const onDeleteFamily = (id) => {
-    const familyURL = `${supabaseURL}/rest/v1/parish`;
+    const familyURL = `${supabaseURL}/rest/v1/family`;
     try {
       setIsLoading(true);
       axios

@@ -84,3 +84,9 @@ export const FACTS = [
   "The church continues to flourish spiritually and numerically, growing in faith and fellowship by the grace of God.",
   "The dedication and unity of its members have played a vital role in its development, ensuring that it remains a strong spiritual and community center.",
 ];
+
+
+export const users = {
+  admin: 'admin1213',
+  member: 'member123'
+}
