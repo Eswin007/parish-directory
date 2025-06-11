@@ -1,20 +1,115 @@
+$bg-color: rgb(223, 224, 255);
 .login-wrap{
     width: 100%;
     height: 100vh;
-    display: grid;
-    place-content: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: url('../assets//login-bg.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    box-sizing: border-box;
+    
     
     input{
         all: unset;
+        box-sizing: border-box;
     }
 
     .login{
-        width: 75%;
-        display: block;
+        width: 28rem;
+        border-radius: .5rem;
+        backdrop-filter: blur(10px);
+        padding: 1rem 1.5rem 2rem 1.5rem;
+        box-shadow: 0 0 1.5rem  rgba(black , .6);
+        border: 1px solid rgba($bg-color, .5);
+        background: linear-gradient(180deg, rgba(rgba(2, 71, 71, 0.247), .2), rgba(white, .2));
 
-        &__input{
-            border: 1px solid #ddd;
+        &__accent{
+            width: 80%;
+            height: 1rem;
+            bottom: 0;
+            position: absolute;
+            transform: translate(-50%,50%);
+            left: 50%;;
+            clip-path: polygon(-100% .5rem, 200% .5rem, 200% 200%, 0 200% );
+            border-radius: 100%;
+            
+            &::after{
+                content: "";
+                background: linear-gradient(90deg, hsla(339, 100%, 55%, 1) 0%, hsla(197, 100%, 64%, 1) 100%);
+                width: 100%;
+                height: 100%;
+                display: block;
+                position: absolute;
+                border-radius: 100%;
+                inset: 0;
+                filter: blur(7px);
+                mix-blend-mode: color-dodge;
+                opacity: .5;
+            }
+
         }
+
+
+        // &::after{
+        //     isolation: isolate;
+        //     content: "";
+        //     border-radius: 0 0 100% 100%;
+        //     z-index: -2;
+        //     filter: blur(8px);
+        //     mix-blend-mode: color-dodge;
+        // }
+        
+
+        &__header{
+            font-size: 1.5rem;
+            color: var(--clr-text-100);
+            margin-bottom: 1.5rem;
+        }
+
+        &__title{
+            color: var(--clr-text-100);
+            line-height: 1;
+            font-weight: 400;
+        }
+
+        form{
+            display: grid;;
+        }
+
+        .input-group{
+            display: flex;
+            gap: .5rem;
+            flex-direction: column;
+            width: 100%;
+            & + .input-group{
+                margin-top: 1rem;
+            }
+        }
+        
+        &__label{
+            color: var(--clr-text-100);
+        }
+        &__input{
+            width: 100%;
+            border: 1px solid rgba($bg-color, .5);
+            border-radius: .25rem;
+            padding: .5rem;
+            color: var(--clr-text-100);
+            transition: all .3s ease;
+                &:focus{
+                    background-color: rgba($bg-color, .2)
+                }
+        }
+
+        &__btn{
+            margin-top: 1rem;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+
     }
    
 }

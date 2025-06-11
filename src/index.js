@@ -5,6 +5,7 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import Login from './components/Login';
+import ProtectedRoute from './Router';
 
 
 
@@ -15,7 +16,8 @@ root.render(
             <Routes>
                 <Route path='/'  element={<Login />} />
                 <Route path='/login'  element={<Login />} />
-                <Route path='/directory' element={<App />} />
+                  <Route path='/directory' element={<ProtectedRoute><App /></ProtectedRoute>} />
+               
             </Routes>
         </BrowserRouter>
   </React.StrictMode>

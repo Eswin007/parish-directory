@@ -1,17 +1,8 @@
-import {BrowerRouter, Routes, Route} from 'react-router-dom';
-import App from './App';
-import Login from './components/Login';
+import { Navigate } from "react-router-dom"
 
-
-
-const Router = () =>{
-    return(
-        <BrowerRouter>
-            <Routes>
-                <Route path='/login' element={<Login />} />
-                <Route path='/directory' element={<App />} />
-
-            </Routes>
-        </BrowerRouter>
-    )
+const ProtectedRoute = ({children}) =>{
+    const loggedIn = localStorage.getItem('username');
+    return loggedIn ? children : <Navigate to='/login' />
 }
+
+export default ProtectedRoute

@@ -6,6 +6,7 @@ import ToggleSwitch from "./Inputs/ToggleSwitch";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useMediaQuery } from "react-responsive";
 import { faCake, faUserPlus, faUsers } from "@fortawesome/free-solid-svg-icons";
+import { useNavigate } from "react-router-dom";
 const Header = ({
   setShowForm,
   formRevealHandler,
@@ -22,7 +23,7 @@ const Header = ({
 }) => {
   const [searchValue, setSearchValue] = useState("");
   const [searchCount, setSearchCount] = useState(0);
-
+  const navigate = useNavigate();
   const isTabletOrMobile = useMediaQuery({ query: "(max-width: 1224px)" });
 
   const addNewMember = () => {
@@ -33,6 +34,13 @@ const Header = ({
     formRevealHandler(true);
     setFormData(FAMILY_INITIAL);
   };
+
+  const handleLogout = () =>{
+    localStorage.removeItem('username');
+    navigate('/login')
+  }
+
+  const loggedInUser = localStorage.getItem('username')
 
   return (
     <div className="header">
@@ -61,7 +69,7 @@ const Header = ({
         style={{ marginLeft: "auto" }}
         checked={storage === "dark"}
       />
-      {!showForm && (
+      {!showForm && loggedInUser === 'admin' && (
         <Button onClick={addNewMember}>
           {isTabletOrMobile ? (
             <FontAwesomeIcon icon={faUserPlus} />
@@ -75,6 +83,7 @@ const Header = ({
           <FontAwesomeIcon icon={faCake} />
         </Button>
       )}
+      <button type="button" onClick={handleLogout}>Logout</button>
     </div>
   );
 };

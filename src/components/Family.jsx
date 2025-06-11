@@ -47,6 +47,8 @@ const Family = ({
   }, [family?.family_id]);
 
   const isTabletOrMobile = useMediaQuery({ query: "(max-width: 1224px)" });
+  const loggedInUser = localStorage.getItem('username')
+
   return (
     <>
       <AnimatePresence mode="wait" initial={false}>
@@ -83,18 +85,22 @@ const Family = ({
         <div className="family__header">
           <h2 className="family__name">{family?.hof}</h2>
           <div className="family__controls">
-            <button
+      {loggedInUser === 'admin' && 
+      <>
+      <button
               className="family__btn btn-fancy"
               onClick={() => setShowModal(true)}
-            >
+              >
               Delete
             </button>
             <button
               className="family__btn btn-fancy"
               onClick={() => onEditFamily(family?.family_id)}
-            >
+              >
               Edit
             </button>
+              </>
+            }
             <AnimatePresence mode="wait">
               {isTabletOrMobile && activeMember !== null && (
                 <motion.button

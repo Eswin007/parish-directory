@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
 import {users} from './Utilities';
 import {useNavigate} from 'react-router-dom';
+import Button from './Inputs/Button';
+
 
 const Login = () => {
     const [username, setUsername] = useState('');
@@ -20,6 +22,12 @@ const Login = () => {
   return (
     <div className="login-wrap">
         <div className="login">
+            <div className="login__accent"></div>
+            <div className="login__title">
+                <img src="" alt="" />
+                <span>IMTC Parish Directory</span>
+                </div>
+            <h4 className='login__header'>Login.</h4>
             <form action="" onSubmit={onSubmitHandler}>
 
             <div className="input-group">
@@ -33,7 +41,7 @@ const Login = () => {
                 <div className="login__helper-text"></div>
             </div>
             {error && error}
-            <button type="submit">Login</button>
+            <Button className="login__btn" type='submit'>Login</Button>
             </form>
         </div>
     </div>
