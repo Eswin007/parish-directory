@@ -51,6 +51,10 @@ $bg-color: rgb(223, 224, 255);
 
         }
 
+        &__error{
+            color: var(--clr-text-100);
+            opacity: .5;
+        }
 
         // &::after{
         //     isolation: isolate;

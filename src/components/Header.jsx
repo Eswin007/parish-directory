@@ -5,7 +5,7 @@ import { FAMILY_INITIAL } from "./Utilities";
 import ToggleSwitch from "./Inputs/ToggleSwitch";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useMediaQuery } from "react-responsive";
-import { faCake, faUserPlus, faUsers } from "@fortawesome/free-solid-svg-icons";
+import { faCake, faRightFromBracket, faUserPlus, faUsers } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
 const Header = ({
   setShowForm,
@@ -44,7 +44,13 @@ const Header = ({
 
   return (
     <div className="header">
-      <div className="logo">Parish Directory 2025</div>
+      <div className="logo">
+        <div>IMTC Parish Directory</div>
+        {loggedInUser === 'admin' && <span className="header__role">Admin</span>}
+      <button type="button" className="header__logout" onClick={handleLogout}><FontAwesomeIcon icon={faRightFromBracket} /></button>
+
+        </div>
+
       {!showForm && (
         <Searchbar
           placeholder="Search..."
@@ -83,7 +89,6 @@ const Header = ({
           <FontAwesomeIcon icon={faCake} />
         </Button>
       )}
-      <button type="button" onClick={handleLogout}>Logout</button>
     </div>
   );
 };
