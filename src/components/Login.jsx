@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import {users} from './Utilities';
 import {useNavigate} from 'react-router-dom';
 import Button from './Inputs/Button';
+import icoDirectory from '../assets/directory-icon.svg'
 
 
 const Login = () => {
@@ -24,10 +25,10 @@ const Login = () => {
         <div className="login">
             <div className="login__accent"></div>
             <div className="login__title">
-                <img src="" alt="" />
-                <span>IMTC Parish Directory</span>
+                <img src={icoDirectory} style={{width: '2rem'}} alt="" />
+                <span>Parish Directory</span>
                 </div>
-            <h4 className='login__header'>Login.</h4>
+            {/* <h4 className='login__header'>Login.</h4> */}
             <form action="" onSubmit={onSubmitHandler}>
 
             <div className="input-group">
