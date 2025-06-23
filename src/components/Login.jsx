@@ -28,6 +28,7 @@ const Login = () => {
 
   return (
     <div className="login-wrap">
+        <div className="bottom-text">Immanuel Mar Thoma Church, Thengode</div>
         <div className="login">
             <div className="login__accent"></div>
             <div className="login__title">
