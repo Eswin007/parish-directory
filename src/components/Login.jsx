@@ -9,6 +9,7 @@ const Login = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
+    const fieldsValid = username !== '' && password !== ''
     const navigate = useNavigate();
     const onSubmitHandler = (e) =>{
         e.preventDefault();
@@ -16,12 +17,18 @@ const Login = () => {
             navigate('/directory')
             localStorage.setItem('username', username)
         } else{
-             setError('Username or Password incorrect')
+            if(!fieldsValid){
+                setError('Enter Username and Password')
+            } else {
+                setError('Username or Password incorrect')
+            }
         }
     }
 
+
   return (
     <div className="login-wrap">
+        <div className="bottom-text">Immanuel Mar Thoma Church, Thengode</div>
         <div className="login">
             <div className="login__accent"></div>
             <div className="login__title">
@@ -41,8 +48,8 @@ const Login = () => {
                 <input type="password" className="login__input" onChange={(e) => setPassword(e.target.value)} value={password} />
                 <div className="login__helper-text"></div>
             </div>
-            {error && error}
-            <Button className="login__btn" type='submit'>Login</Button>
+            <div className="login__error">{error && error}</div>
+            <Button className="login__btn" type='submit' disabled={fieldsValid}>Login</Button>
             </form>
         </div>
     </div>
