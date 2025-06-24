@@ -1,4 +1,5 @@
 import axios from "axios";
+import { Analytics } from "@vercel/analytics/next"
 import Header from "./components/Header";
 import Family from "./components/Family";
 import { useEffect, useState } from "react";
@@ -317,6 +318,7 @@ const App = () => {
 
   return (
     <>
+    <Analytics/>
       <AnimatePresence mode="wait" initial={false}>
         {showToast && <Toast setShowToast={setShowToast}>{toastMessage}</Toast>}
       </AnimatePresence>
