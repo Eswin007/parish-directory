@@ -44,14 +44,16 @@ export const VALIDATION_SCHEMA = object().shape({
 });
 
 export const RELATION = [
-  "Mother",
-  "Wife",
-  "Son",
-  "Daughter-In-Law",
-  "Daughter",
-  "Grandson",
-  "Granddaughter",
+  { value: "Mother", label: "Mother" },
+  { value: "Wife", label: "Wife" },
+  { value: "Son", label: "Son" },
+  { value: "Daughter-In-Law", label: "Daughter-In-Law" },
+  { value: "Daughter", label: "Daughter" },
+  { value: "Daughter(Married)", label: "Daughter(Married)" },
+  { value: "Grandson", label: "Grandson" },
+  { value: "Granddaughter", label: "Granddaughter" },
 ];
+
 
 export const FAMILY_INITIAL = {
   hof: "",
@@ -67,7 +69,20 @@ export const FAMILY_INITIAL = {
   photo: "",
 };
 
-export const BLOOD_GROUP = ["A+", "A-", "B-", "O+", "O-", "AB+", "AB-", "B+"];
+// export const BLOOD_GROUP = ["A+", "A-", "B-", "O+", "O-", "AB+", "AB-", "B+"];
+
+export const BLOOD_GROUP = [
+  { value: "A+", label: "A+" },
+  { value: "A-", label: "A-" },
+  { value: "B-", label: "B-" },
+  { value: "O+", label: "O+" },
+  { value: "O-", label: "O-" },
+  { value: "AB+", label: "AB+" },
+  { value: "AB-", label: "AB-" },
+  { value: "B+", label: "B+" }
+];
+
+
 
 export const apiKey =
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZmZndicnZpeGJtbGFibW96a3RwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MjU3MjkxMzgsImV4cCI6MjA0MTMwNTEzOH0.yU8fXAZa_x84GwdVhPVDdLhOWbAa6r2PoHxhnV5ebn0";

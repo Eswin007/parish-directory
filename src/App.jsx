@@ -181,6 +181,7 @@ const App = () => {
   const validationSchema = VALIDATION_SCHEMA;
 
   const saveFamilyHandler = async (formData) => {
+    console.log(formData, 'checkForm')
     setIsLoading(true);
     const { members, ...familyHead } = formData;
     const finalFamilyHead = { ...familyHead, photo: familyPhoto };

@@ -176,6 +176,7 @@ const MemberForm = ({
         value={formData?.hof || ""}
         onChange={(e) => onChangeHandler(e, "hof")}
         errors={errors?.hof}
+        autoFocus={true}
       />
       <InputField
         placeholder="Phone 1"
@@ -236,16 +237,14 @@ const MemberForm = ({
         onChange={(e) => onChangeHandler(e, "dom")}
         errors={errors?.dom}
       />
-
       <Dropdown
         label="Blood Group"
         placeholder="Select"
         options={BLOOD_GROUP}
         value={formData?.blood}
-        onChange={(value) => onChangeHandler({ target: { value } }, "blood")}
+        onChange={(value) => onChangeHandler({ target:{ value: value.value }  }, 'blood') }
         errors={errors?.blood}
       />
-
       {formData?.members?.map((item, index) => {
         return (
           <div
@@ -256,6 +255,7 @@ const MemberForm = ({
               <InputField
                 placeholder="Name"
                 label="Name"
+                autoFocus={true}
                 value={item.name || ""}
                 onChange={(e) => onChangeHandler(e, "name", index, "isMember")}
                 errors={errors?.[`members[${index}].name`]}
@@ -267,7 +267,7 @@ const MemberForm = ({
                 value={item.relation}
                 onChange={(value) =>
                   onChangeHandler(
-                    { target: { value } },
+                    { target: {value: value.value}},
                     "relation",
                     index,
                     "isMember"
@@ -309,7 +309,7 @@ const MemberForm = ({
                 value={item.blood}
                 onChange={(value) =>
                   onChangeHandler(
-                    { target: { value } },
+                    { target: {value: value.value} },
                     "blood",
                     index,
                     "isMember"
