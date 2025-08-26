@@ -154,7 +154,7 @@ const App = () => {
     const today = new Date();
     today.setHours(0, 0, 0, 0);
     const tenDaysLater = new Date();
-    tenDaysLater.setDate(today.getDate() + 20);
+    tenDaysLater.setDate(today.getDate() + 15);
 
     const bdays = fullFamily.filter((member) => {
       if (!member?.dob) return false;
@@ -181,6 +181,7 @@ const App = () => {
   const validationSchema = VALIDATION_SCHEMA;
 
   const saveFamilyHandler = async (formData) => {
+    console.log(formData, 'checkForm')
     setIsLoading(true);
     const { members, ...familyHead } = formData;
     const finalFamilyHead = { ...familyHead, photo: familyPhoto };

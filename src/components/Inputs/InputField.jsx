@@ -8,6 +8,8 @@ const InputField = ({
   value,
   onChange,
   errors,
+  autoFocus,
+  ...props
 }) => {
   return (
     <div className={`input-group ${errors ? "invalid" : ""}`}>
@@ -18,6 +20,9 @@ const InputField = ({
         name={name}
         value={value}
         onChange={onChange}
+        autoFocus={autoFocus}
+        {...props}
+       
       />
       {errors && <div className="input-error">{errors}</div>}
     </div>
