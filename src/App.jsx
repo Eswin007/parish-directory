@@ -154,7 +154,7 @@ const App = () => {
     const today = new Date();
     today.setHours(0, 0, 0, 0);
     const tenDaysLater = new Date();
-    tenDaysLater.setDate(today.getDate() + 20);
+    tenDaysLater.setDate(today.getDate() + 15);
 
     const bdays = fullFamily.filter((member) => {
       if (!member?.dob) return false;

@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useState } from "react";
 import Select from 'react-select'
 
-const Dropdown = ({ options, placeholder, label, value, onChange, errors }) => {
+const Dropdown = ({ options, placeholder, label, value, onChange, errors, ...props}) => {
   return (
     <div 
     className={`dropdown ${errors ? "invalid" : ""}`} 
@@ -12,11 +12,14 @@ const Dropdown = ({ options, placeholder, label, value, onChange, errors }) => {
       <label htmlFor="">{label}</label>
       <Select 
         classNamePrefix='dd' 
+        className="dd"
         options={options}
         value={options.find(opt => opt.value === value)} 
         menuPlacement="auto" 
-        onChange={onChange} 
-      />
+        placeholder="Select"
+        onChange={onChange}
+        {...props} 
+/>
       {errors && <div className="input-error">{errors}</div>}
     </div>
   );

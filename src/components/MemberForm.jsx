@@ -259,6 +259,7 @@ const MemberForm = ({
                 value={item.name || ""}
                 onChange={(e) => onChangeHandler(e, "name", index, "isMember")}
                 errors={errors?.[`members[${index}].name`]}
+                 onFocus={(e) => e.target.scrollIntoView({ behavior: "smooth", block: "center" })}
               />
               <Dropdown
                 label="Relation"
