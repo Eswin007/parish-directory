@@ -66,7 +66,7 @@ const Searchbar = ({
       <input
         type="text"
         value={searchValue || ""}
-        placeholder={placeholder}
+        placeholder={`Search from ${familyList.length || 'all'} families`}
         enterKeyHint="Search"
         onChange={searchValueHandler}
         onKeyDown={(e) => {
