@@ -122,6 +122,10 @@ $bg-color: rgb(223, 224, 255);
             & + .input-group{
                 margin-top: 1rem;
             }
+
+            input:hover{
+                background-color: rgba(black, .25);
+            }
         }
         
         &__label{

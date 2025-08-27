@@ -120,6 +120,7 @@
       transition: border-color 0.3s ease;
       border-color: var(--clr-active-800);
       background-color: var(--clr-bg-100);
+      box-shadow:  0 0 0 1px var(--clr-active-800);
     }
 
     &__search-icon {
