@@ -10,6 +10,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCamera, faCancel } from "@fortawesome/free-solid-svg-icons";
 import { motion } from "framer-motion";
 import { useMediaQuery } from "react-responsive";
+import LocationPicker from "./Inputs/LocationPicker";
 
 const MemberForm = ({
   saveFamilyHandler,
@@ -22,9 +23,13 @@ const MemberForm = ({
   setMembersToBeRemoved,
   familyPhoto,
   setFamilyPhoto,
+  coords,
+  setCoords
 }) => {
   const [imageUploading, setImageUploading] = useState(false);
   const isTabletOrMobile = useMediaQuery({ query: "(max-width: 1224px)" });
+
+  // const [coords, setCoords] = useState([76.28, 9.98]);
 
   const fileUploadHandler = async (e) => {
     setImageUploading(true);
@@ -64,14 +69,16 @@ const MemberForm = ({
       photo: "",
     }));
   };
+    console.log(formData, 'formdatawithlat')
 
   const onSubmitHandler = (e) => {
+
     e.preventDefault();
     saveFamilyHandler(formData);
+
   };
   const onChangeHandler = (e, inputName, index = null, isMember) => {
     const { value } = e.target;
-
     setErrors((prev) => {
       if (isMember === "isMember" && index !== undefined) {
         return {
@@ -97,6 +104,7 @@ const MemberForm = ({
         return {
           ...prev,
           members: updatedMembers,
+          
         };
       } else {
         return {
@@ -337,6 +345,8 @@ const MemberForm = ({
           </div>
         );
       })}
+
+      <LocationPicker setFormData={setFormData} />
 
       <div className="button-wrap">
         <Button
