@@ -24,7 +24,7 @@ const MemberForm = ({
   familyPhoto,
   setFamilyPhoto,
   coords,
-  setCoords
+  setCoords,
 }) => {
   const [imageUploading, setImageUploading] = useState(false);
   const isTabletOrMobile = useMediaQuery({ query: "(max-width: 1224px)" });
@@ -69,13 +69,11 @@ const MemberForm = ({
       photo: "",
     }));
   };
-    console.log(formData, 'formdatawithlat')
+  console.log(formData, "formdatawithlat");
 
   const onSubmitHandler = (e) => {
-
     e.preventDefault();
     saveFamilyHandler(formData);
-
   };
   const onChangeHandler = (e, inputName, index = null, isMember) => {
     const { value } = e.target;
@@ -104,7 +102,6 @@ const MemberForm = ({
         return {
           ...prev,
           members: updatedMembers,
-          
         };
       } else {
         return {
@@ -160,7 +157,11 @@ const MemberForm = ({
         {formData?.photo !== "" ? (
           <div className="photo__family">
             <img src={`${photoURL}/${formData?.photo}`} />
-            <button type="button" onClick={(e) => removeImage(e)} className="photo__remove">
+            <button
+              type="button"
+              onClick={(e) => removeImage(e)}
+              className="photo__remove"
+            >
               Remove Photo
             </button>
           </div>
@@ -250,7 +251,9 @@ const MemberForm = ({
         placeholder="Select"
         options={BLOOD_GROUP}
         value={formData?.blood}
-        onChange={(value) => onChangeHandler({ target:{ value: value.value }  }, 'blood') }
+        onChange={(value) =>
+          onChangeHandler({ target: { value: value.value } }, "blood")
+        }
         errors={errors?.blood}
       />
       {formData?.members?.map((item, index) => {
@@ -267,7 +270,12 @@ const MemberForm = ({
                 value={item.name || ""}
                 onChange={(e) => onChangeHandler(e, "name", index, "isMember")}
                 errors={errors?.[`members[${index}].name`]}
-                 onFocus={(e) => e.target.scrollIntoView({ behavior: "smooth", block: "center" })}
+                onFocus={(e) =>
+                  e.target.scrollIntoView({
+                    behavior: "smooth",
+                    block: "center",
+                  })
+                }
               />
               <Dropdown
                 label="Relation"
@@ -276,7 +284,7 @@ const MemberForm = ({
                 value={item.relation}
                 onChange={(value) =>
                   onChangeHandler(
-                    { target: {value: value.value}},
+                    { target: { value: value.value } },
                     "relation",
                     index,
                     "isMember"
@@ -318,7 +326,7 @@ const MemberForm = ({
                 value={item.blood}
                 onChange={(value) =>
                   onChangeHandler(
-                    { target: {value: value.value} },
+                    { target: { value: value.value } },
                     "blood",
                     index,
                     "isMember"
@@ -346,7 +354,11 @@ const MemberForm = ({
         );
       })}
 
-      <LocationPicker setFormData={setFormData} />
+      <LocationPicker
+        setFormData={setFormData}
+        lat={formData.lat}
+        lon={formData.lon}
+      />
 
       <div className="button-wrap">
         <Button
@@ -361,7 +373,7 @@ const MemberForm = ({
           variant="secondary"
           onClick={() => formRevealHandler(false)}
         >
-          {isTabletOrMobile ? <FontAwesomeIcon icon={faCancel} /> : 'Cancel'}
+          {isTabletOrMobile ? <FontAwesomeIcon icon={faCancel} /> : "Cancel"}
         </Button>
         <Button type="submit">Save</Button>
       </div>

@@ -11,29 +11,50 @@ import VectorSource from "ol/source/Vector";
 import VectorLayer from "ol/layer/Vector";
 import { Icon, Style } from "ol/style";
 
-const LocationPicker = ({ initialCoords = [76.28, 9.98], setFormData }) => {
+const LocationPicker = ({
+  // initialCoords = [10.030953498048913, 76.37231081875424],
+  setFormData,
+  lat,
+  lon,
+}) => {
   const mapRef = useRef();
   const markerSource = new VectorSource();
-    
+  const hasCoords = lat !== null && lon !== null;
+  // const initialCoords = [76.37231081875424, 10.030953498048913];
+  // initialCoords = [10.030953498048913, 76.37231081875424];
+  const initialCoords = [76.37231081875424, 10.030953498048913];
+
+  const startCoords = hasCoords ? [lat, lon] : initialCoords;
+
   useEffect(() => {
     const markerLayer = new VectorLayer({ source: markerSource });
 
+    const initialMarker = new Feature({
+      geometry: new Point(fromLonLat(startCoords)),
+    });
+    initialMarker.setStyle(
+      new Style({
+        image: new Icon({
+          src: "https://openlayers.org/en/latest/examples/data/icon.png",
+          anchor: [0.5, 1],
+          scale: 0.8,
+        }),
+      })
+    );
+    markerSource.addFeature(initialMarker);
+
     const map = new Map({
       target: mapRef.current,
-      layers: [
-        new TileLayer({ source: new OSM() }),
-        markerLayer,
-      ],
+      layers: [new TileLayer({ source: new OSM() }), markerLayer],
       view: new View({
-        center: fromLonLat(initialCoords),
-        zoom: 14,
+        center: fromLonLat(startCoords),
+        zoom: 17,
       }),
     });
 
     map.on("click", (event) => {
       const coords = toLonLat(event.coordinate); // [lon, lat]
-        setFormData((prev) => ({...prev, lat: coords[0], lon: coords[1]}))
-      
+      setFormData((prev) => ({ ...prev, lat: coords[0], lon: coords[1] }));
 
       // Clear old marker
       markerSource.clear();
@@ -57,7 +78,12 @@ const LocationPicker = ({ initialCoords = [76.28, 9.98], setFormData }) => {
     return () => map.setTarget(undefined);
   }, []);
 
-  return <div ref={mapRef} style={{ width: "100%", gridColumn: '1/-1', height: "400px" }} />;
+  return (
+    <div
+      ref={mapRef}
+      style={{ width: "100%", gridColumn: "1/-1", height: "400px" }}
+    />
+  );
 };
 
 export default LocationPicker;

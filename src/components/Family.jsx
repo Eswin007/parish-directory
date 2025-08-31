@@ -47,7 +47,7 @@ const Family = ({
   }, [family?.family_id]);
 
   const isTabletOrMobile = useMediaQuery({ query: "(max-width: 1224px)" });
-  const loggedInUser = localStorage.getItem('username')
+  const loggedInUser = localStorage.getItem("username");
 
   return (
     <>
@@ -85,22 +85,22 @@ const Family = ({
         <div className="family__header">
           <h2 className="family__name">{family?.hof}</h2>
           <div className="family__controls">
-      {loggedInUser === 'admin' && 
-      <>
-      <button
-              className="family__btn btn-fancy"
-              onClick={() => setShowModal(true)}
-              >
-              Delete
-            </button>
-            <button
-              className="family__btn btn-fancy"
-              onClick={() => onEditFamily(family?.family_id)}
-              >
-              Edit
-            </button>
+            {loggedInUser === "admin" && (
+              <>
+                <button
+                  className="family__btn btn-fancy"
+                  onClick={() => setShowModal(true)}
+                >
+                  Delete
+                </button>
+                <button
+                  className="family__btn btn-fancy"
+                  onClick={() => onEditFamily(family?.family_id)}
+                >
+                  Edit
+                </button>
               </>
-            }
+            )}
             <AnimatePresence mode="wait">
               {isTabletOrMobile && activeMember !== null && (
                 <motion.button
@@ -160,6 +160,19 @@ const Family = ({
           <div className="family-grid__row">
             <div className="family-grid__cell">Email</div>
             <div className="family-grid__cell">{family?.email}</div>
+          </div>
+          <div className="family-grid__row">
+            <div className="family-grid__cell">Location</div>
+            {family?.lon !== null ? (
+              <a
+                href={`https://www.google.com/maps?q=${family?.lon},${family?.lat}`}
+                target="_blank"
+              >
+                Show in Google Maps
+              </a>
+            ) : (
+              <div className="family-grid__cell">Not updated</div>
+            )}
           </div>
         </div>
 
