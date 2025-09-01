@@ -6,11 +6,14 @@ import { createPortal } from "react-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import ImageViewer from "./Overlays/ImageViewer";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faExpand, faSquare, faTimes } from "@fortawesome/free-solid-svg-icons";
+import { faExpand, faExternalLink, faMap, faMapLocation, faMapMarked, faSquare, faTimes } from "@fortawesome/free-solid-svg-icons";
 import { RELATION } from "../App";
 import PulseLoader from "./Overlays/PulseLoader";
 import { useMediaQuery } from "react-responsive";
 import coupleImage from "../assets/couple-01.svg";
+import icoLocation from '../assets/location-icon.svg'
+import { faGoogle, faGooglePlay, faGooglePlusG } from "@fortawesome/free-brands-svg-icons";
+
 
 const familyAnim = {
   initial: {
@@ -145,34 +148,39 @@ const Family = ({
         <div className="family-grid">
           <div className="family-grid__row">
             <div className="family-grid__cell">Address</div>
-            <div className="family-grid__cell">{family?.address}</div>
+            <div className="family-grid__cell">{family?.address || '-'}</div>
           </div>
           <div className="family-grid__row">
             <div className="family-grid__cell">Mother Parish</div>
-            <div className="family-grid__cell">{family?.mother_parish}</div>
+            <div className="family-grid__cell">{family?.mother_parish || '-'}</div>
           </div>
           <div className="family-grid__row">
             <div className="family-grid__cell">Phone</div>
-            <div className="family-grid__cell">{`${family?.phone1 || ""}  ${
-              family?.phone2 && " / " + family?.phone2
+            <div className="family-grid__cell">{`${family?.phone1 || "-"}  ${
+              family?.phone2 && " / " + family?.phone2 
             }`}</div>
           </div>
           <div className="family-grid__row">
             <div className="family-grid__cell">Email</div>
-            <div className="family-grid__cell">{family?.email}</div>
+            <div className="family-grid__cell">{family?.email || '-'}</div>
           </div>
           <div className="family-grid__row">
-            <div className="family-grid__cell">Location</div>
-            {family?.lon !== null ? (
+            <div className="family-grid__cell ">Location</div>
+            <div className="family-grid__cell location-link">
+              {family?.lon !== null ? (
               <a
-                href={`https://www.google.com/maps?q=${family?.lon},${family?.lat}`}
+                // href={`https://www.google.com/maps?q=${family?.lon},${family?.lat}`}
+                href={`https://www.google.com/maps/dir/?api=1&destination=${family?.lon},${family?.lat}`}
                 target="_blank"
-              >
-                Show in Google Maps
-              </a>
+                >
+                <span>View on Maps</span>
+                <img src={icoLocation} alt="" />    
+                </a>
             ) : (
-              <div className="family-grid__cell">Not updated</div>
+              <div className="family-grid__cell">Map Unavailable
+              </div>
             )}
+            </div>
           </div>
         </div>
 
