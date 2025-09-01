@@ -44,6 +44,7 @@ const App = () => {
   const [toastMessage, setToastMessage] = useState(null);
   const [activeMember, setActiveMember] = useState(null);
   const [bdayMembers, setBdayMembers] = useState([null]);
+  const [coords, setCoords] = useState([76.28, 9.98]);
   const [showBday, setShowBday] = useState(() => {
     if (isTabletOrMobile) {
       return false;
@@ -182,7 +183,6 @@ const App = () => {
   const validationSchema = VALIDATION_SCHEMA;
 
   const saveFamilyHandler = async (formData) => {
-    console.log(formData, 'checkForm')
     setIsLoading(true);
     const { members, ...familyHead } = formData;
     const finalFamilyHead = { ...familyHead, photo: familyPhoto };
@@ -307,7 +307,6 @@ const App = () => {
       ...editFamily,
       members: editMember,
     });
-    console.log(formData, "formData on edit");
   };
 
   const getSortedFamilyMembers = (family) => {
@@ -395,6 +394,8 @@ const App = () => {
                 saveFamilyHandler={saveFamilyHandler}
                 formRevealHandler={formRevealHandler}
                 errors={errors}
+                coords={coords}
+                setCoords={setCoords}
                 setErrors={setErrors}
                 familyList={familyList}
                 setFamilyMembersList={setFamilyMembersList}

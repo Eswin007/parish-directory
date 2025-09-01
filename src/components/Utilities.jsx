@@ -67,6 +67,8 @@ export const FAMILY_INITIAL = {
   occupation: "",
   members: [],
   photo: "",
+  lat: "",
+  lon: ""
 };
 
 // export const BLOOD_GROUP = ["A+", "A-", "B-", "O+", "O-", "AB+", "AB-", "B+"];
