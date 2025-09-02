@@ -156,9 +156,14 @@ const Family = ({
           </div>
           <div className="family-grid__row">
             <div className="family-grid__cell">Phone</div>
-            <div className="family-grid__cell">{`${family?.phone1 || "-"}  ${
-              family?.phone2 && " / " + family?.phone2 
-            }`}</div>
+            <div className="family-grid__cell">
+              <a href={`tel:${family?.phone1}`}>
+                {family?.phone1 || "-"}
+                </a>
+                {family?.phone2 && (
+                  <a href={`tel:${family?.phone2}`}> / {family?.phone2}</a>
+                )}
+            </div>
           </div>
           <div className="family-grid__row">
             <div className="family-grid__cell">Email</div>

@@ -2,14 +2,15 @@ import { object, string, date, array } from "yup";
 
 export const VALIDATION_SCHEMA = object().shape({
   hof: string().required("Name is required"),
-  phone1: string()
-    .nullable()
-    .matches(/^[0-9]+$/, "Must be only digits")
-    .min(10, "Must be exactly 10 digits")
-    .max(12, "Max 12 Digits"),
-  phone2: string()
-    .nullable()
-    .matches(/^[0-9]*$/, "Must be only digits"),
+ phone1: string()
+  .nullable()
+  .matches(/^$|^\+?[0-9]+$/, "Must be digits")
+  .max(20, "Max 20 Digits"),
+
+phone2: string()
+  .nullable()
+  .max(20, 'Max 20 Digits')
+  .matches(/^$|^\+?[0-9]+$/, "Must be digits"),
   email: string().nullable().email("Invalid email format"),
 
   mother_parish: string(),
