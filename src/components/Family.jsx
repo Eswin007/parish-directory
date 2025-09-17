@@ -151,6 +151,10 @@ const Family = ({
             <div className="family-grid__cell">{family?.address || '-'}</div>
           </div>
           <div className="family-grid__row">
+            <div className="family-grid__cell">Prayer Group</div>
+            <div className="family-grid__cell">{family?.prayer_group || '-'}</div>
+          </div>
+          <div className="family-grid__row">
             <div className="family-grid__cell">Mother Parish</div>
             <div className="family-grid__cell">{family?.mother_parish || '-'}</div>
           </div>
@@ -169,6 +173,7 @@ const Family = ({
             <div className="family-grid__cell">Email</div>
             <div className="family-grid__cell">{family?.email || '-'}</div>
           </div>
+
           <div className="family-grid__row">
             <div className="family-grid__cell ">Location</div>
             <div className="family-grid__cell location-link">

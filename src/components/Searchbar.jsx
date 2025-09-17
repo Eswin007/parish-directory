@@ -1,6 +1,6 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faClose, faSearch } from "@fortawesome/free-solid-svg-icons";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 const Searchbar = ({
   placeholder,
@@ -28,7 +28,6 @@ const Searchbar = ({
     const searchedFamily = familyList?.filter((family) =>
       family.hof?.toLowerCase().includes(filterRequest.toLowerCase())
     );
-
     const searchedMembers = familyMembersList.filter((members) =>
       members.name.toLowerCase().includes(filterRequest.toLowerCase())
     );
@@ -39,7 +38,13 @@ const Searchbar = ({
       );
     });
 
-    const consolidatedFamily = [...searchedFamily, ...familyFromMembers];
+
+    const searchedPrayerGroups = familyList.filter((family)=>
+      family?.prayer_group?.toLowerCase().includes(filterRequest.toLowerCase())
+    )
+
+
+    const consolidatedFamily = [...searchedFamily, ...familyFromMembers, ...searchedPrayerGroups];
 
     const searchResults = consolidatedFamily.filter((member, index, self) => {
       return (
@@ -60,6 +65,13 @@ const Searchbar = ({
       setFilteredFamily(familyList);
     }
   };
+
+  useEffect(()=>{
+    if(searchValue.length >= 3){
+      memberFilterHandler(searchValue)
+    }
+  }, [searchValue])
+  
 
   return (
     <div className={`searchbar ${className}`}>
