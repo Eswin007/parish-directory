@@ -111,6 +111,7 @@
       @include respond(smallMobile) {
         padding: .75rem .5rem;
         gap: .75rem;
+        grid-row-gap: .5rem;
       }
 
       &.disabled {
@@ -165,10 +166,67 @@
 
     &__table-cell {
 
+      // @include respond(mediumScreen){
+      //   &:has( > *:empty){
+      //     display: none;
+      //   }
+      // }
+
       &:first-child {
         @include respond(mediumScreen) {
           grid-row: 1/4;
         }
+      }
+
+      &:has(.family-list__prayer-group){
+          @include respond(smallTabs){
+        grid-row: 3/4;
+      }
+      }
+    }
+
+    &__prayer-group{
+      display: flex;
+      align-items: center;
+
+      @include respond(smallTabs){
+
+              &.brown{
+                background-color: rgba(brown, .1);
+                border-color: rgba(brown, .5);
+              }
+        
+              &.blue{
+                background-color: rgba(blue, .1);
+                border-color: rgba(blue, .5);
+              }
+            
+              &.green{
+                background-color: rgba(green, .1);
+                border-color: rgba(green, .5);
+              }
+              &.yellow{
+                background-color: rgba(yellow, .1);
+                border-color: rgba(rgb(134, 134, 28), .5);
+              }
+      }
+
+    
+      img{
+        width: 1rem;
+        margin-right: .25rem;
+        opacity: .7;
+      }
+      @include respond(smallTabs){
+        &:empty{
+          display: none;
+        }
+        border: 1px solid var(--clr-bg-600);
+        padding: 3px .75rem;
+        border-radius: 100vmax;
+        justify-content: flex-start;
+        justify-self: flex-start;
+        width: max-content;
       }
     }
 
@@ -245,7 +303,7 @@
       
       @include respond(smallTabs) {
         width: 100%;
-        font-size: 1.25rem;
+        font-size: 1.125rem;
         word-break: break-word;
 
       }
@@ -257,6 +315,7 @@
 
       @include respond(smallTabs){
         word-break: break-all;
+        display: none;
       }
     }
 
@@ -269,12 +328,46 @@
       font-size: 0.875rem;
 
       @include respond(mediumScreen) {
-        display: none;
+        margin-top: .25rem;
       }
     }
 
     &__phone {
       color: var(--clr-text-800);
+
+      display: flex;;
+      align-items: center;
+      gap: .25rem;
+
+      
+
+      &--1,
+      &--2{
+        display: flex;
+        align-items: center;
+
+        .ico-phone{
+          color: var(--clr-text-600);
+          margin-right: .25rem;
+        }
+      }
+
+      &--2{
+        &::before{
+          content: "/";
+          margin-right: .25rem;
+
+             @include respond(smallTabs){
+       display: none;
+      }
+        }
+      }
+
+      @include respond(smallTabs){
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+      }
     }
 
     &__action {

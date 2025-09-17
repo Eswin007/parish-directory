@@ -5,7 +5,7 @@ import axios from "axios";
 import Card from "./Card";
 import Dropdown from "./Inputs/Dropdown";
 import { photoURL } from "../App";
-import { BLOOD_GROUP, RELATION, apiKey } from "./Utilities";
+import { BLOOD_GROUP, PRAYER_GROUP, RELATION, apiKey } from "./Utilities";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCamera, faCancel } from "@fortawesome/free-solid-svg-icons";
 import { motion } from "framer-motion";
@@ -207,6 +207,16 @@ const MemberForm = ({
         value={formData?.email}
         onChange={(e) => onChangeHandler(e, "email")}
         errors={errors?.email}
+      />
+      <Dropdown
+        label="Prayer Group"
+        placeholder="Select"
+        options={PRAYER_GROUP}
+        value={formData?.prayer_group}
+        onChange={(value) =>
+          onChangeHandler({ target: { value: value.value } }, "prayer_group")
+        }
+        errors={errors?.blood}
       />
       <InputField
         placeholder="Mother Parish"

@@ -12,7 +12,7 @@ phone2: string()
   .max(20, 'Max 20 Digits')
   .matches(/^$|^\+?[0-9]+$/, "Must be digits"),
   email: string().nullable().email("Invalid email format"),
-
+  prayer_group: string(),
   mother_parish: string(),
   address: string(),
   occupation: string().nullable(),
@@ -84,6 +84,13 @@ export const BLOOD_GROUP = [
   { value: "AB-", label: "AB-" },
   { value: "B+", label: "B+" }
 ];
+
+export const PRAYER_GROUP = [
+  {value: 'Church Area', label: 'Church Area', color: 'brown'},
+  {value: 'Pallikkara', label: 'Pallikkara', color: 'blue'},
+  {value: 'Pukkattupady', label: 'Pukkattupady', color: 'green'},
+  {value: 'Edachira - Kakkanad', label: 'Edachira - Kakkanad', color: 'yellow'}
+]
 
 
 
