@@ -45,8 +45,8 @@ const Header = ({
   return (
     <div className="header">
       <div className="logo">
-        <div>IMTC Parish Directory</div>
-        {loggedInUser === 'admin' && <span className="header__role">Admin</span>}
+        IMTC Parish Directory {loggedInUser === 'admin' && <span className="header__role">Admin</span>}
+        
       <button type="button" className="header__logout" onClick={handleLogout}><FontAwesomeIcon icon={faRightFromBracket} /></button>
 
         </div>

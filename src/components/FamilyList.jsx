@@ -2,7 +2,7 @@ import React, { useState, useMemo, useEffect } from "react";
 import { photoURL } from "../App";
 import ImageViewer from "./Overlays/ImageViewer";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCircle, faExpand, faHandsPraying, faMobilePhone, faPersonPraying, faPhone, faPhoneAlt, faPray, faPrayingHands, faSquare, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { faCircle, faEnvelope, faExpand, faHandsPraying, faMobilePhone, faPersonPraying, faPhone, faPhoneAlt, faPray, faPrayingHands, faSquare, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { faEdit } from "@fortawesome/free-solid-svg-icons";
 import Modal from "./Overlays/Modal";
 import { useMediaQuery } from "react-responsive";
@@ -143,25 +143,11 @@ const FamilyList = ({
                       </div>
                     </div>
                     <div className="family-list__table-cell">
-                      <div className="family-list__phone">
-                        <div className="family-list__phone--1">
-                          {isTabletOrMobile &&  family?.phone1 &&
-                          <FontAwesomeIcon icon={faPhone} fontSize=".875rem" className="ico-phone"/>
-                          }
-                          {family?.phone1}</div>
-                        {family?.phone2 && 
-                        <div className="family-list__phone--2">
-                            {isTabletOrMobile && 
-                          <FontAwesomeIcon icon={faPhone} font-size=".875rem" className="ico-phone"/>
-                          }
-                          {family?.phone2}
-                          </div>
-                        }
-                        {/* {`${family?.phone1} ${
-                          family?.phone2 && "/ " + family?.phone2
-                        }`} */}
+                        <div className="family-list__contacts">
+                            {family?.phone1 && <div className="family-list__contact"><FontAwesomeIcon icon={faPhone} fontSize=".875rem" className="ico-contact"/>{family?.phone1}</div>}
+                            {family?.phone2 && <div className="family-list__contact"><FontAwesomeIcon icon={faPhone} fontSize=".875rem" className="ico-contact"/>{family?.phone2}</div>}
+                            {family?.email && <div className="family-list__contact"><FontAwesomeIcon icon={faEnvelope} fontSize=".875rem" className="ico-contact" />{family?.email}</div>}
                       </div>
-                      <div className="family-list__email">{family?.email}</div>
                     </div>
                   </div>
                 );
@@ -177,7 +163,7 @@ const FamilyList = ({
             <span>Oops...No results 😔</span>
           </motion.div>
         )}
-      </div>
+          </div>
     </>
   );
 };
