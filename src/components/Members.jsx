@@ -28,7 +28,7 @@ const Members = ({ familyMembers, family }) => {
         </div>
         <div className="members-table__body">
           <div className="members-table__row">
-            <div className="members-table__cell" data-label="Name">
+            <div className="members-table__cell" data-label="(HoF)">
               {family?.hof}
             </div>
             <div className="members-table__cell" data-label="relation">
@@ -51,10 +51,10 @@ const Members = ({ familyMembers, family }) => {
             return (
               familyMembers && (
                 <div className="members-table__row" key={index}>
-                  <div className="members-table__cell" data-label="Name">
+                  <div className="members-table__cell" data-label={'(' + member?.relation + ')'}>
                     {member.name}
                   </div>
-                  <div className="members-table__cell" data-label="Relation">
+                  <div className="members-table__cell relation" data-label="Relation">
                     {member.relation}
                   </div>
                   <div className="members-table__cell" data-label="Occupation">

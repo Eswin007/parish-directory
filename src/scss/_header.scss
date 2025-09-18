@@ -8,9 +8,10 @@
   line-height: 1;
   color: var(--clr-text-800);
   transition: color 0.15s ease;
-  display: flex;
+  display: inline-flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
+  text-align: left;
 
   div{
     text-box-trim: trim-both;
@@ -100,7 +101,7 @@
     min-width: 10rem;
     max-width: 25rem;
     width: 30vw;
-    width: clamp(10rem, 30vw, 30rem);
+    width: clamp(10rem, 23vw, 30rem);
     display: flex;
     border: 1px solid var(--clr-border-500);
     background-color: var(--clr-bg-300);
