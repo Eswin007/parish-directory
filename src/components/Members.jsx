@@ -31,7 +31,7 @@ const Members = ({ familyMembers, family }) => {
             <div className="members-table__cell" data-label="(HoF)">
               {family?.hof}
             </div>
-            <div className="members-table__cell" data-label="relation">
+            <div className="members-table__cell relation" data-label="relation">
               HoF
             </div>
             <div className="members-table__cell" data-label="occupation">
