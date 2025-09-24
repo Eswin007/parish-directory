@@ -364,11 +364,11 @@ const MemberForm = ({
         );
       })}
 
-      <LocationPicker
+      {/* <LocationPicker
         setFormData={setFormData}
         lat={formData.lat}
         lon={formData.lon}
-      />
+      /> */}
 
       <div className="button-wrap">
         <Button
