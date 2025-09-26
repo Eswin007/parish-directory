@@ -1,5 +1,5 @@
 import axios from "axios";
-import { Analytics } from "@vercel/analytics/react"
+import { Analytics } from "@vercel/analytics/react";
 import Header from "./components/Header";
 import Family from "./components/Family";
 import { useEffect, useState } from "react";
@@ -55,7 +55,6 @@ const App = () => {
 
   //Media Queries
 
-
   const [storage, setStorage] = useState(() => {
     return localStorage.getItem("theme") || "light";
   });
@@ -80,7 +79,6 @@ const App = () => {
   useEffect(() => {
     themePreference();
   }, []);
- 
 
   const HTMLElement = document.querySelector("html");
   useEffect(() => {
@@ -156,7 +154,7 @@ const App = () => {
     const today = new Date();
     today.setHours(0, 0, 0, 0);
     const tenDaysLater = new Date();
-    tenDaysLater.setDate(today.getDate() + 15);
+    tenDaysLater.setDate(today.getDate() + 10);
 
     const bdays = fullFamily.filter((member) => {
       if (!member?.dob) return false;
